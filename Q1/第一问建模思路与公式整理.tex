@@ -1,0 +1,411 @@
+\documentclass[UTF8,a4paper,12pt]{ctexart}
+
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{siunitx}
+
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\sisetup{per-mode=symbol}
+
+\title{第一问建模思路与公式整理}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{建模简化与总体思路}
+
+根据手写稿，Hussain--Dincer（2003）给出了轴对称二维圆柱模型：
+\begin{equation}
+    T=T(r,z,t),\qquad m=m(r,z,t),
+\end{equation}
+其中热传导和水分扩散同时包含径向与轴向过程，并在圆柱侧壁以及上下端设置对流边界条件。
+
+手写稿进一步引用 de Silva（2014）的处理：当圆柱长度远大于半径，即
+\begin{equation}
+    L\gg R,
+\end{equation}
+时，可将二维轴对称问题近似化为一维径向圆柱扩散问题。
+
+题中棒材的几何尺度记为
+\begin{equation}
+    L=\SI{25}{cm},\qquad R=\SI{2}{cm}.
+\end{equation}
+由于研究重点为棒材不同径向位置处的温度和含水率变化，因此忽略端部效应，只考虑径向传热、传质过程，令
+\begin{equation}
+    T=T(r,t),\qquad C=C(r,t),\qquad 0\le r\le R.
+\end{equation}
+
+第一问的物理过程可概括为：
+\[
+\text{热空气}\longrightarrow\text{棒材表面}\longrightarrow\text{棒材内部},
+\]
+其传热过程满足 Fourier 定律；水分迁移过程可概括为
+\[
+\text{棒材内部水分}\longrightarrow\text{棒材表面}\longrightarrow\text{空气},
+\]
+其传质过程满足 Fick 定律。
+
+\section{温度场模型}
+
+\subsection{控制方程}
+
+取半径为 $r$、厚度为 $\mathrm{d}r$ 的圆柱环状微元。径向热流密度由 Fourier 定律给出：
+\begin{equation}
+    q_r=-k\frac{\partial T}{\partial r},
+\end{equation}
+其中 $k$ 为材料导热系数。
+
+由圆柱坐标系下的能量守恒，可得一维径向非稳态导热方程
+\begin{equation}
+    \rho C_p\frac{\partial T}{\partial t}
+    =
+    \frac{1}{r}\frac{\partial}{\partial r}
+    \left(
+        r k\frac{\partial T}{\partial r}
+    \right),
+    \qquad 0<r<R.
+    \label{eq:heat-pde}
+\end{equation}
+
+\subsection{初始条件与边界条件}
+
+初始温度为
+\begin{equation}
+    T(r,0)=28^\circ\mathrm{C}.
+\end{equation}
+
+在圆柱中心 $r=0$ 处，由轴对称性有
+\begin{equation}
+    \left.\frac{\partial T}{\partial r}\right|_{r=0}=0.
+    \label{eq:heat-center-bc}
+\end{equation}
+
+在棒材外表面 $r=R$ 处采用对流换热边界条件：
+\begin{equation}
+    -k\left.\frac{\partial T}{\partial r}\right|_{r=R}
+    =
+    h\left[T(R,t)-T_a(t)\right],
+    \label{eq:heat-surface-bc}
+\end{equation}
+其中 $h$ 为题目给定的对流换热系数，$T_a(t)$ 为烘房空气温度。
+
+手写稿记录了
+\begin{equation}
+    T_a(0)=28^\circ\mathrm{C},\qquad
+    T_a(600)=33.202^\circ\mathrm{C}.
+\end{equation}
+对于其余时刻，可根据题目所给离散数据对 $T_a(t)$ 作分段线性插值。若
+$t_j\le t\le t_{j+1}$，则
+\begin{equation}
+    T_a(t)
+    =
+    T_{a,j}
+    +
+    \frac{T_{a,j+1}-T_{a,j}}{t_{j+1}-t_j}
+    (t-t_j).
+    \label{eq:Ta-interp}
+\end{equation}
+
+\section{水分扩散模型}
+
+\subsection{控制方程}
+
+令 $C(r,t)$ 表示材料的干基含水率，单位为 $\mathrm{kg/kg}$。
+根据 Fick 定律，径向水分通量为
+\begin{equation}
+    J_C=-D(C)\frac{\partial C}{\partial r},
+\end{equation}
+其中 $D(C)$ 为随含水率变化的有效扩散系数。
+
+圆柱坐标系下的一维径向水分扩散方程为
+\begin{equation}
+    \frac{\partial C}{\partial t}
+    =
+    \frac{1}{r}\frac{\partial}{\partial r}
+    \left[
+        rD(C)\frac{\partial C}{\partial r}
+    \right],
+    \qquad 0<r<R.
+    \label{eq:moisture-pde}
+\end{equation}
+
+手写稿给出的扩散系数模型为
+\begin{equation}
+    D(C)=7\times 10^{-9}\exp(-0.89C).
+    \label{eq:Dc}
+\end{equation}
+
+\subsection{初始条件与边界条件}
+
+初始含水率为
+\begin{equation}
+    C(r,0)=2.55.
+\end{equation}
+
+圆柱中心满足对称边界条件
+\begin{equation}
+    \left.\frac{\partial C}{\partial r}\right|_{r=0}=0.
+    \label{eq:moisture-center-bc}
+\end{equation}
+
+外表面采用对流传质边界条件
+\begin{equation}
+    -D(C)
+    \left.\frac{\partial C}{\partial r}\right|_{r=R}
+    =
+    h_m\left[C(R,t)-C_a(t)\right],
+    \label{eq:moisture-surface-bc}
+\end{equation}
+其中手写稿给出
+\begin{equation}
+    h_m=8\times 10^{-7}\ \mathrm{m/s},
+\end{equation}
+$C_a(t)$ 表示烘房空气中的水分浓度（由附件~1 给出的数据确定）。若附件中给出的是离散时刻数据，同样可采用分段线性插值得到连续函数 $C_a(t)$。
+
+\section{数值求解：有限体积法}
+
+\subsection{空间离散}
+
+沿径向将区间 $[0,R]$ 划分为若干控制体。对第 $i$ 个控制体，
+\begin{equation}
+    r_{i-\frac12}\le r\le r_{i+\frac12}.
+\end{equation}
+其体积为
+\begin{equation}
+    V_i
+    =
+    \pi L
+    \left(
+        r_{i+\frac12}^2-r_{i-\frac12}^2
+    \right),
+    \label{eq:volume}
+\end{equation}
+左右两侧控制面的面积分别为
+\begin{equation}
+    A_{i-\frac12}=2\pi Lr_{i-\frac12},
+    \qquad
+    A_{i+\frac12}=2\pi Lr_{i+\frac12}.
+    \label{eq:area}
+\end{equation}
+
+有限体积离散的核心思想是
+\[
+\boxed{\text{控制体内物理量变化率}
+=
+\text{左侧流入}
+-
+\text{右侧流出}}
+\]
+或等价地写成各控制面净通量之和。
+
+\section{温度方程的有限体积离散}
+
+\subsection{内部控制体}
+
+对第 $i$ 个内部控制体进行能量守恒，有
+\begin{equation}
+    \rho C_pV_i\frac{\mathrm{d}T_i}{\mathrm{d}t}
+    =
+    kA_{i-\frac12}\frac{T_{i-1}-T_i}{\Delta r}
+    +
+    kA_{i+\frac12}\frac{T_{i+1}-T_i}{\Delta r}.
+    \label{eq:heat-fvm-semidiscrete}
+\end{equation}
+
+令
+\begin{equation}
+    t_n=n\Delta t,
+    \qquad
+    T_i^n\approx T(r_i,t_n).
+\end{equation}
+时间方向采用全隐式格式，
+\begin{equation}
+    \frac{\mathrm{d}T_i}{\mathrm{d}t}
+    \approx
+    \frac{T_i^{n+1}-T_i^n}{\Delta t},
+\end{equation}
+并将右端空间通量全部取在第 $n+1$ 时间层，则
+\begin{align}
+    \rho C_pV_i
+    \frac{T_i^{n+1}-T_i^n}{\Delta t}
+    &=
+    kA_{i-\frac12}
+    \frac{T_{i-1}^{n+1}-T_i^{n+1}}{\Delta r}
+    \notag\\
+    &\quad+
+    kA_{i+\frac12}
+    \frac{T_{i+1}^{n+1}-T_i^{n+1}}{\Delta r}.
+    \label{eq:heat-implicit}
+\end{align}
+
+整理为三对角形式：
+\begin{equation}
+    -a_iT_{i-1}^{n+1}
+    +b_iT_i^{n+1}
+    -c_iT_{i+1}^{n+1}
+    =d_i,
+    \label{eq:tridiag-row}
+\end{equation}
+其中
+\begin{align}
+    a_i&=\frac{kA_{i-\frac12}}{\Delta r},\\
+    b_i&=\frac{\rho C_pV_i}{\Delta t}
+        +\frac{k(A_{i-\frac12}+A_{i+\frac12})}{\Delta r},\\
+    c_i&=\frac{kA_{i+\frac12}}{\Delta r},\\
+    d_i&=\frac{\rho C_pV_i}{\Delta t}T_i^n.
+\end{align}
+
+因此每个时间步需要求解一个三对角线性方程组，其结构为
+\begin{equation}
+\begin{bmatrix}
+b_1 & -c_1 & 0 & \cdots & 0\\
+-a_2 & b_2 & -c_2 & \ddots & \vdots\\
+0 & \ddots & \ddots & \ddots & 0\\
+\vdots & \ddots & -a_{N-2} & b_{N-2} & -c_{N-2}\\
+0 & \cdots & 0 & -a_{N-1} & b_{N-1}
+\end{bmatrix}
+\begin{bmatrix}
+T_1^{n+1}\\
+T_2^{n+1}\\
+\vdots\\
+T_{N-2}^{n+1}\\
+T_{N-1}^{n+1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+d_1\\
+d_2\\
+\vdots\\
+d_{N-2}\\
+d_{N-1}
+\end{bmatrix}.
+\end{equation}
+
+\subsection{中心点 $r=0$ 的处理}
+
+圆柱坐标方程在 $r=0$ 处形式上含有 $1/r$，因此直接代入会出现奇点。
+采用中心控制体
+\[
+0\le r\le \frac{\Delta r}{2},
+\]
+其左侧控制面面积为
+\begin{equation}
+    A_{-\frac12}=0.
+\end{equation}
+于是
+\begin{equation}
+    \rho C_pV_0\frac{\mathrm{d}T_0}{\mathrm{d}t}
+    =
+    kA_{\frac12}
+    \frac{T_1-T_0}{\Delta r}.
+\end{equation}
+其中
+\begin{equation}
+    V_0=\pi L\left(\frac{\Delta r}{2}\right)^2,
+    \qquad
+    A_{\frac12}=2\pi L\frac{\Delta r}{2}
+    =\pi L\Delta r.
+\end{equation}
+从而得到
+\begin{equation}
+    \frac{\mathrm{d}T_0}{\mathrm{d}t}
+    =
+    \frac{4k}{\rho C_p(\Delta r)^2}
+    (T_1-T_0),
+    \label{eq:center-temp}
+\end{equation}
+这样即可避免直接处理 $1/r$ 奇点。
+
+\subsection{外表面 $r=R$ 的处理}
+
+令最外层节点为 $r_N=R$。外表面对流热流可写为
+\begin{equation}
+    \dot q
+    =
+    h\left[T_a(t)-T_N\right].
+\end{equation}
+因此最外层控制体满足
+\begin{equation}
+    \rho C_pV_N\frac{\mathrm{d}T_N}{\mathrm{d}t}
+    =
+    kA_{N-\frac12}
+    \frac{T_{N-1}-T_N}{\Delta r}
+    +
+    hA_R\left[T_a(t)-T_N\right],
+    \label{eq:outer-temp}
+\end{equation}
+其中
+\begin{equation}
+    A_R=2\pi RL.
+\end{equation}
+
+\section{水分方程的有限体积离散}
+
+对式~\eqref{eq:moisture-pde}采用同样的有限体积思想。第 $i$ 个内部控制体满足
+\begin{equation}
+    V_i\frac{\mathrm{d}C_i}{\mathrm{d}t}
+    =
+    D_{i-\frac12}A_{i-\frac12}
+    \frac{C_{i-1}-C_i}{\Delta r}
+    +
+    D_{i+\frac12}A_{i+\frac12}
+    \frac{C_{i+1}-C_i}{\Delta r}.
+    \label{eq:moisture-fvm}
+\end{equation}
+
+界面扩散系数按手写稿采用相邻节点扩散系数的算术平均：
+\begin{equation}
+    D_{i+\frac12}
+    =
+    \frac{D(C_i)+D(C_{i+1})}{2}.
+    \label{eq:D-interface}
+\end{equation}
+
+在最外层 $r=R$ 处，由
+\begin{equation}
+    -D(C)\frac{\partial C}{\partial r}
+    =
+    h_m(C_s-C_a),
+\end{equation}
+得到外层控制体的半离散方程
+\begin{equation}
+    V_N\frac{\mathrm{d}C_N}{\mathrm{d}t}
+    =
+    D_{N-\frac12}A_{N-\frac12}
+    \frac{C_{N-1}-C_N}{\Delta r}
+    -
+    h_mA_R(C_N-C_a).
+    \label{eq:outer-moisture}
+\end{equation}
+
+由于 $D=D(C)$ 随含水率变化，水分方程属于非线性扩散方程。实际计算时可在每一时间步根据当前（或迭代更新后的）含水率重新计算 $D(C_i)$ 与 $D_{i+\frac12}$。
+
+\section{第一问的计算流程}
+
+根据上述模型，第一问可按以下流程求解：
+\begin{enumerate}
+    \item 根据附件数据构造连续的烘房空气温度 $T_a(t)$ 与空气水分浓度 $C_a(t)$；
+    \item 将棒材半径区间 $[0,R]$ 划分为有限个径向控制体；
+    \item 利用全隐式有限体积格式逐时间步求解温度场 $T(r,t)$；
+    \item 根据 $D(C)=7\times10^{-9}e^{-0.89C}$ 更新有效水分扩散系数，并求解含水率场 $C(r,t)$；
+    \item 输出题目要求的不同径向位置、不同时间处的温度与含水率，并据此完成第一问分析。
+\end{enumerate}
+
+% =========================
+% 手写识别说明：
+% 1. 文献在图片中仅出现“Hussain-Dincer 2003”和“de Silva 2014”，
+%    未给出完整题名、期刊等信息，因此本文未补造参考文献条目。
+% 2. 图片中的关键数值识别为：
+%    L=25 cm, R=2 cm, T(r,0)=28°C, T_a(0)=28°C,
+%    T_a(600)=33.202°C, C(r,0)=2.55,
+%    D(C)=7×10^{-9} exp(-0.89 C), h_m=8×10^{-7} m/s。
+% 3. “C(r,t)”在手写稿中表述为含水率（kg/kg）；本文按“干基含水率”整理。
+% 4. 水分方程手写稿给出了空间有限体积半离散式与外边界处理；
+%    温度方程明确写出了全隐式时间离散和三对角结构。
+% =========================
+
+\end{document}

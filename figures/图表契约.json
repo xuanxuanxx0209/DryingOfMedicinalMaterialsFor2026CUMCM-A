@@ -1,0 +1,31 @@
+{
+  "q1": [
+    {
+      "basename": "raw_q1_air_boundary",
+      "category": "raw",
+      "claim": "预热阶段烘房温度与空气水分浓度均随时间上升，二者构成连续变化的表面对流边界。",
+      "evidence": "附件1.xlsx 中 0 至 1800 秒的 31 条原始记录。",
+      "layout": "左右双面板折线图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "process_q1_convergence",
+      "category": "process",
+      "claim": "权威网格继续缩小后，关键点温度和含水率变化均受控，空间离散是含水率误差的主要来源。",
+      "evidence": "问题1_网格收敛.csv 中时间步减半和空间步减半的最大绝对差。",
+      "layout": "左右双面板点图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "result_q1_fields",
+      "category": "result",
+      "claim": "热量和水分均从表面向内部推进，1800 秒内温度响应深入圆柱而中心含水率基本维持初值。",
+      "evidence": "result1.xlsx 中每秒和每 0.1 厘米的温度与含水率结果。",
+      "layout": "左右双面板时空热图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    }
+  ]
+}

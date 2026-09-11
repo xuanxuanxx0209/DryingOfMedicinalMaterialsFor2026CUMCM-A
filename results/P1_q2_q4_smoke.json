@@ -1,0 +1,75 @@
+{
+  "mode": "P1_q2_q4_smoke",
+  "inputs": {
+    "problem A\\附件\\附件1.xlsx": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+    "problem A\\附件\\附件2.xlsx": "5563acbfa4b4afb10cc6c03e2207e5369bf39da27576672aff14cc5c32e704af"
+  },
+  "q2": {
+    "time_step_s": 1.0,
+    "radial_intervals": 20,
+    "end_time_s": 600.0,
+    "temperature_range_c": [
+      28.0,
+      29.69904402010437
+    ],
+    "moisture_range_kg_per_kg": [
+      1.93709304294127,
+      2.5500000000000034
+    ],
+    "property_ranges": {
+      "density_kg_per_m3": [
+        897.9479094964826,
+        976.3999999878588
+      ],
+      "heat_capacity_j_per_kg_k": [
+        3254.4666913854016,
+        3415.295774627295
+      ],
+      "conductivity_w_per_m_k": [
+        0.46062037380352805,
+        0.4829577464760132
+      ],
+      "diffusivity_m2_per_s": [
+        5.70652335353999e-09,
+        5.890848305183215e-09
+      ]
+    },
+    "max_coupling_iterations": 3,
+    "moisture_balance_relative_error": 1.0677755903153462e-14
+  },
+  "q4": {
+    "time_step_s": 10.0,
+    "radial_intervals": 20,
+    "end_time_s": 3600.0,
+    "radius_start_m": 0.02,
+    "radius_end_m": 0.01794,
+    "temperature_range_c": [
+      28.0,
+      43.195809242772214
+    ],
+    "moisture_range_kg_per_kg": [
+      0.9773287851925591,
+      2.550000000000001
+    ],
+    "property_ranges": {
+      "density_kg_per_m3": [
+        847.9595906673303,
+        989.4999787741335
+      ],
+      "heat_capacity_j_per_kg_k": [
+        2912.6745050694108,
+        3394.366156948034
+      ],
+      "conductivity_w_per_m_k": [
+        0.21885344233203824,
+        0.2636619680881892
+      ],
+      "diffusivity_m2_per_s": [
+        1.6013144615949787e-09,
+        1.7941490244709193e-09
+      ]
+    },
+    "max_coupling_iterations": 4,
+    "moisture_balance_relative_error": 6.036126989035408e-16
+  }
+}

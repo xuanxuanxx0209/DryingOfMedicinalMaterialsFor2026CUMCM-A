@@ -1,0 +1,42 @@
+{
+  "mode": "P1_q1_smoke",
+  "input": {
+    "path": "problem A\\附件\\附件1.xlsx",
+    "sha256": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+    "rows": 241,
+    "first_time_s": 0,
+    "last_time_s": 14400
+  },
+  "parameters": {
+    "end_time_s": 120.0,
+    "time_step_s": 1.0,
+    "radial_spacing_m": 0.001,
+    "radial_intervals": 20,
+    "initial_temperature_c": 28.0,
+    "initial_moisture_kg_per_kg": 2.55,
+    "diffusivity_formula": "7e-9*exp(-0.89/C)",
+    "picard_tolerance": 1e-10,
+    "picard_max_iterations": 50
+  },
+  "boundary_at_120_s": {
+    "temperature_c": 29.192,
+    "moisture_kg_per_kg": 0.02053
+  },
+  "result_at_120_s": {
+    "temperature_center_c": 28.000299399060758,
+    "temperature_surface_c": 28.239232563466203,
+    "moisture_center_kg_per_kg": 2.55,
+    "moisture_surface_kg_per_kg": 2.2564664180211067
+  },
+  "checks": {
+    "temperature_min_c": 27.999999999999993,
+    "temperature_max_c": 28.239232563466203,
+    "moisture_min_kg_per_kg": 2.2564664180211067,
+    "moisture_max_kg_per_kg": 2.550000000000001,
+    "moisture_balance_relative_error": 7.540502223047309e-14,
+    "heat_matrix_condition_number": 143.17457668343943,
+    "moisture_matrix_condition_number": 150.60833604507903,
+    "max_picard_iterations": 3,
+    "finite": true
+  }
+}
