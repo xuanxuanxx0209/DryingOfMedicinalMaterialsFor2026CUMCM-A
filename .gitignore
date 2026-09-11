@@ -1,4 +1,9 @@
 tmp-pdfcrop-13964.tex
+__pycache__/
+figures/_qa/
+figures/q2_audit/
+完整论文-LaTeX/build/paper-text.txt
+完整论文-LaTeX/build/q2-pages/
 *.ini
 *.aux
 *.lof

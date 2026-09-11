@@ -4,6 +4,7 @@
     "problem A\\附件\\附件1.xlsx": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7"
   },
   "parameters": {
+    "temporal_scheme": "backward_euler_start_then_bdf2",
     "authoritative": {
       "intervals": 160,
       "time_step_s": 1.0
@@ -15,7 +16,12 @@
     "space_refined": {
       "intervals": 320,
       "time_step_s": 1.0
-    }
+    },
+    "heat_transfer_coefficient_w_per_m2_k": 25.0,
+    "mass_transfer_coefficient_m_per_s": 8e-07,
+    "coupling_temperature_tolerance_c": 1e-08,
+    "coupling_moisture_tolerance_kg_per_kg": 1e-10,
+    "coupling_max_iterations": 40
   },
   "requested_times_s": [
     1800.0,
@@ -34,99 +40,173 @@
   ],
   "temperature_c": [
     [
-      32.19072301,
-      32.3835583,
-      32.96730096,
-      33.9619735,
-      35.41395434
+      32.18924743,
+      32.38211702,
+      32.96594248,
+      33.96078043,
+      35.41303101
     ],
     [
-      40.38160266,
-      40.55357866,
-      41.06047177,
-      41.87829423,
-      42.99775756
+      40.38156999,
+      40.55356986,
+      41.06049094,
+      41.87823124,
+      42.99762364
     ],
     [
-      45.84612436,
-      45.93419024,
-      46.19239014,
-      46.60453855,
-      47.13956881
+      45.84675914,
+      45.93481085,
+      46.19295961,
+      46.60508233,
+      47.1400671
     ],
     [
-      48.44971608,
-      48.48754727,
-      48.59796909,
-      48.7731387,
-      49.00299147
+      48.45023819,
+      48.48806354,
+      48.59844867,
+      48.77355519,
+      49.00333139
     ],
     [
-      49.46664562,
-      49.4788822,
-      49.51333688,
-      49.56523782,
-      49.66099928
+      49.46698172,
+      49.47922116,
+      49.51365281,
+      49.56533671,
+      49.66090298
     ],
     [
-      49.84943164,
-      49.85527479,
-      49.87453493,
-      49.91008771,
-      49.96638676
+      49.84949716,
+      49.85534183,
+      49.87461294,
+      49.91014876,
+      49.9664125
     ]
   ],
   "moisture_kg_per_kg": [
     [
-      2.54993192,
-      2.54887082,
-      2.52550496,
-      2.32572025,
-      1.64870529
+      2.5499335,
+      2.54888051,
+      2.52554781,
+      2.32571951,
+      1.64861392
     ],
     [
-      2.52567453,
-      2.4947248,
-      2.35779031,
-      2.02299763,
-      1.47112962
+      2.5257247,
+      2.49477584,
+      2.3578177,
+      2.02297011,
+      1.47108302
     ],
     [
-      2.38600277,
-      2.32559291,
-      2.13440472,
-      1.80204002,
-      1.34758159
+      2.38605457,
+      2.32563013,
+      2.13440823,
+      1.80201683,
+      1.34755932
     ],
     [
-      2.17083572,
-      2.10842591,
-      1.9236357,
-      1.62595299,
-      1.2310986
+      2.17084866,
+      2.10843185,
+      1.92362738,
+      1.62593635,
+      1.23108582
     ],
     [
-      1.95665271,
-      1.90060967,
-      1.73599433,
-      1.47199932,
-      1.11665268
+      1.95664155,
+      1.90059696,
+      1.73597907,
+      1.47198443,
+      1.11664134
     ],
     [
-      1.76619857,
-      1.71655375,
-      1.57021619,
-      1.33327679,
-      1.00812991
+      1.76617756,
+      1.71653315,
+      1.57019716,
+      1.3332609,
+      1.0081177
     ]
   ],
+  "property_ranges": {
+    "density_kg_per_m3": [
+      779.0390653208459,
+      976.4000000000003
+    ],
+    "heat_capacity_j_per_kg_k": [
+      2823.530059631764,
+      3415.295774647888
+    ],
+    "conductivity_w_per_m_k": [
+      0.400768063837745,
+      0.48295774647887335
+    ],
+    "diffusivity_m2_per_s": [
+      5.547500034437551e-09,
+      1.252185983191935e-08
+    ]
+  },
+  "sensitivity": [
+    {
+      "case": "换热系数_0.8倍",
+      "heat_transfer_coefficient_w_per_m2_k": 20.0,
+      "mass_transfer_coefficient_m_per_s": 8e-07,
+      "max_temperature_change_c": 1.081749072127451,
+      "max_moisture_change_kg_per_kg": 0.015376005248283864,
+      "temperature_center_3h_change_c": -0.12915190883287408,
+      "temperature_surface_3h_change_c": -0.10106390775573004,
+      "moisture_center_3h_change_kg_per_kg": 0.010389842380041259,
+      "moisture_surface_3h_change_kg_per_kg": 0.001516049479656001
+    },
+    {
+      "case": "换热系数_1.2倍",
+      "heat_transfer_coefficient_w_per_m2_k": 30.0,
+      "mass_transfer_coefficient_m_per_s": 8e-07,
+      "max_temperature_change_c": 0.7884521202494312,
+      "max_moisture_change_kg_per_kg": 0.010526116139252029,
+      "temperature_center_3h_change_c": 0.057694001705570486,
+      "temperature_surface_3h_change_c": 0.04655086323739255,
+      "moisture_center_3h_change_kg_per_kg": -0.006561360073640943,
+      "moisture_surface_3h_change_kg_per_kg": -0.0013902518044206502
+    },
+    {
+      "case": "传质系数_0.8倍",
+      "heat_transfer_coefficient_w_per_m2_k": 25.0,
+      "mass_transfer_coefficient_m_per_s": 6.4e-07,
+      "max_temperature_change_c": 0.05668169350022367,
+      "max_moisture_change_kg_per_kg": 0.16937214899187691,
+      "temperature_center_3h_change_c": -0.012595609954260567,
+      "temperature_surface_3h_change_c": -0.010316901376945964,
+      "moisture_center_3h_change_kg_per_kg": 0.09196979741074274,
+      "moisture_surface_3h_change_kg_per_kg": 0.16937214899187691
+    },
+    {
+      "case": "传质系数_1.2倍",
+      "heat_transfer_coefficient_w_per_m2_k": 25.0,
+      "mass_transfer_coefficient_m_per_s": 9.6e-07,
+      "max_temperature_change_c": 0.0491982384468983,
+      "max_moisture_change_kg_per_kg": 0.13483605393017595,
+      "temperature_center_3h_change_c": 0.009965309455644444,
+      "temperature_surface_3h_change_c": 0.008321070719915724,
+      "moisture_center_3h_change_kg_per_kg": -0.07412167827996385,
+      "moisture_surface_3h_change_kg_per_kg": -0.13445389040982747
+    }
+  ],
   "verification": {
-    "max_temperature_difference_time_refined_c": 0.000738180378391462,
-    "max_moisture_difference_time_refined_kg_per_kg": 4.569464285042457e-05,
-    "max_temperature_difference_space_refined_c": 1.3019984677953289e-05,
-    "max_moisture_difference_space_refined_kg_per_kg": 1.1636711950924195e-05,
-    "moisture_balance_relative_error": 1.0080263874897082e-14,
-    "max_coupling_iterations": 4
+    "max_temperature_difference_time_refined_c": 1.900470216753547e-06,
+    "max_moisture_difference_time_refined_kg_per_kg": 2.014021527330101e-08,
+    "max_temperature_difference_space_refined_c": 1.3031195152279906e-05,
+    "max_moisture_difference_space_refined_kg_per_kg": 1.1647078612675443e-05,
+    "rounded_temperature_changes_time_refined": 0,
+    "rounded_moisture_changes_time_refined": 0,
+    "rounded_temperature_changes_space_refined": 0,
+    "rounded_moisture_changes_space_refined": 2,
+    "moisture_balance_relative_error": 1.693181669923302e-11,
+    "max_coupling_iterations": 4,
+    "max_temperature_linear_residual": 6.922096723684544e-15,
+    "max_moisture_linear_residual": 7.549021098756777e-16,
+    "final_system_condition_numbers": {
+      "temperature_final": 2189.7894153558846,
+      "moisture_final": 1243.2805578289801
+    }
   },
   "environment": {
     "python": "3.13.7",

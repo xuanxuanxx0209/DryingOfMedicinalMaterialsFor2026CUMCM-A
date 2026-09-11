@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "created_at": "2026-09-11T04:13:59.115302+00:00",
+  "created_at": "2026-09-11T14:57:33.646395+00:00",
   "passed": true,
   "main_tex": "example.tex",
   "project_root": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文-LaTeX",
-  "source_sha256": "fd107b6a6448c2cabb65c4746a1d8dc94dd376cd46524e55c4bf156c542fb169",
-  "compiled_source_sha256": "fd107b6a6448c2cabb65c4746a1d8dc94dd376cd46524e55c4bf156c542fb169",
-  "post_build_source_sha256": "fd107b6a6448c2cabb65c4746a1d8dc94dd376cd46524e55c4bf156c542fb169",
-  "pdf_sha256": "069c8f9227a7c4fc1efd428fec27b4a1abbd158daa4b5e91e5f1ea8740cd8fee",
-  "project_manifest_sha256": "36679b3f9d7121c284051980d92a393c320acbe59051b5af1b059431f995d7a5",
+  "source_sha256": "e1ae1b382f683208f00243c63fb17f6546ba6496faafba3f6efe460df33ba88e",
+  "compiled_source_sha256": "e1ae1b382f683208f00243c63fb17f6546ba6496faafba3f6efe460df33ba88e",
+  "post_build_source_sha256": "e1ae1b382f683208f00243c63fb17f6546ba6496faafba3f6efe460df33ba88e",
+  "pdf_sha256": "36c460b986f5c7f12f2fcb348d11844a7dc63d452ffbd4c304cef25546aa0aef",
+  "project_manifest_sha256": "e52ab56157eaa2cecca9bb3b276389ebe444d6165f8fa75b88add66028fd3015",
   "engine": "xelatex",
   "tools": {
     "latexmk": {
@@ -37,7 +37,7 @@
       ],
       "cwd": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文-LaTeX",
       "returncode": 0,
-      "duration_seconds": 10.265
+      "duration_seconds": 21.172
     }
   ],
   "warnings": [],

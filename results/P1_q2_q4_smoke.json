@@ -10,32 +10,34 @@
     "end_time_s": 600.0,
     "temperature_range_c": [
       28.0,
-      29.69904402010437
+      29.698200187960477
     ],
     "moisture_range_kg_per_kg": [
-      1.93709304294127,
-      2.5500000000000034
+      1.936925039710022,
+      2.5500000000000065
     ],
     "property_ranges": {
       "density_kg_per_m3": [
-        897.9479094964826,
-        976.3999999878588
+        897.9264050828829,
+        976.399999989794
       ],
       "heat_capacity_j_per_kg_k": [
-        3254.4666913854016,
-        3415.295774627295
+        3254.4134041534344,
+        3415.295774630577
       ],
       "conductivity_w_per_m_k": [
-        0.46062037380352805,
-        0.4829577464760132
+        0.4606129727990881,
+        0.48295774647646894
       ],
       "diffusivity_m2_per_s": [
-        5.70652335353999e-09,
-        5.890848305183215e-09
+        5.7062302388191326e-09,
+        5.8906122213173e-09
       ]
     },
     "max_coupling_iterations": 3,
-    "moisture_balance_relative_error": 1.0677755903153462e-14
+    "moisture_balance_relative_error": 1.2751829166140178e-11,
+    "max_temperature_linear_residual": 4.468709269333479e-16,
+    "max_moisture_linear_residual": 3.3385966438541274e-16
   },
   "q4": {
     "time_step_s": 10.0,
@@ -70,6 +72,6 @@
       ]
     },
     "max_coupling_iterations": 4,
-    "moisture_balance_relative_error": 6.036126989035408e-16
+    "moisture_balance_relative_error": 1.3130081481759759e-12
   }
 }

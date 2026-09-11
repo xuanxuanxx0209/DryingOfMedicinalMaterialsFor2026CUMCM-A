@@ -27,5 +27,88 @@
       "backend": "Python matplotlib",
       "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
     }
+  ],
+  "q2": [
+    {
+      "basename": "raw_q2_boundary_series",
+      "category": "raw",
+      "claim": "三小时计算区间内烘房温度和空气水分浓度总体上升，逐分钟观测带有波动并逐步接近平台。",
+      "evidence": "附件1.xlsx 中 0 秒至 10800 秒的 181 条原始记录。",
+      "layout": "上下双面板时间序列图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "raw_q2_boundary_relation",
+      "category": "raw",
+      "claim": "三小时内烘房温度和空气水分浓度沿时间轨迹共同上升，Pearson 相关系数为 0.984。",
+      "evidence": "附件1.xlsx 的温度和空气水分浓度成对观测。",
+      "layout": "按时间着色的散点轨迹图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "raw_q2_boundary_rates",
+      "category": "raw",
+      "claim": "边界变化主要集中在预热前段，后续一分钟增量逐步收敛到零附近。",
+      "evidence": "附件1.xlsx 相邻 60 秒记录的一阶差分。",
+      "layout": "上下双面板变化率图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "process_q2_picard_iterations",
+      "category": "process",
+      "claim": "全部时间层在 4 次以内达到温度 1e-8 摄氏度和含水率 1e-10 千克每千克的迭代阈值。",
+      "evidence": "问题2_迭代次数.csv 的逐秒 Picard 迭代记录。",
+      "layout": "时间阶梯线和频数点图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "process_q2_refinement",
+      "category": "process",
+      "claim": "时间步和空间网格加密误差均低于四位小数报告精度对应的数量级。",
+      "evidence": "问题2_结果摘要.json 的时间加密和空间加密最大绝对差。",
+      "layout": "双面板对数点图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "process_q2_sensitivity",
+      "category": "process",
+      "claim": "换热系数主要影响温度，传质系数主要影响含水率，两个通道的主导参数相互分离。",
+      "evidence": "换热系数和传质系数分别取基准值 0.8 倍与 1.2 倍的四个确定性工况。",
+      "layout": "双面板横向点图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "result_q2_temperature_field",
+      "category": "result",
+      "claim": "温度从圆柱表面向中心推进，径向温差随边界趋稳而持续缩小。",
+      "evidence": "result2.xlsx 温度表中的逐秒、每 0.1 厘米结果。",
+      "layout": "时空热图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "result_q2_moisture_field",
+      "category": "result",
+      "claim": "水分从表面向内部迁移，三小时末中心和表面含水率分别为 1.7662 与 1.0081 千克每千克。",
+      "evidence": "result2.xlsx 水分浓度表中的逐秒、每 0.1 厘米结果。",
+      "layout": "时空热图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "result_q2_center_surface_gap",
+      "category": "result",
+      "claim": "中心和表面的两类差值均先增后减，含水率差在三小时末仍保持为 0.7581 千克每千克。",
+      "evidence": "result2.xlsx 中中心和表面两列的逐秒差值。",
+      "layout": "上下双面板差值折线图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    }
   ]
 }

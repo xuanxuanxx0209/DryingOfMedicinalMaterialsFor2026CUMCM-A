@@ -1,0 +1,699 @@
+\documentclass[UTF8,a4paper,12pt]{ctexart}
+
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{siunitx}
+\usepackage{bm}
+
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\sisetup{per-mode=symbol}
+
+\title{第二问建模思路与公式整理}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{第二问与第一问的关系}
+
+第二问总体上继续沿用第一问建立的一维径向圆柱传热--传质模型、有限体积空间离散方法、中心零通量边界条件以及表面对流边界条件。
+
+与第一问相比，第二问最主要的变化是：不再把材料的密度 $\rho$、比热容 $c_p$、热传导系数 $k$ 以及水分扩散系数 $D$ 看作常数或仅关于含水率的简单函数，而是使用附件~3 给出的经验公式，使这些物性参数随当前含水率 $C$ 和温度 $T$ 动态变化。
+
+因此，第二问中的温度场和水分场是相互耦合的：
+\[
+C
+\longrightarrow
+\rho(C),\,c_p(C),\,k(C)
+\longrightarrow
+T
+\longrightarrow
+D(C,T),
+\]
+而新的扩散系数 $D(C,T)$ 又进一步影响下一时刻的含水率 $C$。因此需要在每一个时间步内对温度场和含水率场进行迭代更新，直到前后两次迭代结果足够接近，即认为该时间步达到收敛。
+
+\section{附件 3 中的材料物性经验公式}
+
+附件~3 给出的经验公式为
+\begin{equation}
+    \rho(C)=650+128C,
+    \label{eq:rho}
+\end{equation}
+\begin{equation}
+    c_p(C)=1450+2736\frac{C}{C+1},
+    \label{eq:cp}
+\end{equation}
+\begin{equation}
+    k(C)=0.21+0.38\frac{C}{C+1},
+    \label{eq:k}
+\end{equation}
+以及水分浓度扩散系数
+\begin{equation}
+    D(C,T)
+    =
+    2.4\times10^{-3}
+    \exp\!\left(-\frac{0.45}{C}\right)
+    \exp\!\left(-\frac{3850}{T}\right).
+    \label{eq:D}
+\end{equation}
+
+其中
+\[
+\rho:\ \mathrm{kg/m^3},\qquad
+c_p:\ \mathrm{J/(kg\cdot K)},\qquad
+k:\ \mathrm{W/(m\cdot K)},
+\]
+\[
+D:\ \mathrm{m^2/s},\qquad
+C:\ \mathrm{kg/kg},\qquad
+T:\ \mathrm{K}.
+\]
+
+需要特别注意：式~\eqref{eq:D} 中的温度 $T$ 必须使用绝对温度（K），不能直接代入摄氏温度。
+
+\section{耦合传热模型}
+
+\subsection{控制方程}
+
+第二问仍采用第一问的一维径向圆柱导热方程，但将物性参数改为当前含水率的函数：
+\begin{equation}
+    \rho(C)c_p(C)\frac{\partial T}{\partial t}
+    =
+    \frac{1}{r}
+    \frac{\partial}{\partial r}
+    \left[
+        rk(C)\frac{\partial T}{\partial r}
+    \right],
+    \qquad 0<r<R.
+    \label{eq:heat-pde}
+\end{equation}
+
+式~\eqref{eq:heat-pde} 表明，含水率 $C(r,t)$ 的变化会同时改变材料的体积热容 $\rho c_p$ 和热传导系数 $k$，进而影响温度场的演化。
+
+\subsection{初始条件与边界条件}
+
+初始条件继续沿用第一问：
+\begin{equation}
+    T(r,0)=T_0.
+\end{equation}
+若第一问中取
+\[
+T_0=28^\circ\mathrm{C},
+\]
+则在涉及式~\eqref{eq:D} 的计算中应换算为
+\[
+T_0=301.15\ \mathrm{K}.
+\]
+
+圆柱中心 $r=0$ 处满足轴对称零通量条件
+\begin{equation}
+    \left.
+    \frac{\partial T}{\partial r}
+    \right|_{r=0}
+    =0.
+    \label{eq:heat-center}
+\end{equation}
+
+外表面 $r=R$ 处仍采用第一问的对流换热边界：
+\begin{equation}
+    -k(C)
+    \left.
+    \frac{\partial T}{\partial r}
+    \right|_{r=R}
+    =
+    h\bigl[T(R,t)-T_a(t)\bigr].
+    \label{eq:heat-surface}
+\end{equation}
+
+其中 $h$ 为对流换热系数，$T_a(t)$ 为烘房空气温度，仍按第一问的方法由附件数据进行插值。
+
+\section{耦合水分扩散模型}
+
+\subsection{控制方程}
+
+第二问的水分扩散方程仍满足 Fick 定律，但扩散系数同时依赖于当前含水率和温度：
+\begin{equation}
+    \frac{\partial C}{\partial t}
+    =
+    \frac{1}{r}
+    \frac{\partial}{\partial r}
+    \left[
+        rD(C,T)\frac{\partial C}{\partial r}
+    \right],
+    \qquad 0<r<R.
+    \label{eq:moisture-pde}
+\end{equation}
+
+其中 $D(C,T)$ 由式~\eqref{eq:D} 给出。
+
+因此，温度场会通过扩散系数 $D$ 直接影响水分迁移；与此同时，水分场又会通过 $\rho(C)$、$c_p(C)$ 和 $k(C)$ 反过来影响温度场，从而形成双向耦合。
+
+\subsection{初始条件与边界条件}
+
+含水率初始条件沿用第一问：
+\begin{equation}
+    C(r,0)=C_0.
+\end{equation}
+若第一问中采用
+\[
+C_0=2.55,
+\]
+则第二问继续使用相同初始含水率。
+
+圆柱中心满足零水分通量条件：
+\begin{equation}
+    \left.
+    \frac{\partial C}{\partial r}
+    \right|_{r=0}
+    =0.
+    \label{eq:moisture-center}
+\end{equation}
+
+圆柱表面继续采用对流传质边界：
+\begin{equation}
+    -D(C,T)
+    \left.
+    \frac{\partial C}{\partial r}
+    \right|_{r=R}
+    =
+    h_m\bigl[C(R,t)-C_a(t)\bigr].
+    \label{eq:moisture-surface}
+\end{equation}
+其中 $h_m$ 为表面对流传质系数，$C_a(t)$ 为烘房空气水分浓度，其处理方法与第一问一致。
+
+\section{空间离散：继续沿用第一问有限体积网格}
+
+沿半径方向将区间 $[0,R]$ 划分为若干控制体。第 $i$ 个控制体满足
+\begin{equation}
+    r_{i-\frac12}\le r\le r_{i+\frac12}.
+\end{equation}
+
+控制体体积为
+\begin{equation}
+    V_i
+    =
+    \pi L
+    \left(
+        r_{i+\frac12}^2-r_{i-\frac12}^2
+    \right),
+    \label{eq:Vi}
+\end{equation}
+左右控制面面积分别为
+\begin{equation}
+    A_{i-\frac12}=2\pi Lr_{i-\frac12},
+    \qquad
+    A_{i+\frac12}=2\pi Lr_{i+\frac12}.
+    \label{eq:Ai}
+\end{equation}
+
+第二问无需重新设计空间网格，可完全复用第一问的节点、控制体和中心点处理方式。
+
+\section{温度方程的非线性有限体积离散}
+
+\subsection{内部控制体}
+
+对于第 $i$ 个内部控制体，温度方程可写成
+\begin{align}
+    \rho_i c_{p,i}V_i
+    \frac{\mathrm{d}T_i}{\mathrm{d}t}
+    &=
+    k_{i-\frac12}A_{i-\frac12}
+    \frac{T_{i-1}-T_i}{\Delta r}
+    \notag\\
+    &\quad+
+    k_{i+\frac12}A_{i+\frac12}
+    \frac{T_{i+1}-T_i}{\Delta r},
+    \label{eq:heat-fvm}
+\end{align}
+其中
+\begin{equation}
+    \rho_i=\rho(C_i),\qquad
+    c_{p,i}=c_p(C_i),\qquad
+    k_i=k(C_i).
+\end{equation}
+
+界面热传导系数可采用相邻节点算术平均：
+\begin{equation}
+    k_{i+\frac12}
+    =
+    \frac{k_i+k_{i+1}}{2}.
+    \label{eq:kface}
+\end{equation}
+
+时间方向继续采用第一问的全隐式格式。由于物性参数与未知含水率相关，在第 $n+1$ 时间层内还需要增加非线性迭代指标 $m$。于是
+\begin{align}
+    &\rho_i^{(m)}c_{p,i}^{(m)}V_i
+    \frac{T_i^{n+1,(m+1)}-T_i^n}{\Delta t}
+    \notag\\
+    &\qquad=
+    k_{i-\frac12}^{(m)}A_{i-\frac12}
+    \frac{T_{i-1}^{n+1,(m+1)}-T_i^{n+1,(m+1)}}{\Delta r}
+    \notag\\
+    &\qquad\quad+
+    k_{i+\frac12}^{(m)}A_{i+\frac12}
+    \frac{T_{i+1}^{n+1,(m+1)}-T_i^{n+1,(m+1)}}{\Delta r}.
+    \label{eq:heat-iteration}
+\end{align}
+
+这里
+\begin{equation}
+    \rho_i^{(m)}=\rho\!\left(C_i^{n+1,(m)}\right),
+\end{equation}
+\begin{equation}
+    c_{p,i}^{(m)}
+    =
+    c_p\!\left(C_i^{n+1,(m)}\right),
+\end{equation}
+\begin{equation}
+    k_i^{(m)}
+    =
+    k\!\left(C_i^{n+1,(m)}\right).
+\end{equation}
+
+因此，在给定第 $m$ 次迭代的含水率场之后，温度方程对 $T^{n+1,(m+1)}$ 仍然是一个三对角线性方程组，可以直接沿用第一问的求解程序。
+
+\section{水分方程的非线性有限体积离散}
+
+对于内部控制体，
+\begin{align}
+    V_i\frac{\mathrm{d}C_i}{\mathrm{d}t}
+    &=
+    D_{i-\frac12}A_{i-\frac12}
+    \frac{C_{i-1}-C_i}{\Delta r}
+    \notag\\
+    &\quad+
+    D_{i+\frac12}A_{i+\frac12}
+    \frac{C_{i+1}-C_i}{\Delta r}.
+    \label{eq:moisture-fvm}
+\end{align}
+
+节点扩散系数由当前温度和含水率共同决定：
+\begin{equation}
+    D_i^{(m)}
+    =
+    2.4\times10^{-3}
+    \exp\!\left(
+        -\frac{0.45}{C_i^{n+1,(m)}}
+    \right)
+    \exp\!\left(
+        -\frac{3850}{T_i^{n+1,(m+1)}}
+    \right).
+    \label{eq:Di}
+\end{equation}
+
+界面扩散系数可继续采用相邻节点算术平均：
+\begin{equation}
+    D_{i+\frac12}^{(m)}
+    =
+    \frac{D_i^{(m)}+D_{i+1}^{(m)}}{2}.
+    \label{eq:Dface}
+\end{equation}
+
+全隐式离散后，
+\begin{align}
+    V_i
+    \frac{
+        C_i^{n+1,(m+1)}-C_i^n
+    }{\Delta t}
+    &=
+    D_{i-\frac12}^{(m)}A_{i-\frac12}
+    \frac{
+        C_{i-1}^{n+1,(m+1)}
+        -
+        C_i^{n+1,(m+1)}
+    }{\Delta r}
+    \notag\\
+    &\quad+
+    D_{i+\frac12}^{(m)}A_{i+\frac12}
+    \frac{
+        C_{i+1}^{n+1,(m+1)}
+        -
+        C_i^{n+1,(m+1)}
+    }{\Delta r}.
+    \label{eq:moisture-iteration}
+\end{align}
+
+在每次非线性迭代中，将 $D^{(m)}$ 暂时固定后，式~\eqref{eq:moisture-iteration} 同样可整理为三对角线性方程组求解。
+
+\section{中心点与表面边界的离散}
+
+\subsection{中心 $r=0$}
+
+中心处仍采用第一问的中心控制体处理方法。由于
+\begin{equation}
+    A_{-\frac12}=0,
+\end{equation}
+天然满足零通量条件，因此不会出现圆柱坐标中的 $1/r$ 奇点。
+
+对于温度，有
+\begin{equation}
+    \rho_0c_{p,0}V_0
+    \frac{\mathrm{d}T_0}{\mathrm{d}t}
+    =
+    k_{\frac12}A_{\frac12}
+    \frac{T_1-T_0}{\Delta r}.
+\end{equation}
+
+对于含水率，有
+\begin{equation}
+    V_0
+    \frac{\mathrm{d}C_0}{\mathrm{d}t}
+    =
+    D_{\frac12}A_{\frac12}
+    \frac{C_1-C_0}{\Delta r}.
+\end{equation}
+
+\subsection{外表面 $r=R$}
+
+温度最外层控制体满足
+\begin{align}
+    \rho_Nc_{p,N}V_N\frac{\mathrm{d}T_N}{\mathrm{d}t}
+    &=
+    k_{N-\frac12}A_{N-\frac12}
+    \frac{T_{N-1}-T_N}{\Delta r}
+    \notag\\
+    &\quad+
+    hA_R\bigl[T_a(t)-T_N\bigr],
+    \label{eq:heat-surface-fvm}
+\end{align}
+其中
+\begin{equation}
+    A_R=2\pi RL.
+\end{equation}
+
+水分最外层控制体满足
+\begin{align}
+    V_N\frac{\mathrm{d}C_N}{\mathrm{d}t}
+    &=
+    D_{N-\frac12}A_{N-\frac12}
+    \frac{C_{N-1}-C_N}{\Delta r}
+    \notag\\
+    &\quad-
+    h_mA_R\bigl[C_N-C_a(t)\bigr].
+    \label{eq:moisture-surface-fvm}
+\end{align}
+
+因此，第二问中心条件和表面对流条件均可直接复用第一问的离散程序，仅需将各物性参数更新为当前迭代下的函数值。
+
+\section{每一时间步内的耦合迭代算法}
+
+第二问的核心是处理 $T$ 与 $C$ 的耦合。对时间层
+\[
+t_n\longrightarrow t_{n+1},
+\]
+可采用 Picard 型固定点迭代。
+
+\subsection{迭代初值}
+
+在第 $n+1$ 个时间步开始时，可用上一时间层作为初始猜测：
+\begin{equation}
+    T_i^{n+1,(0)}=T_i^n,
+    \qquad
+    C_i^{n+1,(0)}=C_i^n.
+\end{equation}
+
+\subsection{第 $m$ 次迭代}
+
+给定
+\[
+T^{n+1,(m)},\qquad C^{n+1,(m)},
+\]
+依次执行以下更新：
+
+\begin{enumerate}
+    \item 根据 $C^{n+1,(m)}$ 计算
+    \[
+    \rho^{(m)},\qquad
+    c_p^{(m)},\qquad
+    k^{(m)}.
+    \]
+
+    \item 将上述热物性系数代入温度方程，求解
+    \[
+    T^{n+1,(m+1)}.
+    \]
+
+    \item 根据新的温度 $T^{n+1,(m+1)}$ 和当前含水率 $C^{n+1,(m)}$ 更新
+    \[
+    D^{(m)}
+    =
+    D\!\left(
+        C^{n+1,(m)},
+        T^{n+1,(m+1)}
+    \right).
+    \]
+
+    \item 将 $D^{(m)}$ 代入水分扩散方程，求解
+    \[
+    C^{n+1,(m+1)}.
+    \]
+
+    \item 检验前后两次迭代结果是否收敛。若未收敛，则令
+    \[
+    m\leftarrow m+1
+    \]
+    并重复上述步骤。
+\end{enumerate}
+
+这一过程正对应于
+\[
+C
+\rightarrow
+(\rho,c_p,k)
+\rightarrow
+T
+\rightarrow
+D
+\rightarrow
+C
+\]
+的闭环耦合关系。
+
+\section{收敛判据}
+
+为了避免仅凭肉眼判断，应给出明确的数值收敛条件。可采用最大相对变化量：
+\begin{equation}
+    \varepsilon_T^{(m+1)}
+    =
+    \max_i
+    \frac{
+        \left|
+        T_i^{n+1,(m+1)}
+        -
+        T_i^{n+1,(m)}
+        \right|
+    }{
+        \max\left(
+            |T_i^{n+1,(m+1)}|,
+            T_{\mathrm{ref}}
+        \right)
+    },
+    \label{eq:epsT}
+\end{equation}
+\begin{equation}
+    \varepsilon_C^{(m+1)}
+    =
+    \max_i
+    \frac{
+        \left|
+        C_i^{n+1,(m+1)}
+        -
+        C_i^{n+1,(m)}
+        \right|
+    }{
+        \max\left(
+            |C_i^{n+1,(m+1)}|,
+            C_{\mathrm{ref}}
+        \right)
+    }.
+    \label{eq:epsC}
+\end{equation}
+
+当
+\begin{equation}
+    \max
+    \left(
+        \varepsilon_T^{(m+1)},
+        \varepsilon_C^{(m+1)}
+    \right)
+    <\varepsilon,
+    \label{eq:convergence}
+\end{equation}
+即可认为当前时间步收敛。
+
+实际计算中可先尝试
+\[
+\varepsilon=10^{-6}
+\]
+或根据计算精度要求调整阈值。
+
+\section{若迭代不稳定时的处理}
+
+由于第二问的非线性耦合较第一问更强，若直接固定点迭代出现振荡或难以收敛，可采用欠松弛技术：
+\begin{equation}
+    T^{(m+1)}
+    \leftarrow
+    \omega_T T_{\mathrm{new}}
+    +(1-\omega_T)T^{(m)},
+\end{equation}
+\begin{equation}
+    C^{(m+1)}
+    \leftarrow
+    \omega_C C_{\mathrm{new}}
+    +(1-\omega_C)C^{(m)},
+\end{equation}
+其中
+\[
+0<\omega_T,\omega_C\le 1.
+\]
+当直接迭代稳定时可取 $\omega_T=\omega_C=1$；若出现振荡，可适当减小松弛因子。
+
+此外，也可通过减小时间步长 $\Delta t$ 提高非线性迭代的稳定性。
+
+\section{第二问完整计算流程}
+
+第二问可按照以下步骤计算：
+
+\begin{enumerate}
+    \item 读取第一问所使用的几何参数、空间网格、边界条件以及烘房环境数据；
+    \item 设置初始温度场 $T(r,0)$ 和初始含水率场 $C(r,0)$；
+    \item 对每一个时间步 $t_n\to t_{n+1}$，用上一时刻结果初始化 $T^{n+1,(0)}$ 和 $C^{n+1,(0)}$；
+    \item 根据当前 $C$ 更新 $\rho(C)$、$c_p(C)$、$k(C)$；
+    \item 求解温度有限体积方程，得到新的温度场；
+    \item 根据新的 $T$ 和当前 $C$ 更新 $D(C,T)$；
+    \item 求解水分有限体积方程，得到新的含水率场；
+    \item 计算温度场和含水率场前后两次迭代的误差；
+    \item 若满足收敛判据，则接受当前时间步结果并进入下一时间步；否则继续迭代；
+    \item 最终输出题目要求位置和时刻的温度、含水率及其他相关指标。
+\end{enumerate}
+
+\section{附加分析：温度促进扩散与失水抑制扩散的竞争关系}
+
+这一部分不是第二问主模型成立所必需的，但可以作为结果分析中的一个有价值的补充。
+
+由
+\begin{equation}
+    D(C,T)
+    =
+    2.4\times10^{-3}
+    \exp\!\left(-\frac{0.45}{C}\right)
+    \exp\!\left(-\frac{3850}{T}\right)
+\end{equation}
+取对数可得
+\begin{equation}
+    \ln D
+    =
+    \ln(2.4\times10^{-3})
+    -\frac{0.45}{C}
+    -\frac{3850}{T}.
+    \label{eq:lnD}
+\end{equation}
+
+分别对 $T$ 和 $C$ 求偏导：
+\begin{equation}
+    \frac{\partial \ln D}{\partial T}
+    =
+    \frac{3850}{T^2}>0,
+    \label{eq:sensitivityT}
+\end{equation}
+\begin{equation}
+    \frac{\partial \ln D}{\partial C}
+    =
+    \frac{0.45}{C^2}>0.
+    \label{eq:sensitivityC}
+\end{equation}
+
+因此：
+\begin{itemize}
+    \item 当药材升温，即 $\mathrm{d}T/\mathrm{d}t>0$ 时，温度效应会使 $D$ 增大，促进水分扩散；
+    \item 干燥过程中通常有 $\mathrm{d}C/\mathrm{d}t<0$，由于 $D$ 随 $C$ 增大而增大，所以含水率下降会使 $D$ 减小，从而抑制后续水分扩散。
+\end{itemize}
+
+沿着某一径向位置随时间变化，对式~\eqref{eq:lnD} 求导：
+\begin{equation}
+    \frac{\mathrm{d}\ln D}{\mathrm{d}t}
+    =
+    \frac{3850}{T^2}\frac{\mathrm{d}T}{\mathrm{d}t}
+    +
+    \frac{0.45}{C^2}\frac{\mathrm{d}C}{\mathrm{d}t}.
+    \label{eq:dlnDdt}
+\end{equation}
+
+定义温升促进项
+\begin{equation}
+    S_T
+    =
+    \frac{3850}{T^2}\frac{\mathrm{d}T}{\mathrm{d}t},
+\end{equation}
+以及失水抑制项的绝对强度
+\begin{equation}
+    S_C
+    =
+    -\frac{0.45}{C^2}\frac{\mathrm{d}C}{\mathrm{d}t},
+    \qquad
+    \left(
+    \frac{\mathrm{d}C}{\mathrm{d}t}<0
+    \right).
+\end{equation}
+
+于是有：
+\[
+S_T>S_C
+\quad\Longrightarrow\quad
+\frac{\mathrm{d}D}{\mathrm{d}t}>0,
+\]
+说明此时温升促进扩散的作用更强；
+
+\[
+S_T<S_C
+\quad\Longrightarrow\quad
+\frac{\mathrm{d}D}{\mathrm{d}t}<0,
+\]
+说明此时含水率下降导致的扩散抑制作用更强；
+
+而
+\begin{equation}
+    S_T=S_C
+    \label{eq:turning}
+\end{equation}
+对应于 $D$ 随时间变化的临界时刻或极值点。
+
+因此，在得到第二问的数值结果后，可计算不同径向位置处的 $S_T(t)$ 与 $S_C(t)$，从而定量判断在干燥过程中何时由“升温促进扩散”占主导，何时转变为“失水抑制扩散”占主导。该分析可以作为第二问结果解释中的拓展内容，而不必影响主模型的求解流程。
+
+\section{模型结构总结}
+
+第二问相较第一问并未改变模型的基本框架，而是将常物性传热--传质模型升级为温度--含水率双向耦合的变物性模型。核心关系可概括为
+\[
+\boxed{
+C
+\rightarrow
+\rho(C),c_p(C),k(C)
+\rightarrow
+T
+\rightarrow
+D(C,T)
+\rightarrow
+C
+}
+\]
+并在每一个时间步内通过迭代求得自洽的温度场和含水率场。
+
+% =========================
+% 整理说明：
+% 1. 本文严格沿用第一问的一维径向圆柱模型、有限体积网格、
+%    中心零通量边界和表面对流边界。
+% 2. 附件3经验公式识别为：
+%    rho=650+128C；
+%    cp=1450+2736*C/(C+1)；
+%    k=0.21+0.38*C/(C+1)；
+%    D=2.4e-3*exp(-0.45/C)*exp(-3850/T)。
+% 3. D公式中的T单位必须为K。
+% 4. “升温促进扩散 vs. 失水抑制扩散”的竞争机制作为附加分析，
+%    不影响第二问主线模型。
+% 5. 若实际计算中Picard迭代收敛较慢，可减小时间步或采用欠松弛。
+% =========================
+
+\end{document}

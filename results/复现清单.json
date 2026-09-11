@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-11T14:11:26.171695+00:00",
+  "random_seed": 20260911,
+  "input_files": [
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\problem A\\A题.pdf",
+      "sha256": "052d8014bff5727c019b72e44fdffaf5c145ce04050dd938baaf3527db331736",
+      "bytes": 553320
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\problem A\\附件\\附件1.xlsx",
+      "sha256": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+      "bytes": 16586
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\problem A\\附件\\附件3\\result2.xlsx",
+      "sha256": "23b261b295c1b787d000eebbca6521c37075107b6fcf78724f8d395ce1798ff4",
+      "bytes": 10073
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\全程干燥求解.py",
+      "sha256": "870c3e4a02b42a1c0803039feef404158cad43488d8ef3ecb770b39af2dbd40a",
+      "bytes": 41140
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\问题2_绘图.py",
+      "sha256": "d07869bf56443cec33d732467d45bfdbdc45c2737228269801a9125bbde4e96f",
+      "bytes": 13436
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\问题2_复现.py",
+      "sha256": "8dee7d2469f5cebf80e4eaa8da3fcc7aa4df6f0b3292f77065991b2de84c4a8e",
+      "bytes": 626
+    }
+  ],
+  "runtime": {
+    "name": "python",
+    "version": "3.13.7",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "dependencies": {
+      "numpy": "2.3.3",
+      "pandas": "2.3.2",
+      "openpyxl": "3.1.5",
+      "matplotlib": "3.10.6"
+    }
+  },
+  "key_parameters": {
+    "temporal_scheme": "BE首步加BDF2",
+    "time_step_s": 1.0,
+    "radial_intervals": 160,
+    "radius_m": 0.02,
+    "report_step_s": 1,
+    "report_radius_step_m": 0.001,
+    "picard_temperature_tolerance_c": 1e-08,
+    "picard_moisture_tolerance_kg_per_kg": 1e-10,
+    "picard_max_iterations": 40,
+    "heat_transfer_coefficient_w_per_m2_k": 25.0,
+    "mass_transfer_coefficient_m_per_s": 8e-07
+  },
+  "reproduce_command": "python -X utf8 问题2_复现.py"
+}

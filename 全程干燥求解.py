@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 import platform
+import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -53,6 +55,9 @@ class VariableSimulation:
     max_coupling_iterations: int
     moisture_balance_relative_error: float
     dry_time_s: float | None
+    coupling_iterations: np.ndarray
+    max_temperature_linear_residual: float
+    max_moisture_linear_residual: float
 
 
 def sha256_file(path: Path) -> str:
@@ -61,6 +66,16 @@ def sha256_file(path: Path) -> str:
         for block in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def commit_temporary_file(temporary: Path, output_path: Path) -> None:
+    try:
+        temporary.replace(output_path)
+    except PermissionError:
+        shutil.copyfile(temporary, output_path)
+        if sha256_file(temporary) != sha256_file(output_path):
+            raise IOError(f"文件复制校验失败: {output_path}")
+        temporary.unlink()
 
 
 def read_radius_history(path: Path = RADIUS_PATH) -> RadiusHistory:
@@ -121,6 +136,33 @@ def q4_properties(
     return density, heat_capacity, conductivity, diffusivity
 
 
+def relative_tridiagonal_residual(
+    lower: np.ndarray,
+    diagonal: np.ndarray,
+    upper: np.ndarray,
+    solution: np.ndarray,
+    right_hand_side: np.ndarray,
+) -> float:
+    residual = diagonal * solution - right_hand_side
+    residual[1:] += lower * solution[:-1]
+    residual[:-1] += upper * solution[1:]
+    scale = max(float(np.max(np.abs(right_hand_side))), 1.0e-30)
+    return float(np.max(np.abs(residual)) / scale)
+
+
+def bdf2_effective_history(
+    current_state: np.ndarray,
+    previous_state: np.ndarray,
+) -> np.ndarray:
+    """Return the history state that lets the BE assembler realize BDF2.
+
+    With an effective step of 2*dt/3, the standard three-level formula is
+    (3*u[n+1] - 4*u[n] + u[n-1])/(2*dt). Material properties are evaluated
+    at the current Picard iterate on time level n+1.
+    """
+    return (4.0 * current_state - previous_state) / 3.0
+
+
 def simulate_variable_model(
     *,
     model: str,
@@ -132,9 +174,16 @@ def simulate_variable_model(
     coupling_temperature_tolerance: float = 1.0e-8,
     coupling_moisture_tolerance: float = 1.0e-10,
     coupling_max_iterations: int = 40,
+    temporal_scheme: str = "backward_euler",
+    heat_transfer_coefficient: float = HEAT_TRANSFER_COEFFICIENT,
+    mass_transfer_coefficient: float = MASS_TRANSFER_COEFFICIENT,
 ) -> VariableSimulation:
     if model not in {"q23", "q4"}:
         raise ValueError("model必须为q23或q4")
+    if temporal_scheme not in {"backward_euler", "bdf2"}:
+        raise ValueError("temporal_scheme必须为backward_euler或bdf2")
+    if heat_transfer_coefficient <= 0.0 or mass_transfer_coefficient <= 0.0:
+        raise ValueError("表面对流系数必须为正数")
     step_count_float = end_time_s / time_step_s
     step_count = int(round(step_count_float))
     if not np.isclose(step_count, step_count_float):
@@ -156,6 +205,7 @@ def simulate_variable_model(
     recorded_radius = [initial_radius]
     recorded_temperature = [temperature.copy()]
     recorded_moisture = [moisture.copy()]
+    recorded_iterations = [0]
     normalized_weights = np.empty(intervals + 1, dtype=float)
     normalized_faces = np.empty(intervals + 2, dtype=float)
     normalized_faces[0] = 0.0
@@ -169,9 +219,12 @@ def simulate_variable_model(
     if not np.isclose(np.sum(normalized_weights), 1.0):
         raise RuntimeError("归一化控制体权重之和不等于1")
 
-    initial_mean_moisture = float(np.dot(normalized_weights, moisture))
-    accumulated_boundary_loss = 0.0
+    previous_temperature = temperature.copy()
+    previous_moisture = moisture.copy()
     max_iterations_used = 0
+    max_balance_error = 0.0
+    max_temperature_linear_residual = 0.0
+    max_moisture_linear_residual = 0.0
     dry_time_s: float | None = None
 
     for step in range(1, step_count + 1):
@@ -186,35 +239,59 @@ def simulate_variable_model(
         converged = False
 
         for iteration in range(1, coupling_max_iterations + 1):
+            use_bdf2 = temporal_scheme == "bdf2" and step > 1
+            effective_step_s = 2.0 * time_step_s / 3.0 if use_bdf2 else time_step_s
+            temperature_history_state = (
+                bdf2_effective_history(temperature, previous_temperature)
+                if use_bdf2
+                else temperature
+            )
+            moisture_history_state = (
+                bdf2_effective_history(moisture, previous_moisture)
+                if use_bdf2
+                else moisture
+            )
             density, heat_capacity, conductivity, _ = property_function(
                 moisture_guess, temperature_guess
             )
             lower_t, diagonal_t, upper_t, rhs_t = core.assemble_implicit_system(
                 grid,
-                temperature,
+                temperature_history_state,
                 density * heat_capacity,
                 conductivity,
-                time_step_s,
-                HEAT_TRANSFER_COEFFICIENT,
+                effective_step_s,
+                heat_transfer_coefficient,
                 ambient_temperature,
             )
             temperature_new = core.solve_tridiagonal(
                 lower_t, diagonal_t, upper_t, rhs_t
+            )
+            max_temperature_linear_residual = max(
+                max_temperature_linear_residual,
+                relative_tridiagonal_residual(
+                    lower_t, diagonal_t, upper_t, temperature_new, rhs_t
+                ),
             )
             _, _, _, diffusivity = property_function(
                 moisture_guess, temperature_new
             )
             lower_c, diagonal_c, upper_c, rhs_c = core.assemble_implicit_system(
                 grid,
-                moisture,
+                moisture_history_state,
                 np.ones(intervals + 1, dtype=float),
                 diffusivity,
-                time_step_s,
-                MASS_TRANSFER_COEFFICIENT,
+                effective_step_s,
+                mass_transfer_coefficient,
                 ambient_moisture,
             )
             moisture_new = core.solve_tridiagonal(
                 lower_c, diagonal_c, upper_c, rhs_c
+            )
+            max_moisture_linear_residual = max(
+                max_moisture_linear_residual,
+                relative_tridiagonal_residual(
+                    lower_c, diagonal_c, upper_c, moisture_new, rhs_c
+                ),
             )
             temperature_error = float(
                 np.max(np.abs(temperature_new - temperature_guess))
@@ -234,22 +311,36 @@ def simulate_variable_model(
                 f"温度误差{temperature_error:.3e}，含水率误差{moisture_error:.3e}"
             )
 
-        temperature = temperature_guess
-        moisture = moisture_guess
-        max_iterations_used = max(max_iterations_used, iteration)
-        accumulated_boundary_loss += (
+        mean_new = float(np.dot(normalized_weights, moisture_guess))
+        mean_current = float(np.dot(normalized_weights, moisture))
+        if temporal_scheme == "bdf2" and step > 1:
+            mean_previous = float(np.dot(normalized_weights, previous_moisture))
+            inventory_change = 1.5 * mean_new - 2.0 * mean_current + 0.5 * mean_previous
+        else:
+            inventory_change = mean_new - mean_current
+        boundary_loss = (
             time_step_s
             * 2.0
-            * MASS_TRANSFER_COEFFICIENT
+            * mass_transfer_coefficient
             / radius_m
-            * (moisture[-1] - ambient_moisture)
+            * (moisture_guess[-1] - ambient_moisture)
         )
+        balance_scale = max(abs(inventory_change), abs(boundary_loss), 1.0e-30)
+        max_balance_error = max(
+            max_balance_error,
+            abs(inventory_change + boundary_loss) / balance_scale,
+        )
+
+        previous_temperature, temperature = temperature, temperature_guess
+        previous_moisture, moisture = moisture, moisture_guess
+        max_iterations_used = max(max_iterations_used, iteration)
 
         if step % record_stride == 0:
             recorded_time.append(current_time)
             recorded_radius.append(radius_m)
             recorded_temperature.append(temperature.copy())
             recorded_moisture.append(moisture.copy())
+            recorded_iterations.append(iteration)
 
         if stop_at_dryness and float(np.max(moisture)) < DRYING_THRESHOLD:
             dry_time_s = current_time
@@ -258,18 +349,12 @@ def simulate_variable_model(
                 recorded_radius.append(radius_m)
                 recorded_temperature.append(temperature.copy())
                 recorded_moisture.append(moisture.copy())
+                recorded_iterations.append(iteration)
             break
 
     if stop_at_dryness and dry_time_s is None:
         raise RuntimeError(f"{model}在{end_time_s / 3600:g}小时内未达到干燥阈值")
 
-    final_mean_moisture = float(np.dot(normalized_weights, moisture))
-    balance_residual = (
-        final_mean_moisture - initial_mean_moisture + accumulated_boundary_loss
-    )
-    relative_balance_error = abs(balance_residual) / max(
-        abs(initial_mean_moisture - final_mean_moisture), 1.0e-30
-    )
     return VariableSimulation(
         time_s=np.asarray(recorded_time, dtype=float),
         radius_m=np.asarray(recorded_radius, dtype=float),
@@ -277,8 +362,11 @@ def simulate_variable_model(
         temperature_c=np.asarray(recorded_temperature, dtype=float),
         moisture=np.asarray(recorded_moisture, dtype=float),
         max_coupling_iterations=max_iterations_used,
-        moisture_balance_relative_error=float(relative_balance_error),
+        moisture_balance_relative_error=float(max_balance_error),
         dry_time_s=dry_time_s,
+        coupling_iterations=np.asarray(recorded_iterations, dtype=int),
+        max_temperature_linear_residual=float(max_temperature_linear_residual),
+        max_moisture_linear_residual=float(max_moisture_linear_residual),
     )
 
 
@@ -315,13 +403,14 @@ def write_result2(simulation: VariableSimulation, output_path: Path) -> None:
             )
             worksheet.cell(row, 1, int(round(float(time_s))))
             for column, value in enumerate(values, start=2):
-                worksheet.cell(row, column, round(float(value), 4))
+                cell = worksheet.cell(row, column, round(float(value), 4))
+                cell.number_format = "0.0000"
         worksheet.freeze_panes = "B2"
     output_path.parent.mkdir(parents=True, exist_ok=True)
     temporary = output_path.with_suffix(".tmp.xlsx")
     template.save(temporary)
     template.close()
-    temporary.replace(output_path)
+    commit_temporary_file(temporary, output_path)
 
 
 def write_result3(simulation: VariableSimulation, output_path: Path) -> None:
@@ -346,7 +435,7 @@ def write_result3(simulation: VariableSimulation, output_path: Path) -> None:
     temporary = output_path.with_suffix(".tmp.xlsx")
     template.save(temporary)
     template.close()
-    temporary.replace(output_path)
+    commit_temporary_file(temporary, output_path)
 
 
 def write_result4(simulation: VariableSimulation, output_path: Path) -> None:
@@ -386,7 +475,7 @@ def write_result4(simulation: VariableSimulation, output_path: Path) -> None:
     temporary = output_path.with_suffix(".tmp.xlsx")
     template.save(temporary)
     template.close()
-    temporary.replace(output_path)
+    commit_temporary_file(temporary, output_path)
 
 
 def requested_table(
@@ -408,6 +497,64 @@ def requested_table(
     return rows
 
 
+def write_table_csv(
+    output_path: Path,
+    times_h: list[float],
+    radii_cm: list[float],
+    values: np.ndarray,
+    value_format: str = ".8f",
+) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", encoding="utf-8-sig", newline="") as stream:
+        writer = csv.writer(stream)
+        writer.writerow(["时间_h", *[f"{radius:g}_cm" for radius in radii_cm]])
+        for time_h, row in zip(times_h, values, strict=True):
+            writer.writerow([f"{time_h:.1f}", *[format(float(value), value_format) for value in row]])
+
+
+def final_system_condition_numbers(
+    simulation: VariableSimulation,
+    time_step_s: float,
+    heat_transfer_coefficient: float,
+    mass_transfer_coefficient: float,
+) -> dict[str, float]:
+    intervals = simulation.node_coordinate.size - 1
+    radius_m = float(simulation.radius_m[-1])
+    grid = core.make_grid(radius_m=radius_m, intervals=intervals)
+    air = core.read_air_boundary()
+    ambient_temperature, ambient_moisture = air.at(float(simulation.time_s[-1]))
+    density, heat_capacity, conductivity, diffusivity = q23_properties(
+        simulation.moisture[-1], simulation.temperature_c[-1]
+    )
+    effective_step_s = 2.0 * time_step_s / 3.0
+    lower_t, diagonal_t, upper_t, _ = core.assemble_implicit_system(
+        grid,
+        simulation.temperature_c[-1],
+        density * heat_capacity,
+        conductivity,
+        effective_step_s,
+        heat_transfer_coefficient,
+        ambient_temperature,
+    )
+    lower_c, diagonal_c, upper_c, _ = core.assemble_implicit_system(
+        grid,
+        simulation.moisture[-1],
+        np.ones(intervals + 1, dtype=float),
+        diffusivity,
+        effective_step_s,
+        mass_transfer_coefficient,
+        ambient_moisture,
+    )
+    return {
+        "temperature_final": float(
+            np.linalg.cond(core.dense_from_tridiagonal(lower_t, diagonal_t, upper_t))
+        ),
+        "moisture_final": float(
+            np.linalg.cond(core.dense_from_tridiagonal(lower_c, diagonal_c, upper_c))
+        ),
+    }
+
+
 def run_smoke() -> None:
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     q2 = simulate_variable_model(
@@ -416,6 +563,7 @@ def run_smoke() -> None:
         time_step_s=1.0,
         intervals=20,
         record_interval_s=60.0,
+        temporal_scheme="bdf2",
     )
     q4 = simulate_variable_model(
         model="q4",
@@ -456,6 +604,8 @@ def run_smoke() -> None:
             },
             "max_coupling_iterations": q2.max_coupling_iterations,
             "moisture_balance_relative_error": q2.moisture_balance_relative_error,
+            "max_temperature_linear_residual": q2.max_temperature_linear_residual,
+            "max_moisture_linear_residual": q2.max_moisture_linear_residual,
         },
         "q4": {
             "time_step_s": 10.0,
@@ -494,6 +644,7 @@ def run_q2() -> None:
         time_step_s=1.0,
         intervals=160,
         record_interval_s=1.0,
+        temporal_scheme="bdf2",
     )
     time_refined = simulate_variable_model(
         model="q23",
@@ -501,6 +652,7 @@ def run_q2() -> None:
         time_step_s=0.5,
         intervals=160,
         record_interval_s=1800.0,
+        temporal_scheme="bdf2",
     )
     space_refined = simulate_variable_model(
         model="q23",
@@ -508,6 +660,7 @@ def run_q2() -> None:
         time_step_s=1.0,
         intervals=320,
         record_interval_s=1800.0,
+        temporal_scheme="bdf2",
     )
     write_result2(authoritative, RESULTS_DIR / "result2.xlsx")
 
@@ -537,20 +690,177 @@ def run_q2() -> None:
     space_moisture = np.asarray(
         requested_table(space_refined, space_refined.moisture, times_s, radii_cm)
     )
+    times_h = [time_s / 3600.0 for time_s in times_s]
+    write_table_csv(
+        RESULTS_DIR / "问题2_表3温度.csv", times_h, radii_cm, temperature
+    )
+    write_table_csv(
+        RESULTS_DIR / "问题2_表4含水率.csv", times_h, radii_cm, moisture
+    )
+
+    with (RESULTS_DIR / "问题2_迭代次数.csv").open(
+        "w", encoding="utf-8-sig", newline=""
+    ) as stream:
+        writer = csv.writer(stream)
+        writer.writerow(["时间_s", "Picard迭代次数"])
+        writer.writerows(
+            zip(
+                authoritative.time_s.astype(int).tolist(),
+                authoritative.coupling_iterations.tolist(),
+                strict=True,
+            )
+        )
+
+    property_density, property_cp, property_k, property_d = q23_properties(
+        authoritative.moisture, authoritative.temperature_c
+    )
+    property_rows = []
+    for time_s in times_s:
+        row_index = int(np.argmin(np.abs(authoritative.time_s - time_s)))
+        property_rows.append(
+            [
+                time_s / 3600.0,
+                float(np.min(property_density[row_index])),
+                float(np.max(property_density[row_index])),
+                float(np.min(property_cp[row_index])),
+                float(np.max(property_cp[row_index])),
+                float(np.min(property_k[row_index])),
+                float(np.max(property_k[row_index])),
+                float(np.min(property_d[row_index])),
+                float(np.max(property_d[row_index])),
+            ]
+        )
+    with (RESULTS_DIR / "问题2_物性范围.csv").open(
+        "w", encoding="utf-8-sig", newline=""
+    ) as stream:
+        writer = csv.writer(stream)
+        writer.writerow(
+            [
+                "时间_h",
+                "密度最小_kg_m3",
+                "密度最大_kg_m3",
+                "比热最小_J_kg_K",
+                "比热最大_J_kg_K",
+                "导热系数最小_W_m_K",
+                "导热系数最大_W_m_K",
+                "扩散系数最小_m2_s",
+                "扩散系数最大_m2_s",
+            ]
+        )
+        writer.writerows(property_rows)
+
+    sensitivity_cases = {
+        "换热系数_0.8倍": (0.8 * HEAT_TRANSFER_COEFFICIENT, MASS_TRANSFER_COEFFICIENT),
+        "换热系数_1.2倍": (1.2 * HEAT_TRANSFER_COEFFICIENT, MASS_TRANSFER_COEFFICIENT),
+        "传质系数_0.8倍": (HEAT_TRANSFER_COEFFICIENT, 0.8 * MASS_TRANSFER_COEFFICIENT),
+        "传质系数_1.2倍": (HEAT_TRANSFER_COEFFICIENT, 1.2 * MASS_TRANSFER_COEFFICIENT),
+    }
+    sensitivity = []
+    for case_name, (heat_coefficient, mass_coefficient) in sensitivity_cases.items():
+        case_simulation = simulate_variable_model(
+            model="q23",
+            end_time_s=10800.0,
+            time_step_s=1.0,
+            intervals=160,
+            record_interval_s=1800.0,
+            temporal_scheme="bdf2",
+            heat_transfer_coefficient=heat_coefficient,
+            mass_transfer_coefficient=mass_coefficient,
+        )
+        case_temperature = np.asarray(
+            requested_table(
+                case_simulation,
+                case_simulation.temperature_c,
+                times_s,
+                radii_cm,
+            )
+        )
+        case_moisture = np.asarray(
+            requested_table(
+                case_simulation,
+                case_simulation.moisture,
+                times_s,
+                radii_cm,
+            )
+        )
+        sensitivity.append(
+            {
+                "case": case_name,
+                "heat_transfer_coefficient_w_per_m2_k": heat_coefficient,
+                "mass_transfer_coefficient_m_per_s": mass_coefficient,
+                "max_temperature_change_c": float(
+                    np.max(np.abs(case_temperature - temperature))
+                ),
+                "max_moisture_change_kg_per_kg": float(
+                    np.max(np.abs(case_moisture - moisture))
+                ),
+                "temperature_center_3h_change_c": float(
+                    case_temperature[-1, 0] - temperature[-1, 0]
+                ),
+                "temperature_surface_3h_change_c": float(
+                    case_temperature[-1, -1] - temperature[-1, -1]
+                ),
+                "moisture_center_3h_change_kg_per_kg": float(
+                    case_moisture[-1, 0] - moisture[-1, 0]
+                ),
+                "moisture_surface_3h_change_kg_per_kg": float(
+                    case_moisture[-1, -1] - moisture[-1, -1]
+                ),
+            }
+        )
+    with (RESULTS_DIR / "问题2_敏感性.csv").open(
+        "w", encoding="utf-8-sig", newline=""
+    ) as stream:
+        fieldnames = list(sensitivity[0].keys())
+        writer = csv.DictWriter(stream, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(sensitivity)
+
+    condition_numbers = final_system_condition_numbers(
+        authoritative,
+        time_step_s=1.0,
+        heat_transfer_coefficient=HEAT_TRANSFER_COEFFICIENT,
+        mass_transfer_coefficient=MASS_TRANSFER_COEFFICIENT,
+    )
     summary = {
         "mode": "q2_full",
         "inputs": {
             str(AIR_PATH.relative_to(PROJECT_ROOT)): sha256_file(AIR_PATH)
         },
         "parameters": {
+            "temporal_scheme": "backward_euler_start_then_bdf2",
             "authoritative": {"intervals": 160, "time_step_s": 1.0},
             "time_refined": {"intervals": 160, "time_step_s": 0.5},
             "space_refined": {"intervals": 320, "time_step_s": 1.0},
+            "heat_transfer_coefficient_w_per_m2_k": HEAT_TRANSFER_COEFFICIENT,
+            "mass_transfer_coefficient_m_per_s": MASS_TRANSFER_COEFFICIENT,
+            "coupling_temperature_tolerance_c": 1.0e-8,
+            "coupling_moisture_tolerance_kg_per_kg": 1.0e-10,
+            "coupling_max_iterations": 40,
         },
         "requested_times_s": times_s,
         "requested_radii_cm": radii_cm,
         "temperature_c": np.round(temperature, 8).tolist(),
         "moisture_kg_per_kg": np.round(moisture, 8).tolist(),
+        "property_ranges": {
+            "density_kg_per_m3": [
+                float(np.min(property_density)),
+                float(np.max(property_density)),
+            ],
+            "heat_capacity_j_per_kg_k": [
+                float(np.min(property_cp)),
+                float(np.max(property_cp)),
+            ],
+            "conductivity_w_per_m_k": [
+                float(np.min(property_k)),
+                float(np.max(property_k)),
+            ],
+            "diffusivity_m2_per_s": [
+                float(np.min(property_d)),
+                float(np.max(property_d)),
+            ],
+        },
+        "sensitivity": sensitivity,
         "verification": {
             "max_temperature_difference_time_refined_c": float(
                 np.max(np.abs(temperature - time_temperature))
@@ -564,8 +874,23 @@ def run_q2() -> None:
             "max_moisture_difference_space_refined_kg_per_kg": float(
                 np.max(np.abs(moisture - space_moisture))
             ),
+            "rounded_temperature_changes_time_refined": int(
+                np.sum(np.round(temperature, 4) != np.round(time_temperature, 4))
+            ),
+            "rounded_moisture_changes_time_refined": int(
+                np.sum(np.round(moisture, 4) != np.round(time_moisture, 4))
+            ),
+            "rounded_temperature_changes_space_refined": int(
+                np.sum(np.round(temperature, 4) != np.round(space_temperature, 4))
+            ),
+            "rounded_moisture_changes_space_refined": int(
+                np.sum(np.round(moisture, 4) != np.round(space_moisture, 4))
+            ),
             "moisture_balance_relative_error": authoritative.moisture_balance_relative_error,
             "max_coupling_iterations": authoritative.max_coupling_iterations,
+            "max_temperature_linear_residual": authoritative.max_temperature_linear_residual,
+            "max_moisture_linear_residual": authoritative.max_moisture_linear_residual,
+            "final_system_condition_numbers": condition_numbers,
         },
         "environment": {
             "python": platform.python_version(),
