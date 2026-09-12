@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "created_at": "2026-09-11T14:57:33.646395+00:00",
+  "created_at": "2026-09-12T11:32:20.655267+00:00",
   "passed": true,
   "main_tex": "example.tex",
   "project_root": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文-LaTeX",
-  "source_sha256": "e1ae1b382f683208f00243c63fb17f6546ba6496faafba3f6efe460df33ba88e",
-  "compiled_source_sha256": "e1ae1b382f683208f00243c63fb17f6546ba6496faafba3f6efe460df33ba88e",
-  "post_build_source_sha256": "e1ae1b382f683208f00243c63fb17f6546ba6496faafba3f6efe460df33ba88e",
-  "pdf_sha256": "36c460b986f5c7f12f2fcb348d11844a7dc63d452ffbd4c304cef25546aa0aef",
-  "project_manifest_sha256": "e52ab56157eaa2cecca9bb3b276389ebe444d6165f8fa75b88add66028fd3015",
+  "source_sha256": "62f0734173861bbd47b68553b7ef98647e25b4b7e8d6fdd21266f640413792d5",
+  "compiled_source_sha256": "62f0734173861bbd47b68553b7ef98647e25b4b7e8d6fdd21266f640413792d5",
+  "post_build_source_sha256": "62f0734173861bbd47b68553b7ef98647e25b4b7e8d6fdd21266f640413792d5",
+  "pdf_sha256": "17d23d761042a2c497c8d2c843c64aed667dec985e820d62a343248692b5306e",
+  "project_manifest_sha256": "507cea026630a9c248b3a9b5607536b3f943b613f89cefc207da9117ee6a5544",
   "engine": "xelatex",
   "tools": {
     "latexmk": {
@@ -37,7 +37,7 @@
       ],
       "cwd": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文-LaTeX",
       "returncode": 0,
-      "duration_seconds": 21.172
+      "duration_seconds": 11.453
     }
   ],
   "warnings": [],
@@ -47,5 +47,5 @@
     "reason": null
   },
   "issues": [],
-  "reproduce": "C:\\Users\\23572\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe C:\\Users\\23572\\.codex\\skills\\math-modeling\\tools\\latex\\scripts\\latex_paper.py build C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文-LaTeX\\example.tex --engine xelatex --timeout 180 --publish C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文.pdf --overwrite"
+  "reproduce": "C:\\Users\\23572\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe C:\\Users\\23572\\.codex\\skills\\math-modeling\\tools\\latex\\scripts\\latex_paper.py build C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文-LaTeX\\example.tex --engine xelatex --timeout 240 --publish C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文.pdf --overwrite"
 }
