@@ -1,0 +1,194 @@
+[
+  {
+    "name": "raw_q4_radius",
+    "question": "q4",
+    "claim": "附件2外半径早期快速减小，后期趋于平台。",
+    "source": "problem A/附件/附件2.xlsx",
+    "chart": "折线",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.78
+    ],
+    "dpi": 300,
+    "caption": "全部145点线性连接；空心标记每4点展示一次，未删去计算输入。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  },
+  {
+    "name": "raw_q4_air_distribution",
+    "question": "q4",
+    "claim": "91个稳定段样本在平台值附近波动。",
+    "source": "problem A/附件/附件1.xlsx",
+    "chart": "直方图",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.5
+    ],
+    "dpi": 300,
+    "caption": "9000–14400 s的91点；图示观测分布，不是参数置信区间。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  },
+  {
+    "name": "raw_q4_shrink_rate",
+    "question": "q4",
+    "claim": "原始半径记录对应的收缩速率随尺寸减小趋近零。",
+    "source": "results/q4_plot_data/shrink_rate.csv",
+    "chart": "散点图",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.78
+    ],
+    "dpi": 300,
+    "caption": "144个相邻观测区间的差商；零速率保留，不拟合相关性。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  },
+  {
+    "name": "process_q4_mapping",
+    "question": "q4",
+    "claim": "三种映射共享中心和表面端点，改变内部位置分配。",
+    "source": "题目分析报告.md Q4映射",
+    "chart": "折线",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.78
+    ],
+    "dpi": 300,
+    "caption": "显示g=1情形；映射是确定性假设，未被内部位移观测标定。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  },
+  {
+    "name": "process_q4_iterations",
+    "question": "q4",
+    "claim": "每秒耦合迭代在规定的40次上限内收敛。",
+    "source": "results/问题4_迭代统计.csv",
+    "chart": "频数柱状图",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.78
+    ],
+    "dpi": 300,
+    "caption": "频数统计覆盖主模型全部时间步，非采样频数。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  },
+  {
+    "name": "process_q4_refinement",
+    "question": "q4",
+    "claim": "时空加密误差按预先冻结的表值门槛核验。",
+    "source": "results/问题4_数值加密.csv",
+    "chart": "点图",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.78
+    ],
+    "dpi": 300,
+    "caption": "共同6h时刻与固定实际距离/表面值比较；终点时间差另外列在CSV中。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  },
+  {
+    "name": "result_q4_threshold",
+    "question": "q4",
+    "claim": "同附录4物性下，主模型与固定半径对照在不同时刻达到阈值。",
+    "source": "results/q4_runs/main.npz; fixed.npz",
+    "chart": "半对数折线",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.78
+    ],
+    "dpi": 300,
+    "caption": "最大值在全部计算节点上取值；精确首次跨越按1s步检测，图中为每60s记录及终点。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  },
+  {
+    "name": "result_q4_moving_field",
+    "question": "q4",
+    "claim": "药材内部区域随表面收缩而减小，内部含水率逐渐降低。",
+    "source": "results/q4_plot_data/physical_field.npz",
+    "chart": "热力图",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.78
+    ],
+    "dpi": 300,
+    "caption": "显示241个时间索引（含终点）、101个物理距离；白色区域为药材域外，非计算缺失。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  },
+  {
+    "name": "result_q4_geometry_effect",
+    "question": "q4",
+    "claim": "仅更改是否收缩，分离附录4体系内的净几何效应。",
+    "source": "results/问题4_结果摘要.json",
+    "chart": "配对点图",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.78
+    ],
+    "dpi": 300,
+    "caption": "两点均来自确定性计算，所有物性、初边值与数值设置相同。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  },
+  {
+    "name": "result_q4_shape_sensitivity",
+    "question": "q4",
+    "claim": "相同实测外半径下，内部映射假设引起可量化的时长变化。",
+    "source": "results/问题4_结果摘要.json",
+    "chart": "点图",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.78
+    ],
+    "dpi": 300,
+    "caption": "三个未校准的确定性映射情景；点间差异不是置信区间。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  },
+  {
+    "name": "result_q4_profiles",
+    "question": "q4",
+    "claim": "径向梯度与表面内移共同决定固定距离处的水分变化。",
+    "source": "results/q4_runs/main.npz",
+    "chart": "折线",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.78
+    ],
+    "dpi": 300,
+    "caption": "各条曲线止于当时真实表面，不延长到初始2cm。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  },
+  {
+    "name": "process_q4_air_sensitivity",
+    "question": "q4",
+    "claim": "长期空气延拓不确定性与内部收缩假设分别评估。",
+    "source": "results/问题4_情景汇总.csv",
+    "chart": "点图",
+    "layout": "single primary quantitative panel; shared-variable panels only when needed",
+    "backend": "Python",
+    "size_inches": [
+      6.3,
+      3.78
+    ],
+    "dpi": 300,
+    "caption": "单因素扰动，SD为91点总体标准差；不是随机置信区间。",
+    "statistical_scope": "deterministic model scenarios; no statistical CI or significance claim"
+  }
+]

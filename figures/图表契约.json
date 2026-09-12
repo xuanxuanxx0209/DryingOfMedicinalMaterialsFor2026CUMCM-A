@@ -110,5 +110,97 @@
       "backend": "Python matplotlib",
       "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
     }
+  ],
+  "q3": [
+    {
+      "basename": "raw_q3_air_full",
+      "category": "raw",
+      "claim": "烘房温度与空气水分浓度经过预热后在 9000 秒附近进入窄幅稳定区间。",
+      "evidence": "附件1.xlsx 的 241 条逐分钟观测及 9000 秒稳定段界线。",
+      "layout": "上下双面板时间序列图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "raw_q3_air_stable",
+      "category": "raw",
+      "claim": "稳定段的两项边界量围绕样本均值小幅波动，均值比末条记录更适合长期外推。",
+      "evidence": "附件1.xlsx 中 9000 至 14400 秒的 91 条记录、均值和总体标准差。",
+      "layout": "左右双面板折线与均值标准差带",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "raw_q3_air_distribution",
+      "category": "raw",
+      "claim": "稳定段温度与空气水分浓度的离散范围窄，二者相关性弱于全预热阶段的共同上升趋势。",
+      "evidence": "稳定段 91 条成对观测及各变量直方图。",
+      "layout": "边缘直方图与中心散点图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "process_q3_time_convergence",
+      "category": "process",
+      "claim": "时间步由 1 秒加密至 0.25 秒时烘干时长只变化 0.5 秒，满足预设时间离散门槛。",
+      "evidence": "问题3_时间步敏感性.csv 的三个确定性离散试验。",
+      "layout": "双面板点图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "process_q3_space_convergence",
+      "category": "process",
+      "claim": "160 与 320 个径向区间的烘干时长差低于 0.1%，但表值差超过四位小数门槛，故采用 320 区间。",
+      "evidence": "问题3_空间网格敏感性.csv 与问题3_结果摘要.json 的表值误差。",
+      "layout": "双面板哑铃与门槛点图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "process_q3_picard_iterations",
+      "category": "process",
+      "claim": "全部记录时刻的 Picard 迭代均在 4 次内完成，长期推进没有出现迭代恶化。",
+      "evidence": "问题3_迭代次数.csv 的 3447 条记录。",
+      "layout": "时间阶梯线与频数点图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "process_q3_boundary_sensitivity",
+      "category": "process",
+      "claim": "稳定段波动、末条记录替代和端面通量上界均使烘干时长变化保持在 1% 内。",
+      "evidence": "问题3_边界敏感性.csv 的六个确定性工况。",
+      "layout": "以零为基准的横向点图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "result_q3_threshold",
+      "category": "result",
+      "claim": "中心含水率在 57.4322 小时首次降到 0.15 千克每千克，决定全圆柱烘干终点。",
+      "evidence": "问题3_关键过程.csv 的最大含水率轨迹与逐秒事件判定。",
+      "layout": "全程曲线与终点局部放大",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "result_q3_profiles",
+      "category": "result",
+      "claim": "外层含水率先下降，中心始终最湿，五个指定位置在终点均达到阈值以下。",
+      "evidence": "问题3_关键过程.csv 的五条指定位置时间序列。",
+      "layout": "五条带线型和标记的含水率时间曲线",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    },
+    {
+      "basename": "result_q3_moisture_field",
+      "category": "result",
+      "claim": "低含水率区由表面向中心推进，终点限制位置位于圆柱中心。",
+      "evidence": "result3.xlsx 的逐分钟、每 0.1 厘米含水率场。",
+      "layout": "时间与半径构成的含水率热图",
+      "backend": "Python matplotlib",
+      "export": "6.3 英寸宽，SVG、PDF 与 300 DPI PNG，附灰度预览"
+    }
   ]
 }

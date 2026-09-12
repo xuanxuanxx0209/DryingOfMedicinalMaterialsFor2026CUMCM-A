@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-11T20:36:35.885349+00:00",
+  "random_seed": 0,
+  "input_files": [
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\problem A\\A题.pdf",
+      "sha256": "052d8014bff5727c019b72e44fdffaf5c145ce04050dd938baaf3527db331736",
+      "bytes": 553320
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\problem A\\附件\\附件1.xlsx",
+      "sha256": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+      "bytes": 16586
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\problem A\\附件\\附件3\\result3.xlsx",
+      "sha256": "07e4793d620a7f899804c0298d49a16a197960440fd47f8bb780c57ec27e2859",
+      "bytes": 9345
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\全程干燥求解.py",
+      "sha256": "0eb6dbe808b3bb47f451bab941a01ec4f578b6bb28153c3b5dc6094d92440dc2",
+      "bytes": 61353
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\问题3_绘图.py",
+      "sha256": "e4a365e3525733c6f44206640f725c3b80fb0ea5731d634d1217839c798866ee",
+      "bytes": 17169
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\题目分析报告.md",
+      "sha256": "c0cd3a93e2468abbb15eba4db64f81c0b288c4a232ee14e5c0020fc94a3979cf",
+      "bytes": 16395
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\术语表格.md",
+      "sha256": "d70d092c4bad9dd868c0c969e7986ea73f8552073dc69ebdfff54bd112b54348",
+      "bytes": 5629
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\Q3\\第三问建模思路与公式整理_最终修订版.tex",
+      "sha256": "ac646cc7651d33bdbab8110e52c2bdb8ae840e4c034c3f7950af97ccda2c7170",
+      "bytes": 18105
+    },
+    {
+      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\Q3\\问题三证据大纲.md",
+      "sha256": "2f33016d4d076ad3fdabfdd6225a739ea577bb2d2364747eb028a32bc43fa21c",
+      "bytes": 6422
+    }
+  ],
+  "runtime": {
+    "name": "python",
+    "version": "3.13.7",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "dependencies": {
+      "numpy": "2.3.3",
+      "pandas": "2.3.2",
+      "scipy": "1.16.2",
+      "openpyxl": "3.1.5",
+      "matplotlib": "3.10.6"
+    }
+  },
+  "key_parameters": {
+    "question": 3,
+    "radius_intervals": 320,
+    "time_step_s": 1,
+    "output_interval_s": 60,
+    "threshold_kg_per_kg": 0.15,
+    "stable_start_s": 9000,
+    "stable_end_s": 14400
+  },
+  "reproduce_command": "python -X utf8 全程干燥求解.py --mode q3; python -X utf8 问题3_绘图.py"
+}

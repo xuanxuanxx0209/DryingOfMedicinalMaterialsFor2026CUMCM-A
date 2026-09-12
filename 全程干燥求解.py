@@ -6,11 +6,13 @@ import hashlib
 import json
 import platform
 import shutil
+import time
 from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
 import openpyxl
+from scipy.linalg import solve_banded
 
 import 药材烘干求解 as core
 
@@ -26,6 +28,8 @@ MASS_TRANSFER_COEFFICIENT = 8.0e-7
 INITIAL_TEMPERATURE_C = 28.0
 INITIAL_MOISTURE = 2.55
 DRYING_THRESHOLD = 0.15
+STABLE_AIR_START_S = 9000.0
+STABLE_AIR_END_S = 14400.0
 
 
 @dataclass(frozen=True)
@@ -136,6 +140,50 @@ def q4_properties(
     return density, heat_capacity, conductivity, diffusivity
 
 
+def stable_air_statistics() -> dict[str, float]:
+    air = core.read_air_boundary()
+    mask = (air.time_s >= STABLE_AIR_START_S) & (
+        air.time_s <= STABLE_AIR_END_S
+    )
+    if int(np.sum(mask)) != 91:
+        raise ValueError("附件1的9000至14400秒稳定段应含91个观测点")
+    temperature = air.temperature_c[mask]
+    moisture = air.moisture[mask]
+    return {
+        "sample_count": int(temperature.size),
+        "temperature_mean_c": float(np.mean(temperature)),
+        "temperature_std_c": float(np.std(temperature, ddof=0)),
+        "temperature_min_c": float(np.min(temperature)),
+        "temperature_max_c": float(np.max(temperature)),
+        "moisture_mean_kg_per_kg": float(np.mean(moisture)),
+        "moisture_std_kg_per_kg": float(np.std(moisture, ddof=0)),
+        "moisture_min_kg_per_kg": float(np.min(moisture)),
+        "moisture_max_kg_per_kg": float(np.max(moisture)),
+        "last_temperature_c": float(air.temperature_c[-1]),
+        "last_moisture_kg_per_kg": float(air.moisture[-1]),
+    }
+
+
+def solve_tridiagonal_fast(
+    lower: np.ndarray,
+    diagonal: np.ndarray,
+    upper: np.ndarray,
+    right_hand_side: np.ndarray,
+) -> np.ndarray:
+    banded = np.zeros((3, diagonal.size), dtype=float)
+    banded[0, 1:] = upper
+    banded[1] = diagonal
+    banded[2, :-1] = lower
+    return solve_banded(
+        (1, 1),
+        banded,
+        right_hand_side,
+        overwrite_ab=True,
+        overwrite_b=False,
+        check_finite=False,
+    )
+
+
 def relative_tridiagonal_residual(
     lower: np.ndarray,
     diagonal: np.ndarray,
@@ -177,6 +225,8 @@ def simulate_variable_model(
     temporal_scheme: str = "backward_euler",
     heat_transfer_coefficient: float = HEAT_TRANSFER_COEFFICIENT,
     mass_transfer_coefficient: float = MASS_TRANSFER_COEFFICIENT,
+    post_observation_temperature_c: float | None = None,
+    post_observation_moisture: float | None = None,
 ) -> VariableSimulation:
     if model not in {"q23", "q4"}:
         raise ValueError("model必须为q23或q4")
@@ -184,6 +234,12 @@ def simulate_variable_model(
         raise ValueError("temporal_scheme必须为backward_euler或bdf2")
     if heat_transfer_coefficient <= 0.0 or mass_transfer_coefficient <= 0.0:
         raise ValueError("表面对流系数必须为正数")
+    if (post_observation_temperature_c is None) != (
+        post_observation_moisture is None
+    ):
+        raise ValueError("长期空气温度和水分边界必须同时给出或同时省略")
+    if post_observation_moisture is not None and post_observation_moisture < 0.0:
+        raise ValueError("长期空气水分浓度不得为负")
     step_count_float = end_time_s / time_step_s
     step_count = int(round(step_count_float))
     if not np.isclose(step_count, step_count_float):
@@ -234,6 +290,13 @@ def simulate_variable_model(
         )
         grid = core.make_grid(radius_m=radius_m, intervals=intervals)
         ambient_temperature, ambient_moisture = air.at(current_time)
+        if (
+            current_time > float(air.time_s[-1])
+            and post_observation_temperature_c is not None
+            and post_observation_moisture is not None
+        ):
+            ambient_temperature = post_observation_temperature_c
+            ambient_moisture = post_observation_moisture
         temperature_guess = temperature.copy()
         moisture_guess = moisture.copy()
         converged = False
@@ -263,7 +326,7 @@ def simulate_variable_model(
                 heat_transfer_coefficient,
                 ambient_temperature,
             )
-            temperature_new = core.solve_tridiagonal(
+            temperature_new = solve_tridiagonal_fast(
                 lower_t, diagonal_t, upper_t, rhs_t
             )
             max_temperature_linear_residual = max(
@@ -284,7 +347,7 @@ def simulate_variable_model(
                 mass_transfer_coefficient,
                 ambient_moisture,
             )
-            moisture_new = core.solve_tridiagonal(
+            moisture_new = solve_tridiagonal_fast(
                 lower_c, diagonal_c, upper_c, rhs_c
             )
             max_moisture_linear_residual = max(
@@ -334,6 +397,11 @@ def simulate_variable_model(
         previous_temperature, temperature = temperature, temperature_guess
         previous_moisture, moisture = moisture, moisture_guess
         max_iterations_used = max(max_iterations_used, iteration)
+
+        if not np.all(np.isfinite(temperature)) or not np.all(np.isfinite(moisture)):
+            raise RuntimeError(f"{model}在t={current_time:g}秒出现非有限状态")
+        if float(np.min(moisture)) < -1.0e-12:
+            raise RuntimeError(f"{model}在t={current_time:g}秒出现负含水率")
 
         if step % record_stride == 0:
             recorded_time.append(current_time)
@@ -429,7 +497,8 @@ def write_result3(simulation: VariableSimulation, output_path: Path) -> None:
         )
         worksheet.cell(row, 1, int(round(float(time_s))))
         for column, value in enumerate(values, start=2):
-            worksheet.cell(row, column, round(float(value), 4))
+            cell = worksheet.cell(row, column, round(float(value), 4))
+            cell.number_format = "0.0000"
     worksheet.freeze_panes = "B2"
     output_path.parent.mkdir(parents=True, exist_ok=True)
     temporary = output_path.with_suffix(".tmp.xlsx")
@@ -517,12 +586,21 @@ def final_system_condition_numbers(
     time_step_s: float,
     heat_transfer_coefficient: float,
     mass_transfer_coefficient: float,
+    post_observation_temperature_c: float | None = None,
+    post_observation_moisture: float | None = None,
 ) -> dict[str, float]:
     intervals = simulation.node_coordinate.size - 1
     radius_m = float(simulation.radius_m[-1])
     grid = core.make_grid(radius_m=radius_m, intervals=intervals)
     air = core.read_air_boundary()
     ambient_temperature, ambient_moisture = air.at(float(simulation.time_s[-1]))
+    if (
+        float(simulation.time_s[-1]) > float(air.time_s[-1])
+        and post_observation_temperature_c is not None
+        and post_observation_moisture is not None
+    ):
+        ambient_temperature = post_observation_temperature_c
+        ambient_moisture = post_observation_moisture
     density, heat_capacity, conductivity, diffusivity = q23_properties(
         simulation.moisture[-1], simulation.temperature_c[-1]
     )
@@ -905,62 +983,436 @@ def run_q2() -> None:
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 
+def q3_periodic_table(
+    simulation: VariableSimulation,
+    radii_cm: list[float],
+) -> tuple[list[float], np.ndarray]:
+    if simulation.dry_time_s is None:
+        raise RuntimeError("问题三未返回烘干结束时刻")
+    periodic_times = list(
+        np.arange(6.0 * 3600.0, simulation.dry_time_s, 6.0 * 3600.0)
+    )
+    table_times = periodic_times + [simulation.dry_time_s]
+    table = np.asarray(
+        requested_table(simulation, simulation.moisture, table_times, radii_cm)
+    )
+    return table_times, table
+
+
+def q3_common_table_difference(
+    first: VariableSimulation,
+    second: VariableSimulation,
+    radii_cm: list[float],
+) -> float:
+    if first.dry_time_s is None or second.dry_time_s is None:
+        raise RuntimeError("网格比较缺少烘干结束时刻")
+    common_end = min(first.dry_time_s, second.dry_time_s)
+    periodic_times = list(np.arange(6.0 * 3600.0, common_end, 6.0 * 3600.0))
+    first_table = np.asarray(
+        requested_table(first, first.moisture, periodic_times, radii_cm)
+    )
+    second_table = np.asarray(
+        requested_table(second, second.moisture, periodic_times, radii_cm)
+    )
+    periodic_difference = float(np.max(np.abs(first_table - second_table)))
+    first_end = interpolate_at_physical_radii(
+        first, first.moisture, -1, radii_cm
+    )
+    second_end = interpolate_at_physical_radii(
+        second, second.moisture, -1, radii_cm
+    )
+    return max(periodic_difference, float(np.max(np.abs(first_end - second_end))))
+
+
+def write_q3_process_csv(
+    simulation: VariableSimulation,
+    output_path: Path,
+) -> None:
+    radii_cm = [0.0, 0.5, 1.0, 1.5, 2.0]
+    with output_path.open("w", encoding="utf-8-sig", newline="") as stream:
+        writer = csv.writer(stream)
+        writer.writerow(
+            [
+                "time_s",
+                "time_h",
+                *[f"moisture_{radius:g}_cm" for radius in radii_cm],
+                "maximum_moisture",
+                "maximum_radius_cm",
+            ]
+        )
+        for index, time_s in enumerate(simulation.time_s):
+            values = interpolate_at_physical_radii(
+                simulation, simulation.moisture, index, radii_cm
+            )
+            maximum_index = int(np.argmax(simulation.moisture[index]))
+            writer.writerow(
+                [
+                    f"{time_s:.6f}",
+                    f"{time_s / 3600.0:.10f}",
+                    *[f"{value:.10f}" for value in values],
+                    f"{simulation.moisture[index, maximum_index]:.10f}",
+                    f"{100.0 * simulation.radius_m[index] * simulation.node_coordinate[maximum_index]:.8f}",
+                ]
+            )
+
+
+def run_q3_smoke() -> None:
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    stable = stable_air_statistics()
+    simulation = simulate_variable_model(
+        model="q23",
+        end_time_s=18000.0,
+        time_step_s=10.0,
+        intervals=20,
+        record_interval_s=60.0,
+        temporal_scheme="bdf2",
+        post_observation_temperature_c=stable["temperature_mean_c"],
+        post_observation_moisture=stable["moisture_mean_kg_per_kg"],
+    )
+    maximum_series = np.max(simulation.moisture, axis=1)
+    maximum_increase = float(np.max(np.diff(maximum_series)))
+    if maximum_increase > 1.0e-8:
+        raise RuntimeError("问题三冒烟测试的最大含水率出现异常回升")
+    if simulation.moisture_balance_relative_error > 1.0e-8:
+        raise RuntimeError("问题三冒烟测试的水分平衡残差超过合同阈值")
+    if simulation.max_temperature_linear_residual > 1.0e-12:
+        raise RuntimeError("问题三冒烟测试的温度代数残差超过合同阈值")
+    if simulation.max_moisture_linear_residual > 1.0e-12:
+        raise RuntimeError("问题三冒烟测试的含水率代数残差超过合同阈值")
+    report = {
+        "mode": "P1_q3_smoke",
+        "inputs": {
+            str(AIR_PATH.relative_to(PROJECT_ROOT)): sha256_file(AIR_PATH),
+        },
+        "model": "q23_fixed_radius_stable_mean_extension",
+        "temporal_scheme": "backward_euler_start_then_bdf2",
+        "time_step_s": 10.0,
+        "radial_intervals": 20,
+        "end_time_s": 18000.0,
+        "stable_air": stable,
+        "temperature_range_c": [
+            float(np.min(simulation.temperature_c)),
+            float(np.max(simulation.temperature_c)),
+        ],
+        "moisture_range_kg_per_kg": [
+            float(np.min(simulation.moisture)),
+            float(np.max(simulation.moisture)),
+        ],
+        "maximum_moisture_start": float(maximum_series[0]),
+        "maximum_moisture_end": float(maximum_series[-1]),
+        "maximum_recorded_increase": maximum_increase,
+        "max_coupling_iterations": simulation.max_coupling_iterations,
+        "moisture_balance_relative_error": simulation.moisture_balance_relative_error,
+        "max_temperature_linear_residual": simulation.max_temperature_linear_residual,
+        "max_moisture_linear_residual": simulation.max_moisture_linear_residual,
+    }
+    output = RESULTS_DIR / "P1_q3_smoke.json"
+    output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+
+
 def run_q3() -> None:
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    run_started = time.perf_counter()
     maximum_time_s = 7.0 * 24.0 * 3600.0
-    authoritative = simulate_variable_model(
+    stable = stable_air_statistics()
+    boundary_temperature = stable["temperature_mean_c"]
+    boundary_moisture = stable["moisture_mean_kg_per_kg"]
+    common_arguments = {
+        "model": "q23",
+        "end_time_s": maximum_time_s,
+        "intervals": 160,
+        "record_interval_s": 60.0,
+        "stop_at_dryness": True,
+        "temporal_scheme": "bdf2",
+        "post_observation_temperature_c": boundary_temperature,
+        "post_observation_moisture": boundary_moisture,
+    }
+
+    base = simulate_variable_model(time_step_s=1.0, **common_arguments)
+    time_half = simulate_variable_model(time_step_s=0.5, **common_arguments)
+    time_quarter = simulate_variable_model(time_step_s=0.25, **common_arguments)
+    if base.dry_time_s is None or time_half.dry_time_s is None or time_quarter.dry_time_s is None:
+        raise RuntimeError("时间步验证缺少烘干结束时刻")
+    time_base_difference = abs(base.dry_time_s - time_quarter.dry_time_s)
+    time_half_difference = abs(time_half.dry_time_s - time_quarter.dry_time_s)
+    adjacent_base_half = abs(base.dry_time_s - time_half.dry_time_s)
+    adjacent_half_quarter = time_half_difference
+    time_gate_passed = (
+        time_base_difference <= 1.0
+        and time_half_difference <= 0.5
+        and adjacent_half_quarter <= adjacent_base_half + 1.0e-12
+    )
+    authoritative = base if time_gate_passed else time_quarter
+    authoritative_time_step = 1.0 if time_gate_passed else 0.25
+
+    space_refined = simulate_variable_model(
         model="q23",
         end_time_s=maximum_time_s,
-        time_step_s=5.0,
-        intervals=160,
+        time_step_s=authoritative_time_step,
+        intervals=320,
         record_interval_s=60.0,
         stop_at_dryness=True,
+        temporal_scheme="bdf2",
+        post_observation_temperature_c=boundary_temperature,
+        post_observation_moisture=boundary_moisture,
     )
-    time_coarse = simulate_variable_model(
-        model="q23",
-        end_time_s=maximum_time_s,
-        time_step_s=10.0,
-        intervals=160,
-        record_interval_s=60.0,
-        stop_at_dryness=True,
-    )
-    space_coarse = simulate_variable_model(
-        model="q23",
-        end_time_s=maximum_time_s,
-        time_step_s=5.0,
-        intervals=80,
-        record_interval_s=60.0,
-        stop_at_dryness=True,
-    )
-    write_result3(authoritative, RESULTS_DIR / "result3.xlsx")
-    if authoritative.dry_time_s is None:
-        raise RuntimeError("问题三未返回干燥时长")
-    six_hour_times = list(
-        np.arange(6.0 * 3600.0, authoritative.dry_time_s, 6.0 * 3600.0)
-    )
-    table_times = six_hour_times + [authoritative.dry_time_s]
+    if authoritative.dry_time_s is None or space_refined.dry_time_s is None:
+        raise RuntimeError("空间加密验证缺少烘干结束时刻")
     radii_cm = [0.0, 0.5, 1.0, 1.5, 2.0]
-    table = requested_table(
-        authoritative, authoritative.moisture, table_times, radii_cm
+    space_table_difference = q3_common_table_difference(
+        authoritative, space_refined, radii_cm
     )
+    space_time_difference_s = abs(
+        authoritative.dry_time_s - space_refined.dry_time_s
+    )
+    space_time_relative_difference = (
+        space_time_difference_s / space_refined.dry_time_s
+    )
+    if space_time_relative_difference > 0.001:
+        space_fine = simulate_variable_model(
+            model="q23",
+            end_time_s=maximum_time_s,
+            time_step_s=authoritative_time_step,
+            intervals=640,
+            record_interval_s=60.0,
+            stop_at_dryness=True,
+            temporal_scheme="bdf2",
+            post_observation_temperature_c=boundary_temperature,
+            post_observation_moisture=boundary_moisture,
+        )
+        if space_fine.dry_time_s is None:
+            raise RuntimeError("640区间空间复验缺少烘干结束时刻")
+        fine_relative_difference = abs(
+            space_refined.dry_time_s - space_fine.dry_time_s
+        ) / space_fine.dry_time_s
+        if fine_relative_difference > 0.001:
+            raise RuntimeError("640区间复验后烘干时长仍未通过0.1%空间阈值")
+        authoritative = space_fine
+        authoritative_intervals = 640
+    elif space_table_difference > 5.0e-5:
+        authoritative = space_refined
+        authoritative_intervals = 320
+        fine_relative_difference = None
+    else:
+        authoritative_intervals = 160
+        fine_relative_difference = None
+
+    if authoritative.dry_time_s is None:
+        raise RuntimeError("问题三权威解缺少烘干时长")
+    maximum_series = np.max(authoritative.moisture, axis=1)
+    maximum_recorded_increase = float(np.max(np.diff(maximum_series)))
+    if maximum_recorded_increase > 1.0e-8:
+        raise RuntimeError("问题三权威解的最大含水率出现异常回升")
+    if authoritative.moisture_balance_relative_error > 1.0e-8:
+        raise RuntimeError("问题三权威解的水分平衡残差超过合同阈值")
+    if authoritative.max_temperature_linear_residual > 1.0e-12:
+        raise RuntimeError("问题三权威解的温度代数残差超过合同阈值")
+    if authoritative.max_moisture_linear_residual > 1.0e-12:
+        raise RuntimeError("问题三权威解的含水率代数残差超过合同阈值")
+
+    write_result3(authoritative, RESULTS_DIR / "result3.xlsx")
+    table_times, table = q3_periodic_table(authoritative, radii_cm)
+    with (RESULTS_DIR / "问题3_表5含水率.csv").open(
+        "w", encoding="utf-8-sig", newline=""
+    ) as stream:
+        writer = csv.writer(stream)
+        writer.writerow(["时间_h", *[f"{radius:g}_cm" for radius in radii_cm]])
+        for time_s, row in zip(table_times, table, strict=True):
+            writer.writerow(
+                [
+                    f"{time_s / 3600.0:.6f}",
+                    *[f"{float(value):.8f}" for value in row],
+                ]
+            )
+    write_q3_process_csv(authoritative, RESULTS_DIR / "问题3_关键过程.csv")
+    with (RESULTS_DIR / "问题3_迭代次数.csv").open(
+        "w", encoding="utf-8-sig", newline=""
+    ) as stream:
+        writer = csv.writer(stream)
+        writer.writerow(["时间_s", "Picard迭代次数"])
+        writer.writerows(
+            zip(
+                authoritative.time_s.tolist(),
+                authoritative.coupling_iterations.tolist(),
+                strict=True,
+            )
+        )
+
+    with (RESULTS_DIR / "问题3_时间步敏感性.csv").open(
+        "w", encoding="utf-8-sig", newline=""
+    ) as stream:
+        writer = csv.writer(stream)
+        writer.writerow(["时间步_s", "烘干时长_s", "烘干时长_h", "相对0.25s绝对差_s"])
+        for step, simulation in ((1.0, base), (0.5, time_half), (0.25, time_quarter)):
+            writer.writerow(
+                [
+                    step,
+                    f"{float(simulation.dry_time_s):.6f}",
+                    f"{float(simulation.dry_time_s) / 3600.0:.10f}",
+                    f"{abs(float(simulation.dry_time_s) - time_quarter.dry_time_s):.6f}",
+                ]
+            )
+    with (RESULTS_DIR / "问题3_空间网格敏感性.csv").open(
+        "w", encoding="utf-8-sig", newline=""
+    ) as stream:
+        writer = csv.writer(stream)
+        writer.writerow(["径向区间数", "时间步_s", "烘干时长_s", "烘干时长_h"])
+        writer.writerow([160, authoritative_time_step, authoritative.dry_time_s if authoritative_intervals == 160 else (base.dry_time_s if authoritative_time_step == 1.0 else time_quarter.dry_time_s), (base.dry_time_s if authoritative_time_step == 1.0 else time_quarter.dry_time_s) / 3600.0])
+        writer.writerow([320, authoritative_time_step, space_refined.dry_time_s, space_refined.dry_time_s / 3600.0])
+        if authoritative_intervals == 640:
+            writer.writerow([640, authoritative_time_step, authoritative.dry_time_s, authoritative.dry_time_s / 3600.0])
+
+    sensitivity_cases = {
+        "温度_减1总体标准差": (
+            boundary_temperature - stable["temperature_std_c"],
+            boundary_moisture,
+            HEAT_TRANSFER_COEFFICIENT,
+            MASS_TRANSFER_COEFFICIENT,
+        ),
+        "温度_加1总体标准差": (
+            boundary_temperature + stable["temperature_std_c"],
+            boundary_moisture,
+            HEAT_TRANSFER_COEFFICIENT,
+            MASS_TRANSFER_COEFFICIENT,
+        ),
+        "空气水分_减1总体标准差": (
+            boundary_temperature,
+            boundary_moisture - stable["moisture_std_kg_per_kg"],
+            HEAT_TRANSFER_COEFFICIENT,
+            MASS_TRANSFER_COEFFICIENT,
+        ),
+        "空气水分_加1总体标准差": (
+            boundary_temperature,
+            boundary_moisture + stable["moisture_std_kg_per_kg"],
+            HEAT_TRANSFER_COEFFICIENT,
+            MASS_TRANSFER_COEFFICIENT,
+        ),
+        "附件末条记录": (
+            stable["last_temperature_c"],
+            stable["last_moisture_kg_per_kg"],
+            HEAT_TRANSFER_COEFFICIENT,
+            MASS_TRANSFER_COEFFICIENT,
+        ),
+        "端面通量上界": (
+            boundary_temperature,
+            boundary_moisture,
+            1.08 * HEAT_TRANSFER_COEFFICIENT,
+            1.08 * MASS_TRANSFER_COEFFICIENT,
+        ),
+    }
+    sensitivity = []
+    for case_name, (
+        case_temperature,
+        case_moisture,
+        case_heat_coefficient,
+        case_mass_coefficient,
+    ) in sensitivity_cases.items():
+        case = simulate_variable_model(
+            model="q23",
+            end_time_s=maximum_time_s,
+            time_step_s=authoritative_time_step,
+            intervals=authoritative_intervals,
+            record_interval_s=3600.0,
+            stop_at_dryness=True,
+            temporal_scheme="bdf2",
+            heat_transfer_coefficient=case_heat_coefficient,
+            mass_transfer_coefficient=case_mass_coefficient,
+            post_observation_temperature_c=case_temperature,
+            post_observation_moisture=case_moisture,
+        )
+        if case.dry_time_s is None:
+            raise RuntimeError(f"敏感性情景{case_name}缺少烘干时长")
+        sensitivity.append(
+            {
+                "case": case_name,
+                "temperature_c": case_temperature,
+                "air_moisture_kg_per_kg": case_moisture,
+                "heat_transfer_coefficient_w_per_m2_k": case_heat_coefficient,
+                "mass_transfer_coefficient_m_per_s": case_mass_coefficient,
+                "dry_time_s": case.dry_time_s,
+                "dry_time_h": case.dry_time_s / 3600.0,
+                "relative_change": (
+                    case.dry_time_s - authoritative.dry_time_s
+                )
+                / authoritative.dry_time_s,
+            }
+        )
+    with (RESULTS_DIR / "问题3_边界敏感性.csv").open(
+        "w", encoding="utf-8-sig", newline=""
+    ) as stream:
+        fieldnames = list(sensitivity[0].keys())
+        writer = csv.DictWriter(stream, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(sensitivity)
+
+    end_face_case = next(item for item in sensitivity if item["case"] == "端面通量上界")
+    if abs(float(end_face_case["relative_change"])) > 0.08:
+        raise RuntimeError("端面通量上界情景超过8%，必须回退二维圆柱模型")
+    condition_numbers = final_system_condition_numbers(
+        authoritative,
+        time_step_s=authoritative_time_step,
+        heat_transfer_coefficient=HEAT_TRANSFER_COEFFICIENT,
+        mass_transfer_coefficient=MASS_TRANSFER_COEFFICIENT,
+        post_observation_temperature_c=boundary_temperature,
+        post_observation_moisture=boundary_moisture,
+    )
+    if max(condition_numbers.values()) > 1.0e8:
+        raise RuntimeError("问题三末时刻离散系统条件数超过合同阈值")
+
     summary = {
         "mode": "q3_full",
+        "inputs": {
+            str(AIR_PATH.relative_to(PROJECT_ROOT)): sha256_file(AIR_PATH),
+            str((TEMPLATE_DIR / "result3.xlsx").relative_to(PROJECT_ROOT)): sha256_file(TEMPLATE_DIR / "result3.xlsx"),
+        },
+        "stable_air": stable,
+        "parameters": {
+            "temporal_scheme": "backward_euler_start_then_bdf2",
+            "authoritative_time_step_s": authoritative_time_step,
+            "authoritative_radial_intervals": authoritative_intervals,
+            "record_interval_s": 60.0,
+            "drying_threshold_kg_per_kg": DRYING_THRESHOLD,
+            "heat_transfer_coefficient_w_per_m2_k": HEAT_TRANSFER_COEFFICIENT,
+            "mass_transfer_coefficient_m_per_s": MASS_TRANSFER_COEFFICIENT,
+            "coupling_temperature_tolerance_c": 1.0e-8,
+            "coupling_moisture_tolerance_kg_per_kg": 1.0e-10,
+            "coupling_max_iterations": 40,
+        },
         "dry_time_s": authoritative.dry_time_s,
         "dry_time_h": authoritative.dry_time_s / 3600.0,
         "table_times_s": table_times,
         "requested_radii_cm": radii_cm,
         "moisture_kg_per_kg": np.round(table, 8).tolist(),
+        "sensitivity": sensitivity,
         "verification": {
-            "time_coarse_dry_time_s": time_coarse.dry_time_s,
-            "space_coarse_dry_time_s": space_coarse.dry_time_s,
-            "time_step_difference_s": float(
-                abs(authoritative.dry_time_s - float(time_coarse.dry_time_s))
-            ),
-            "space_grid_difference_s": float(
-                abs(authoritative.dry_time_s - float(space_coarse.dry_time_s))
-            ),
+            "time_step_gate_passed": time_gate_passed,
+            "time_step_dry_times_s": {
+                "1.0": base.dry_time_s,
+                "0.5": time_half.dry_time_s,
+                "0.25": time_quarter.dry_time_s,
+            },
+            "time_base_to_reference_difference_s": time_base_difference,
+            "time_half_to_reference_difference_s": time_half_difference,
+            "space_refined_dry_time_s": space_refined.dry_time_s,
+            "space_time_difference_s": space_time_difference_s,
+            "space_time_relative_difference": space_time_relative_difference,
+            "space_table_max_absolute_difference_kg_per_kg": space_table_difference,
+            "space_fine_relative_difference": fine_relative_difference,
+            "maximum_recorded_moisture_increase_kg_per_kg": maximum_recorded_increase,
             "moisture_balance_relative_error": authoritative.moisture_balance_relative_error,
             "max_coupling_iterations": authoritative.max_coupling_iterations,
+            "max_temperature_linear_residual": authoritative.max_temperature_linear_residual,
+            "max_moisture_linear_residual": authoritative.max_moisture_linear_residual,
+            "final_system_condition_numbers": condition_numbers,
+        },
+        "runtime_seconds": time.perf_counter() - run_started,
+        "environment": {
+            "python": platform.python_version(),
+            "numpy": np.__version__,
+            "scipy": __import__("scipy").__version__,
+            "openpyxl": openpyxl.__version__,
+            "platform": platform.platform(),
         },
     }
     (RESULTS_DIR / "问题3_结果摘要.json").write_text(
@@ -1054,12 +1506,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="2026 CUMCM A题全程干燥求解")
     parser.add_argument(
         "--mode",
-        choices=("smoke", "q2", "q3", "q4", "all"),
+        choices=("smoke", "q3-smoke", "q2", "q3", "q4", "all"),
         default="smoke",
     )
     arguments = parser.parse_args()
     if arguments.mode == "smoke":
         run_smoke()
+    elif arguments.mode == "q3-smoke":
+        run_q3_smoke()
     elif arguments.mode == "q2":
         run_q2()
     elif arguments.mode == "q3":

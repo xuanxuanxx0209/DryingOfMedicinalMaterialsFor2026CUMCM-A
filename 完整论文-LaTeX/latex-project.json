@@ -77,6 +77,104 @@
       "sha256": "2f2dbe4c4af7f598a32a7e5354e56879e0e3444f78090e71d3c81960e0c11b60",
       "hash_mode": "content",
       "bound_at": "2026-09-11T14:56:59.704206+00:00"
+    },
+    {
+      "source": "figures/result_q3_threshold.pdf",
+      "destination": "figures/result_q3_threshold.pdf",
+      "sha256": "30c4b7869fa9be4d6fd2dd1f2e9139679ed04202ef9d2f79f467b627c5c6a63b",
+      "hash_mode": "content",
+      "bound_at": "2026-09-11T20:35:05.027759+00:00"
+    },
+    {
+      "source": "figures/result_q3_profiles.pdf",
+      "destination": "figures/result_q3_profiles.pdf",
+      "sha256": "c2503a45f012d4eef4ea12bd911786df601c0914951922c8427a36a888f486eb",
+      "hash_mode": "content",
+      "bound_at": "2026-09-11T20:35:05.446538+00:00"
+    },
+    {
+      "source": "figures/process_q3_boundary_sensitivity.pdf",
+      "destination": "figures/process_q3_boundary_sensitivity.pdf",
+      "sha256": "514ebc962d47174b5bfa513dd235524d06e9ecd54fcc1e3c3426428713d44d44",
+      "hash_mode": "content",
+      "bound_at": "2026-09-11T20:35:05.946951+00:00"
+    },
+    {
+      "source": "figures/q4/raw_q4_radius.pdf",
+      "destination": "figures/raw_q4_radius.pdf",
+      "sha256": "95ae63837401b0c37b1613efc8761e5963e9826d20a9d6aec5702aaae3b7e7cd",
+      "hash_mode": "content",
+      "bound_at": "2026-09-12T10:17:28.639848+00:00"
+    },
+    {
+      "source": "figures/q4/result_q4_moving_field.pdf",
+      "destination": "figures/result_q4_moving_field.pdf",
+      "sha256": "c7b1970aa8b2e48df92ca93002c021607563cc005f57f77d95ec8d7509dc5f1b",
+      "hash_mode": "content",
+      "bound_at": "2026-09-12T10:17:30.218568+00:00"
+    },
+    {
+      "source": "figures/q4/result_q4_threshold.pdf",
+      "destination": "figures/result_q4_threshold.pdf",
+      "sha256": "bfe90ae906db7dbe0d4f13622fcef44ae12ffa2cc66fa47546a39d4555977646",
+      "hash_mode": "content",
+      "bound_at": "2026-09-12T10:17:31.820827+00:00"
+    },
+    {
+      "source": "figures/q4/result_q4_shape_sensitivity.pdf",
+      "destination": "figures/result_q4_shape_sensitivity.pdf",
+      "sha256": "0f0e8a9402b9db75f9ff20cecc44599e73a8864bba1e85249e097d9c4dd9f261",
+      "hash_mode": "content",
+      "bound_at": "2026-09-12T10:17:33.430429+00:00"
+    },
+    {
+      "source": "figures/q4/process_q4_refinement.pdf",
+      "destination": "figures/process_q4_refinement.pdf",
+      "sha256": "87d0c7d7f88a73839f77297404835f94150fb7c21d20137127daa2506adbbd6f",
+      "hash_mode": "content",
+      "bound_at": "2026-09-12T10:17:35.002324+00:00"
+    },
+    {
+      "source": "figures/paper_review/result_q2_gap_review.pdf",
+      "destination": "figures/result_q2_gap_review.pdf",
+      "sha256": "a273aac399099c9c28bd29e7f74776079ea9cb7117a78df95fb46d80cb4d451f",
+      "hash_mode": "content",
+      "bound_at": "2026-09-12T17:10:11.087962+00:00"
+    },
+    {
+      "source": "figures/paper_review/result_q2_moisture_review.pdf",
+      "destination": "figures/result_q2_moisture_review.pdf",
+      "sha256": "6e56796a3e213b930c1116a2b9e82caad6118c820797847b52227a95f91c76fc",
+      "hash_mode": "content",
+      "bound_at": "2026-09-12T17:10:11.231178+00:00"
+    },
+    {
+      "source": "figures/paper_review/result_q2_temperature_review.pdf",
+      "destination": "figures/result_q2_temperature_review.pdf",
+      "sha256": "f92ece53cb7e8ff91a4dbe38611a6eaa55587e50d44e7ce3a5e00f5e107ee4b6",
+      "hash_mode": "content",
+      "bound_at": "2026-09-12T17:10:11.374458+00:00"
+    },
+    {
+      "source": "figures/paper_review/result_q3_threshold_review.pdf",
+      "destination": "figures/result_q3_threshold_review.pdf",
+      "sha256": "c12635678538ee767ee5eba063b33c039bcc131d933a6b7f3e9468a1a50a2dbf",
+      "hash_mode": "content",
+      "bound_at": "2026-09-12T17:10:11.518863+00:00"
+    },
+    {
+      "source": "figures/paper_review/result_q4_shape_review.pdf",
+      "destination": "figures/result_q4_shape_review.pdf",
+      "sha256": "ff0af645b5d2e361684e294e5bf8666581db67b905f0a28b0e59ed523ab311da",
+      "hash_mode": "content",
+      "bound_at": "2026-09-12T17:10:11.666943+00:00"
+    },
+    {
+      "source": "figures/paper_review/result_q4_threshold_review.pdf",
+      "destination": "figures/result_q4_threshold_review.pdf",
+      "sha256": "8565a42edbaa29a84825a25c7e600ca0e3395958c116a39d38a5594f6f096ef2",
+      "hash_mode": "content",
+      "bound_at": "2026-09-12T17:10:11.839782+00:00"
     }
   ],
   "created_at": "2026-09-10T17:59:28.878415+00:00"

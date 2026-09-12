@@ -1,0 +1,163 @@
+{
+  "heat_linear_residual": 3.5830925658604023e-14,
+  "moisture_linear_residual": 1.2016246107020775e-15,
+  "moisture_balance_relative": 1.788310195280803e-11,
+  "heat_balance_absolute": 2.3137936011607962e-11,
+  "heat_balance_scaled": 9.74236942522109e-16,
+  "min_moisture": 0.05261370485550386,
+  "min_temperature_c": 27.99999999999991,
+  "max_temperature_c": 50.050099100139754,
+  "max_radial_moisture_increase": 3.1086244689504383e-15,
+  "max_Cmax_minus_center": 1.1546319456101628e-14,
+  "min_mapping_Jacobian_m": 0.012,
+  "previous_Cmax": 0.15000020248137802,
+  "final_Cmax": 0.14999968877238076,
+  "dry_time_s": 183879.0,
+  "max_step_Cmax_increase": 1.3322676295501878e-15,
+  "N": 320,
+  "dt_s": 1.0,
+  "a": 0.0,
+  "fixed": false,
+  "Tshift": 0.0,
+  "Cshift": 0.0,
+  "last_air": false,
+  "runtime_s": 14.864418099998147,
+  "max_picard_iterations": 4,
+  "stable_air": {
+    "sample_count": 91,
+    "temperature_mean_c": 50.004945054945054,
+    "temperature_std_c": 0.15401643715885288,
+    "temperature_min_c": 49.757,
+    "temperature_max_c": 50.246,
+    "moisture_mean_kg_per_kg": 0.04999373626373625,
+    "moisture_std_kg_per_kg": 0.0001534629450327611,
+    "moisture_min_kg_per_kg": 0.04975,
+    "moisture_max_kg_per_kg": 0.05025,
+    "last_temperature_c": 50.165,
+    "last_moisture_kg_per_kg": 0.04986
+  },
+  "dry_time_h": 51.0775,
+  "radius_end_cm": 1.2,
+  "beyond_radius_observation": false,
+  "final_matrix_conditions": {
+    "heat": 8797.057629131425,
+    "moisture": 1719.671174045375
+  },
+  "fixed_radius_dry_time_s": 467267.0,
+  "fixed_radius_dry_time_h": 129.79638888888888,
+  "delta_geometry_s": -283388.0,
+  "eta_geometry_percent": -60.64798070482187,
+  "eta_shape_percent": {
+    "0.1": 0.1560809010273001,
+    "0.2": 0.3143371456229449
+  },
+  "E_shape_percent": 0.3143371456229449,
+  "verification": {
+    "space_320_640": {
+      "table_max_abs_kg_kg": 1.7158440520831375e-05,
+      "event_difference_s": -13.0,
+      "event_relative_percent": 0.007069366802248123
+    },
+    "time_1_0.5": {
+      "table_max_abs_kg_kg": 8.575106225094942e-08,
+      "event_difference_s": 0.5,
+      "event_relative_percent": 0.0002719186854363071
+    }
+  },
+  "excel_rows": 3065,
+  "excel_columns": 22,
+  "structural_empty_cells": 20092,
+  "table6": [
+    {
+      "time_s": 21600.0,
+      "time_h": 6.0,
+      "radius_cm": 1.374,
+      "r0_cm": 1.71951664224506,
+      "r0.5_cm": 1.5376771942805734,
+      "r1_cm": 1.0225856920794003,
+      "r1.5_cm": null,
+      "surface": 0.4207253963941227
+    },
+    {
+      "time_s": 43200.0,
+      "time_h": 12.0,
+      "radius_cm": 1.248,
+      "r0_cm": 0.7375721307728813,
+      "r0.5_cm": 0.6545440001875732,
+      "r1_cm": 0.40827973499442594,
+      "r1.5_cm": null,
+      "surface": 0.16694950192216285
+    },
+    {
+      "time_s": 64800.0,
+      "time_h": 18.0,
+      "radius_cm": 1.214,
+      "r0_cm": 0.4086838415416546,
+      "r0.5_cm": 0.3685929118178796,
+      "r1_cm": 0.23970630714475014,
+      "r1.5_cm": null,
+      "surface": 0.08918099217727246
+    },
+    {
+      "time_s": 86400.0,
+      "time_h": 24.0,
+      "radius_cm": 1.204,
+      "r0_cm": 0.28507093547401136,
+      "r0.5_cm": 0.26101694577908113,
+      "r1_cm": 0.17895118121620998,
+      "r1.5_cm": null,
+      "surface": 0.06733156196249704
+    },
+    {
+      "time_s": 108000.0,
+      "time_h": 30.0,
+      "radius_cm": 1.201,
+      "r0_cm": 0.2262864588274819,
+      "r0.5_cm": 0.20934825046273584,
+      "r1_cm": 0.14922501106905864,
+      "r1.5_cm": null,
+      "surface": 0.05948443751184599
+    },
+    {
+      "time_s": 129600.0,
+      "time_h": 36.0,
+      "radius_cm": 1.2,
+      "r0_cm": 0.19278401831493214,
+      "r0.5_cm": 0.17962332974689801,
+      "r1_cm": 0.13162178816678863,
+      "r1.5_cm": null,
+      "surface": 0.055957059153359016
+    },
+    {
+      "time_s": 151200.0,
+      "time_h": 42.0,
+      "radius_cm": 1.2,
+      "r0_cm": 0.17120729945977534,
+      "r0.5_cm": 0.16034377763839303,
+      "r1_cm": 0.1199434728572476,
+      "r1.5_cm": null,
+      "surface": 0.05409865875903429
+    },
+    {
+      "time_s": 172800.0,
+      "time_h": 48.0,
+      "radius_cm": 1.2,
+      "r0_cm": 0.15612091382262924,
+      "r0.5_cm": 0.1467817878702329,
+      "r1_cm": 0.11153308353258529,
+      "r1.5_cm": null,
+      "surface": 0.05300666259325955
+    },
+    {
+      "time_s": 183879.0,
+      "time_h": 51.0775,
+      "radius_cm": 1.2,
+      "r0_cm": 0.14999968877238076,
+      "r0.5_cm": 0.14125830588559896,
+      "r1_cm": 0.10805733856984298,
+      "r1.5_cm": null,
+      "surface": 0.05261370485550386
+    }
+  ],
+  "model_scope": "Q4 prescribed effective material-scalar diffusion, not identified solid-mass conservation"
+}

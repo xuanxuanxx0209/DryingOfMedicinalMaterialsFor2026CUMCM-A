@@ -1,5 +1,19 @@
 tmp-pdfcrop-13964.tex
 __pycache__/
+*.py[cod]
+
+# Local execution environments, rendered previews, and recoverable snapshots.
+build/*
+!build/figure_review/
+build/figure_review/*
+!build/figure_review/W2_独立验收回执.md
+!build/figure_review/figure_contracts.json
+!build/figure_review/final_snapshot.json
+!build/figure_review/latex_build.json
+!build/figure_review/latex_validate.json
+!build/figure_review/figure_check.log
+完整论文-LaTeX/build/*
+checkpoints/*
 figures/_qa/
 figures/q2_audit/
 完整论文-LaTeX/build/paper-text.txt

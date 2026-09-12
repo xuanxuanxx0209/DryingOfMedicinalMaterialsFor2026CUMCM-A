@@ -1,0 +1,594 @@
+\documentclass[UTF8,a4paper,12pt]{ctexart}
+
+\usepackage{amsmath,amssymb,bm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{siunitx}
+
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\sisetup{per-mode=symbol}
+
+\title{第三问建模思路与公式整理（修订版）}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{第三问的任务与总体思路}
+
+第三问继续沿用第二问建立的一维径向圆柱传热--传质耦合模型。题目要求药材\textbf{各处}的水分浓度均低于
+$0.15\,\mathrm{kg/kg}$，因此第三问的判定标准不能采用体积平均含水率，而应考察药材内部的\textbf{最大水分浓度}。
+
+第三问主要解决以下三个问题：
+\begin{enumerate}
+    \item 附件~1 只给出了烘干初期的烘房温度与水分浓度数据，需要对后续恒温干燥阶段的外部边界条件作合理延拓；
+    \item 在第二问耦合模型基础上继续推进计算，并在每一个时间步求出药材内部最大水分浓度；
+    \item 求出最大水分浓度首次降至 $0.15\,\mathrm{kg/kg}$ 以下的时刻，并对恒温边界假设进行敏感性检验。
+\end{enumerate}
+
+根据附件~1 的数据特征，约从 $t=9000\,\mathrm{s}$ 开始，烘房温度和水分浓度已经不再呈现明显上升趋势，而是在稳定水平附近小幅波动。因此，以
+$9000\sim14400\,\mathrm{s}$ 的观测数据平均值作为后续恒温恒湿阶段的环境状态，比直接采用最后一个观测值更能削弱随机波动对长期预测的影响。
+
+总体思路可表示为
+\[
+\boxed{
+\begin{aligned}
+&\text{附件已知时段：使用实测边界数据}\\
+&\qquad\downarrow\\
+&\text{后续时段：采用稳定段平均值作为恒温恒湿边界}\\
+&\qquad\downarrow\\
+&\text{继续求解第二问的 }T-C\text{ 耦合模型}\\
+&\qquad\downarrow\\
+& C_{\max}(t)=\max_{0\le r\le R}C(r,t)\\
+&\qquad\downarrow\\
+& t_{\mathrm{dry}}
+=\inf\{t:C_{\max}(t)<0.15\}.
+\end{aligned}}
+\]
+
+\section{恒温恒湿阶段边界条件的确定}
+
+\subsection{稳定区间的选取}
+
+附件~1 中环境数据每隔 $60\,\mathrm{s}$ 给出一次。选取
+\[
+9000\,\mathrm{s}\le t_j\le14400\,\mathrm{s}
+\]
+作为稳定振荡区间。该区间共包含
+\[
+N_s=91
+\]
+个观测点。
+
+定义稳定段平均温度和平均环境水分浓度为
+\begin{equation}
+    \overline{T}_a
+    =
+    \frac{1}{N_s}
+    \sum_{t_j=9000}^{14400}T_a(t_j),
+    \label{eq:Ta_mean}
+\end{equation}
+\begin{equation}
+    \overline{C}_a
+    =
+    \frac{1}{N_s}
+    \sum_{t_j=9000}^{14400}C_a(t_j).
+    \label{eq:Ca_mean}
+\end{equation}
+
+由附件~1 实际数据计算得到
+\begin{equation}
+    \overline{T}_a
+    =
+    50.0049^\circ\mathrm{C}
+    =
+    323.1549\,\mathrm{K},
+    \label{eq:Ta_value}
+\end{equation}
+\begin{equation}
+    \overline{C}_a
+    =
+    0.0499937\,\mathrm{kg/kg}.
+    \label{eq:Ca_value}
+\end{equation}
+
+在该稳定区间内，环境温度的总体范围约为
+\[
+49.757^\circ\mathrm{C}
+\sim
+50.246^\circ\mathrm{C},
+\]
+标准差约为
+\[
+0.1540^\circ\mathrm{C};
+\]
+环境水分浓度范围约为
+\[
+0.04975
+\sim
+0.05025\,\mathrm{kg/kg},
+\]
+标准差约为
+\[
+1.53\times10^{-4}\,\mathrm{kg/kg}.
+\]
+因此可认为该阶段主要表现为稳定值附近的小幅振荡，用区间平均值代表后续恒温恒湿工况具有较好的合理性。
+
+\subsection{后续环境边界的延拓}
+
+令
+\[
+t_4=4\,\mathrm{h}=14400\,\mathrm{s}.
+\]
+对于 $0\le t\le t_4$，仍使用附件~1 给出的环境数据，并按前两问的方法进行分段线性插值。
+
+对于 $t>t_4$，取
+\begin{equation}
+T_a(t)=
+\begin{cases}
+T_{a,\mathrm{data}}(t), & 0\le t\le t_4,\\[4pt]
+323.1549\,\mathrm{K}, & t>t_4,
+\end{cases}
+\label{eq:Ta_piecewise}
+\end{equation}
+以及
+\begin{equation}
+C_a(t)=
+\begin{cases}
+C_{a,\mathrm{data}}(t), & 0\le t\le t_4,\\[4pt]
+0.0499937\,\mathrm{kg/kg}, & t>t_4.
+\end{cases}
+\label{eq:Ca_piecewise}
+\end{equation}
+
+这里保持恒定的是\textbf{烘房环境边界} $T_a(t)$ 与 $C_a(t)$，而不是药材内部的
+$T(r,t)$ 与 $C(r,t)$。药材内部仍继续进行非稳态传热和传质。
+
+\section{继续沿用第二问的耦合传热--传质模型}
+
+第三问不重新建立物理控制方程，而直接沿用第二问的变物性模型。
+
+材料物性参数为
+\begin{equation}
+    \rho(C)=650+128C,
+\end{equation}
+\begin{equation}
+    c_p(C)=1450+2736\frac{C}{C+1},
+\end{equation}
+\begin{equation}
+    k(C)=0.21+0.38\frac{C}{C+1},
+\end{equation}
+水分扩散系数为
+\begin{equation}
+    D(C,T)
+    =
+    2.4\times10^{-3}
+    \exp\!\left(-\frac{0.45}{C}\right)
+    \exp\!\left(-\frac{3850}{T}\right),
+    \label{eq:D}
+\end{equation}
+其中 $T$ 使用绝对温度 K。
+
+温度控制方程为
+\begin{equation}
+    \rho(C)c_p(C)\frac{\partial T}{\partial t}
+    =
+    \frac{1}{r}
+    \frac{\partial}{\partial r}
+    \left[
+        rk(C)\frac{\partial T}{\partial r}
+    \right],
+    \qquad 0<r<R.
+    \label{eq:heat}
+\end{equation}
+
+中心处满足
+\begin{equation}
+    \left.
+    \frac{\partial T}{\partial r}
+    \right|_{r=0}=0,
+\end{equation}
+表面满足对流换热条件
+\begin{equation}
+    -k(C)
+    \left.
+    \frac{\partial T}{\partial r}
+    \right|_{r=R}
+    =
+    h\left[T(R,t)-T_a(t)\right].
+    \label{eq:heat_bc}
+\end{equation}
+
+水分控制方程为
+\begin{equation}
+    \frac{\partial C}{\partial t}
+    =
+    \frac{1}{r}
+    \frac{\partial}{\partial r}
+    \left[
+        rD(C,T)\frac{\partial C}{\partial r}
+    \right],
+    \qquad 0<r<R.
+    \label{eq:moisture}
+\end{equation}
+
+中心处满足零水分通量条件
+\begin{equation}
+    \left.
+    \frac{\partial C}{\partial r}
+    \right|_{r=0}=0,
+\end{equation}
+表面满足对流传质边界
+\begin{equation}
+    -D(C,T)
+    \left.
+    \frac{\partial C}{\partial r}
+    \right|_{r=R}
+    =
+    h_m\left[C(R,t)-C_a(t)\right].
+    \label{eq:moisture_bc}
+\end{equation}
+
+空间有限体积网格、中心控制体、最外层控制体以及第二问中的非线性 Picard 迭代均保持不变。
+
+\section{最大水分浓度的定义}
+
+题目要求药材各处的水分浓度均低于目标值，因此定义时刻 $t$ 的最大水分浓度为
+\begin{equation}
+    \boxed{
+    C_{\max}(t)
+    =
+    \max_{0\le r\le R}C(r,t)
+    }.
+    \label{eq:Cmax_cont}
+\end{equation}
+
+该定义直接对应“所有位置均满足水分浓度要求”：只有当最大值低于阈值时，药材内部其他位置才必然同时低于阈值。
+
+在有限体积离散后，设第 $n$ 个时间层各径向节点含水率为
+\[
+C_0^n,C_1^n,\ldots,C_N^n,
+\]
+则数值上的最大水分浓度为
+\begin{equation}
+    \boxed{
+    C_{\max}^n
+    =
+    \max_{0\le i\le N} C_i^n
+    }.
+    \label{eq:Cmax_discrete}
+\end{equation}
+
+虽然在典型径向干燥过程中最高含水率往往出现在靠近中心的位置，但计算时不额外假设最大值所在位置，而是在全部径向节点中直接取最大值，从而保证判定条件的稳健性。
+
+\section{干燥完成时间的定义}
+
+目标水分浓度为
+\begin{equation}
+    C_{\mathrm{tar}}=0.15\,\mathrm{kg/kg}.
+\end{equation}
+
+由于题目要求药材\textbf{各处}的水分浓度均低于 $0.15\,\mathrm{kg/kg}$，因此干燥完成条件应写为
+\begin{equation}
+    C_{\max}(t)<0.15.
+    \label{eq:dry_condition}
+\end{equation}
+
+第三问所求的理论干燥时间定义为
+\begin{equation}
+    \boxed{
+    t_{\mathrm{dry}}
+    =
+    \inf
+    \left\{
+        t\ge0:
+        C_{\max}(t)<0.15
+    \right\}
+    }.
+    \label{eq:tdry}
+\end{equation}
+
+也可以定义事件函数
+\begin{equation}
+    F(t)=C_{\max}(t)-0.15.
+    \label{eq:event}
+\end{equation}
+则问题等价于寻找 $F(t)$ 首次小于零的时刻。
+
+与原先采用平均含水率的判定相比，最大值判据更严格。若只满足
+\[
+\overline C(t)<0.15,
+\]
+仍可能存在局部区域
+\[
+C(r,t)>0.15,
+\]
+从而不符合题目所要求的“各处均低于 $0.15$”。
+
+\section{时间离散与事件检测}
+
+考虑到整个烘干过程持续数十小时甚至数天，而题目要求的最终时间单位为小时，同时结果文件每隔 $60\,\mathrm{s}$ 保存一次，因此数值计算中全程采用
+\begin{equation}
+    \boxed{\Delta t=1\,\mathrm{s}}.
+    \label{eq:dt}
+\end{equation}
+
+相对于数小时乃至数天的干燥时间尺度，$1\,\mathrm{s}$ 已经足够细，并且避免了不必要的多级时间步切换。
+
+令
+\begin{equation}
+    t_n=n\Delta t=n\,\mathrm{s}.
+\end{equation}
+在每一个时间层完成温度--含水率耦合迭代后，计算
+\begin{equation}
+    C_{\max}^n=\max_i C_i^n.
+\end{equation}
+
+若首次出现
+\begin{equation}
+    C_{\max}^{n-1}\ge0.15,
+    \qquad
+    C_{\max}^{n}<0.15,
+    \label{eq:first_cross}
+\end{equation}
+则直接取
+\begin{equation}
+    t_{\mathrm{dry}}^{(\Delta t)}
+    =
+    t_n
+    =
+    n\,\mathrm{s}.
+    \label{eq:tdry_discrete}
+\end{equation}
+
+转换为小时后
+\begin{equation}
+    t_{\mathrm{dry,h}}
+    =
+    \frac{t_{\mathrm{dry}}^{(\Delta t)}}{3600}.
+    \label{eq:tdry_hour}
+\end{equation}
+
+由于时间步仅为 $1\,\mathrm{s}$，由离散时间引入的首次到达时间分辨率不超过 $1\,\mathrm{s}$，即约
+\[
+2.78\times10^{-4}\,\mathrm{h},
+\]
+相对于数十小时量级的总干燥时长可以忽略。因此，基准计算不在单次阈值跨越后进行局部 $0.25\,\mathrm{s}$ 回退或二分搜索。后文独立运行的 $0.5\,\mathrm{s}$ 与 $0.25\,\mathrm{s}$ 全程复算仅用于时间步长敏感性检验。
+
+\section{结果输出}
+
+程序内部每隔 $1\,\mathrm{s}$ 推进一次模型，但按照题目要求进行抽样输出：
+
+\begin{enumerate}
+    \item 论文表格中，每隔 $6\,\mathrm{h}$ 给出到药材中心距离
+    \[
+    0,\ 0.5,\ 1.0,\ 1.5,\ 2.0\ \mathrm{cm}
+    \]
+    处的水分浓度；
+    \item 完整结果文件中，每隔 $60\,\mathrm{s}$ 保存一次，并保留到药材中心距离每隔 $0.1\,\mathrm{cm}$ 的水分浓度；
+    \item 另行记录首次满足
+    \[
+    C_{\max}(t)<0.15
+    \]
+    的干燥结束时间。
+\end{enumerate}
+
+\section{恒温恒湿边界假设的敏感性分析}
+
+采用 $9000\sim14400\,\mathrm{s}$ 平均值作为后续恒温恒湿边界仍属于模型假设，因此在得到基准干燥时间后，对该假设进行敏感性检验。
+
+基准工况为
+\begin{equation}
+    T_a^\ast=323.1549\,\mathrm{K},
+    \qquad
+    C_a^\ast=0.0499937\,\mathrm{kg/kg}.
+\end{equation}
+
+分别以稳定段总体标准差构造温度和空气水分浓度的正负扰动：
+\begin{equation}
+    T_a=T_a^\ast\pm\sigma_T,
+\end{equation}
+\begin{equation}
+    C_a=C_a^\ast\pm\sigma_C,
+\end{equation}
+其中 $\sigma_T$ 与 $\sigma_C$ 分别为 $9000\sim14400\,\mathrm{s}$ 稳定段的温度总体标准差和空气水分浓度总体标准差。实际计算一次只扰动一个边界量，其他条件保持基准值。另将附件末条记录作为长期边界，并将 $h$ 与 $h_m$ 同时放大 $8\%$ 构造端面通量上界筛查情景。
+
+对每一组扰动条件重新求解完整模型，并按照同一最大值判据计算
+\[
+t_{\mathrm{dry}}^{(j)}.
+\]
+
+定义带符号的干燥时间相对变化率
+\begin{equation}
+    \eta_t^{(j)}
+    =
+    \frac{
+        t_{\mathrm{dry}}^{(j)}
+        -
+        t_{\mathrm{dry}}^{(0)}
+    }{
+        t_{\mathrm{dry}}^{(0)}
+    },
+    \label{eq:sensitivity}
+\end{equation}
+其中 $t_{\mathrm{dry}}^{(0)}$ 为基准工况结果。$\eta_t^{(j)}$ 的符号表示烘干时长延长或缩短，$|\eta_t^{(j)}|$ 用于与边界稳健性门槛比较。
+
+若各稳定段扰动工况的 $|\eta_t^{(j)}|$ 始终较小，则说明最终干燥时间对稳定段平均环境状态的小幅变化不敏感，从而支持 $4\,\mathrm{h}$ 后采用恒温恒湿平均边界的简化假设。端面通量上界情景的绝对变化率若超过 $8\%$，则必须回退到二维圆柱模型。
+
+从模型机理上，较高的环境温度通常会提高材料内部温度，并通过 $D(C,T)$ 增大有效水分扩散系数，从而倾向于缩短干燥时间；较高的环境水分浓度则会降低表面传质驱动力
+\[
+C(R,t)-C_a,
+\]
+从而倾向于延长干燥时间。最终应以数值敏感性结果验证这些趋势。
+
+
+\section{时间步长敏感性检验}
+
+为了验证全程采用 $\Delta t=1\,\mathrm{s}$ 不会对干燥完成时间产生明显的数值误差，在其余模型参数、空间网格、环境边界和收敛判据均保持不变的条件下，分别取
+\begin{equation}
+    \Delta t=1\,\mathrm{s},\qquad
+    0.5\,\mathrm{s},\qquad
+    0.25\,\mathrm{s}
+    \label{eq:dt_sensitivity_set}
+\end{equation}
+重复求解第三问模型，并分别记所得干燥完成时间为
+\begin{equation}
+    t_{\mathrm{dry}}^{(1)},\qquad
+    t_{\mathrm{dry}}^{(0.5)},\qquad
+    t_{\mathrm{dry}}^{(0.25)}.
+\end{equation}
+
+由于 $\Delta t=0.25\,\mathrm{s}$ 的时间离散最细，可将其结果作为时间步长敏感性检验的参考值。定义不同时间步下干燥时间的相对偏差为
+\begin{equation}
+    E_{\Delta t}
+    =
+    \frac{
+        \left|
+        t_{\mathrm{dry}}^{(\Delta t)}
+        -t_{\mathrm{dry}}^{(0.25)}
+        \right|
+    }{
+        t_{\mathrm{dry}}^{(0.25)}
+    }
+    \times100\%.
+    \label{eq:time_step_error}
+\end{equation}
+
+因此
+\begin{equation}
+    E_{1}
+    =
+    \frac{
+        \left|t_{\mathrm{dry}}^{(1)}-t_{\mathrm{dry}}^{(0.25)}\right|
+    }{
+        t_{\mathrm{dry}}^{(0.25)}
+    }
+    \times100\%,
+\end{equation}
+\begin{equation}
+    E_{0.5}
+    =
+    \frac{
+        \left|t_{\mathrm{dry}}^{(0.5)}-t_{\mathrm{dry}}^{(0.25)}\right|
+    }{
+        t_{\mathrm{dry}}^{(0.25)}
+    }
+    \times100\%.
+\end{equation}
+
+同时，可比较相邻两次时间加密后的干燥时间差
+\begin{equation}
+    \Delta t_{\mathrm{dry}}^{1\rightarrow0.5}
+    =
+    \left|t_{\mathrm{dry}}^{(1)}-t_{\mathrm{dry}}^{(0.5)}\right|,
+\end{equation}
+\begin{equation}
+    \Delta t_{\mathrm{dry}}^{0.5\rightarrow0.25}
+    =
+    \left|t_{\mathrm{dry}}^{(0.5)}-t_{\mathrm{dry}}^{(0.25)}\right|.
+\end{equation}
+若随着时间步从 $1\,\mathrm{s}$ 减小至 $0.5\,\mathrm{s}$、再减小至 $0.25\,\mathrm{s}$，干燥时间的变化量持续减小，且 $E_1$、$E_{0.5}$ 均处于较小水平，则说明数值结果对时间步长不敏感，采用 $\Delta t=1\,\mathrm{s}$ 已能满足第三问的计算精度要求。
+
+实际计算结果可按表~\ref{tab:dt_sensitivity} 汇总：
+\begin{table}[htbp]
+    \centering
+    \caption{时间步长敏感性检验}
+    \label{tab:dt_sensitivity}
+    \begin{tabular}{cccc}
+        \toprule
+        $\Delta t$/s & $t_{\mathrm{dry}}$/s & $t_{\mathrm{dry}}$/h & 相对偏差 $E_{\Delta t}$ \\
+        \midrule
+        1.00 & --- & --- & --- \\
+        0.50 & --- & --- & --- \\
+        0.25 & --- & --- & 参考值 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+该检验的目的并非改变第三问的主计算步长，而是用更小时间步对 $\Delta t=1\,\mathrm{s}$ 的结果进行数值稳定性验证。若三组结果基本一致，则最终主模型仍采用 $1\,\mathrm{s}$ 时间步，以兼顾计算精度与计算效率。
+
+\section{第三问完整计算流程}
+
+第三问可按照以下步骤实现：
+
+\begin{enumerate}
+    \item 读取附件~1 的环境温度和环境水分浓度数据；
+    \item 对附件数据区间进行分段线性插值；
+    \item 计算 $9000\sim14400\,\mathrm{s}$ 稳定振荡区间的环境平均值
+    \[
+    \overline T_a=323.1549\,\mathrm{K},
+    \qquad
+    \overline C_a=0.0499937\,\mathrm{kg/kg};
+    \]
+    \item 当 $t>14400\,\mathrm{s}$ 时，将上述平均值作为恒温恒湿外部边界；
+    \item 全程采用
+    \[
+    \Delta t=1\,\mathrm{s},
+    \]
+    并在每一个时间步内继续使用第二问的 Picard 耦合迭代求解 $T(r,t)$ 与 $C(r,t)$；
+    \item 每一步计算
+    \[
+    C_{\max}^n=\max_i C_i^n;
+    \]
+    \item 当首次检测到
+    \[
+    C_{\max}^n<0.15
+    \]
+    时停止时间推进，并记录
+    \[
+    t_{\mathrm{dry}}=n\,\mathrm{s};
+    \]
+    \item 将干燥时间转换为小时；
+    \item 按题目要求抽取每隔 $6\,\mathrm{h}$ 的论文表格结果，并每隔 $60\,\mathrm{s}$ 保存完整结果文件；
+    \item 扰动恒温阶段的 $\overline T_a$ 和 $\overline C_a$，重复计算干燥时间，完成边界参数敏感性分析；
+    \item 分别采用 $\Delta t=1\,\mathrm{s}$、$0.5\,\mathrm{s}$ 和 $0.25\,\mathrm{s}$ 重复计算，比较 $t_{\mathrm{dry}}$，完成时间步长敏感性检验。
+\end{enumerate}
+
+\section{模型结构总结}
+
+修订后的第三问可以概括为
+\[
+\boxed{
+\begin{aligned}
+&\text{第二问变物性耦合模型}\\
+&+\ \text{稳定段平均恒温恒湿边界}\\
+&+\ \text{全程 }1\,\mathrm{s}\text{ 时间步}\\
+&+\ C_{\max}(t)\text{ 最大值判据}\\
+&+\ \text{首次越过 }0.15\text{ 的事件检测}\\
+&+\ \text{边界参数敏感性分析}\\
+&+\ \text{时间步长敏感性检验}.
+\end{aligned}}
+\]
+
+其中最关键的修改是将原先基于平均含水率的判定
+\[
+M(t)<0.15
+\]
+替换为
+\[
+C_{\max}(t)<0.15,
+\]
+从而使模型与题目中“药材各处的水分浓度应低于 $0.15\,\mathrm{kg/kg}$”的要求严格一致。
+
+% ============================================================
+% 修订说明：
+% 1. 原“平均含水率 M(t)”全部改为最大水分浓度
+%    Cmax(t)=max_{0<=r<=R} C(r,t)。
+% 2. 干燥完成时间改为
+%    t_dry=inf{t:Cmax(t)<0.15}。
+% 3. 数值判定采用所有径向有限体积节点的最大值，
+%    不预先假设最大值一定出现在中心。
+% 4. 全局时间步统一改为 dt=1 s，不再采用 0.25 s、
+%    局部回退或二分搜索方案。
+% 5. 4 h 后的恒定环境边界不再取最后一个观测点，
+%    而采用附件1中 9000~14400 s 共91个点的平均值：
+%    Ta_bar=50.0049 degC=323.1549 K，
+%    Ca_bar=0.0499937 kg/kg。
+% 6. 保留边界参数敏感性分析，用于验证稳定段平均边界假设的稳健性。
+% 7. 增加时间步长敏感性检验：dt=1 s、0.5 s、0.25 s；
+%    以0.25 s结果为参考，比较干燥完成时间的相对偏差。
+% ============================================================
+
+\end{document}

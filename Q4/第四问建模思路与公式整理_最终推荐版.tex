@@ -1,0 +1,723 @@
+\documentclass[UTF8,a4paper,12pt]{ctexart}
+
+\usepackage{amsmath,amssymb,bm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{siunitx}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{left=2.4cm,right=2.4cm,top=2.4cm,bottom=2.4cm}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.25em}
+\hypersetup{colorlinks=false,hidelinks}
+\sisetup{per-mode=symbol}
+
+\title{第四问建模思路与公式整理\\\large 最终推荐方案：移动域主模型 + 固定尺寸对照 + 收缩假设敏感性}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{第四问的核心任务}
+
+第四问与第三问相比，同时发生两类变化：
+\begin{enumerate}[label=(\arabic*)]
+    \item 几何尺寸由固定半径 $R_0=2\,\mathrm{cm}$ 改为附件~2 给出的时变半径 $R(t)$；
+    \item 材料物性经验式由附录~3 改为附录~4。
+\end{enumerate}
+
+因此，第四问的正式求解必须使用
+\[
+\boxed{R(t)+\text{附录4物性}}
+\]
+并在移动边界上继续求解温度场与水分场。与此同时，为了回答“尺寸收缩本身究竟改变了多少干燥时间”，以及检验“内部同比例收缩”这一不可直接观测假设是否会显著影响最终结论，本文采用三层结构：
+\[
+\boxed{
+\text{正式主模型}
+\;\longrightarrow\;
+\text{固定尺寸对照}
+\;\longrightarrow\;
+\text{收缩假设敏感性}
+}
+\]
+
+需要特别说明：第三问的附录~3 参数不再作为第四问模型的一部分。若最后与第三问结果比较，只能作为跨问题结果对照，不能把第三问与第四问的时间差全部归因于尺寸收缩。
+
+\section{三层建模框架}
+
+\subsection{第一层：第四问正式主模型}
+
+主模型采用附件~2 的实测半径 $R(t)$、附录~4 的物性经验式，并使用均匀相似径向收缩作为移动域的运动学闭合。其输出的干燥时间记为
+\[
+\boxed{t_{\mathrm{dry}}^{(4)}}.
+\]
+
+\subsection{第二层：固定尺寸对照模型}
+
+构造一个只用于解释尺寸效应的反事实对照：保持第四问的附录~4 物性、边界条件、初始条件和数值算法全部不变，仅将
+\[
+R(t)
+\]
+替换为
+\[
+R(t)\equiv R_0.
+\]
+得到干燥时间
+\[
+\boxed{t_{\mathrm{dry}}^{(4,0)}}.
+\]
+
+因为两组模型的唯一差别是“是否发生几何收缩”，所以
+\[
+\boxed{
+\Delta t_R
+=t_{\mathrm{dry}}^{(4)}-t_{\mathrm{dry}}^{(4,0)}
+}
+\]
+可用于评价尺寸变化对干燥时间的净影响。进一步定义相对尺寸效应
+\begin{equation}
+\eta_R
+=
+\frac{t_{\mathrm{dry}}^{(4)}-t_{\mathrm{dry}}^{(4,0)}}
+{t_{\mathrm{dry}}^{(4,0)}}\times100\%.
+\label{eq:etaR}
+\end{equation}
+若 $\eta_R<0$，说明几何收缩总体上缩短了干燥过程；若 $\eta_R>0$，则说明在该模型下收缩反而延长了干燥过程。
+
+\subsection{第三层：收缩假设敏感性}
+
+附件~2 只观测了外表面半径 $R(t)$，并没有给出内部材料点的径向位移。主模型采用“均匀相似收缩”并不是声称药材真实内部一定同比例收缩，而是在缺乏内部位移场及收缩本构关系时，选择一个无额外待定参数、保持径向材料点顺序的最简运动学闭合。
+
+为了检验这个闭合假设对最终干燥时间是否敏感，在完全保持同一 $R(t)$ 和附录~4 物性的前提下，构造轻度非均匀收缩映射族，并比较不同映射下的 $t_{\mathrm{dry}}$。这部分是第四问最重要的\textbf{模型结构敏感性检验}。
+
+\section{主模型的移动域构造}
+
+\subsection{半径数据的连续化}
+
+附件~2 给出离散观测点
+\[
+(t_j,R_j),\qquad j=0,1,\ldots,m.
+\]
+在相邻观测时刻之间采用分段线性插值：
+\begin{equation}
+R(t)=R_j+
+\frac{R_{j+1}-R_j}{t_{j+1}-t_j}(t-t_j),
+\qquad t_j\le t\le t_{j+1}.
+\label{eq:Rinterp}
+\end{equation}
+若最终干燥时刻晚于附件~2 最后一个观测时刻，则基准方案令半径保持末值，不对缺失区间继续做无数据支撑的趋势外推。
+
+\subsection{相似收缩闭合}
+
+定义归一化径向坐标
+\begin{equation}
+x=\frac{r}{R(t)},\qquad 0\le x\le1.
+\label{eq:xdef}
+\end{equation}
+设初始半径为 $R_0$，初始材料坐标为 $s$。主模型采用
+\begin{equation}
+r(s,t)=\frac{R(t)}{R_0}s.
+\label{eq:similar}
+\end{equation}
+即材料点的归一化径向位置保持不变。于是径向材料速度为
+\begin{equation}
+v_r(r,t)=\frac{rR'(t)}{R(t)}.
+\label{eq:velocity}
+\end{equation}
+
+这一假设的作用是封闭移动域问题，而不是把“同比例收缩”当作可由题面直接验证的物理事实。
+
+\section{附录4物性关系}
+
+第四问统一使用附录~4 的经验公式：
+\begin{equation}
+\rho(C)=760+90C,
+\label{eq:rho4}
+\end{equation}
+\begin{equation}
+c_p(C)=1850+2150\frac{C}{C+1},
+\label{eq:cp4}
+\end{equation}
+\begin{equation}
+k(C)=0.12+0.20\frac{C}{C+1},
+\label{eq:k4}
+\end{equation}
+以及
+\begin{equation}
+D(C,T)
+=
+4.2\times10^{-4}
+\exp\!\left(-\frac{0.30}{C}\right)
+\exp\!\left(-\frac{3850}{T}\right),
+\label{eq:D4}
+\end{equation}
+其中 $T$ 必须以 K 为单位。
+
+\section{主模型的控制方程}
+
+\subsection{物理坐标中的材料导数形式}
+
+在径向运动材料中，温度与含水率采用材料导数描述：
+\begin{equation}
+\rho(C)c_p(C)\frac{DT}{Dt}
+=
+\frac{1}{r}\frac{\partial}{\partial r}
+\left(
+ r k(C)\frac{\partial T}{\partial r}
+\right),
+\label{eq:heat_phys}
+\end{equation}
+\begin{equation}
+\frac{DC}{Dt}
+=
+\frac{1}{r}\frac{\partial}{\partial r}
+\left[
+ rD(C,T)\frac{\partial C}{\partial r}
+\right].
+\label{eq:moist_phys}
+\end{equation}
+其中
+\[
+\frac{D}{Dt}
+=
+\frac{\partial}{\partial t}
++v_r\frac{\partial}{\partial r}.
+\]
+
+\subsection{归一化坐标中的方程}
+
+令
+\[
+\widetilde T(x,t)=T(r,t),\qquad
+\widetilde C(x,t)=C(r,t),
+\]
+其中 $r=xR(t)$。由于固定 $x$ 对应随材料一起运动的点，移动项与材料对流项相消，可得到固定单位区间 $0\le x\le1$ 上的方程：
+\begin{equation}
+\rho(\widetilde C)c_p(\widetilde C)
+\frac{\partial\widetilde T}{\partial t}
+=
+\frac{1}{xR^2(t)}
+\frac{\partial}{\partial x}
+\left[
+ xk(\widetilde C)
+ \frac{\partial\widetilde T}{\partial x}
+\right],
+\label{eq:heat_x}
+\end{equation}
+\begin{equation}
+\frac{\partial\widetilde C}{\partial t}
+=
+\frac{1}{xR^2(t)}
+\frac{\partial}{\partial x}
+\left[
+ xD(\widetilde C,\widetilde T)
+ \frac{\partial\widetilde C}{\partial x}
+\right].
+\label{eq:moist_x}
+\end{equation}
+
+式~\eqref{eq:heat_x}--\eqref{eq:moist_x} 中的 $R^{-2}(t)$ 直接体现了收缩导致扩散距离变短的几何效应。
+
+\section{初始条件与边界条件}
+
+中心位置满足轴对称零通量条件
+\begin{equation}
+\left.\frac{\partial\widetilde T}{\partial x}\right|_{x=0}=0,
+\qquad
+\left.\frac{\partial\widetilde C}{\partial x}\right|_{x=0}=0.
+\label{eq:centerbc}
+\end{equation}
+
+由于
+\[
+\frac{\partial}{\partial r}
+=
+\frac{1}{R(t)}\frac{\partial}{\partial x},
+\]
+表面对流换热边界变为
+\begin{equation}
+-\frac{k}{R(t)}
+\left.\frac{\partial\widetilde T}{\partial x}\right|_{x=1}
+=
+h\left[\widetilde T(1,t)-T_a(t)\right],
+\label{eq:heatbc}
+\end{equation}
+表面对流传质边界变为
+\begin{equation}
+-\frac{D}{R(t)}
+\left.\frac{\partial\widetilde C}{\partial x}\right|_{x=1}
+=
+h_m\left[\widetilde C(1,t)-C_a(t)\right].
+\label{eq:moistbc}
+\end{equation}
+
+空气边界 $T_a(t)$、$C_a(t)$ 可沿用第三问已经建立的处理方式：实测区间采用附件~1 数据插值，实测区间结束后采用稳定段平均值作为恒温恒湿边界。
+
+\section{干燥终点判定}
+
+第四问继续采用第三问的全域最大含水率判据。定义
+\begin{equation}
+C_{\max}^{(4)}(t)
+=
+\max_{0\le x\le1}\widetilde C(x,t).
+\label{eq:cmax4}
+\end{equation}
+则正式主模型的干燥结束时间为
+\begin{equation}
+\boxed{
+t_{\mathrm{dry}}^{(4)}
+=
+\inf\left\{
+t>0:
+C_{\max}^{(4)}(t)<0.15
+\right\}.
+}
+\label{eq:tdry4}
+\end{equation}
+
+数值上每个时间层都对全部径向节点取最大值，不预先假设中心一定是控制点。若计算结果显示最大值始终位于中心，则可以在结果分析中说明中心含水率决定最终干燥时刻。
+
+\section{第二层：固定尺寸对照模型}
+
+固定尺寸对照模型的目的不是重新回答第三问，而是\textbf{在第四问自己的附录4物性体系内，单独消除几何收缩这一因素}。
+
+因此，对照模型保留：
+\[
+\rho(C),\ c_p(C),\ k(C),\ D(C,T)
+\]
+全部采用附录~4，空气边界、初始条件、数值网格和收敛判据也与主模型一致，仅令
+\begin{equation}
+R(t)\equiv R_0.
+\label{eq:Rfixed}
+\end{equation}
+
+在归一化坐标中，此时控制方程变为
+\begin{equation}
+\rho c_p\frac{\partial T_0}{\partial t}
+=
+\frac{1}{xR_0^2}
+\frac{\partial}{\partial x}
+\left(
+ xk\frac{\partial T_0}{\partial x}
+\right),
+\end{equation}
+\begin{equation}
+\frac{\partial C_0}{\partial t}
+=
+\frac{1}{xR_0^2}
+\frac{\partial}{\partial x}
+\left(
+ xD\frac{\partial C_0}{\partial x}
+\right).
+\end{equation}
+其干燥结束时间为
+\begin{equation}
+\boxed{
+t_{\mathrm{dry}}^{(4,0)}
+=
+\inf\left\{
+t>0:
+\max_{0\le x\le1}C_0(x,t)<0.15
+\right\}.
+}
+\label{eq:tdry40}
+\end{equation}
+
+最终比较式~\eqref{eq:tdry4} 与式~\eqref{eq:tdry40}，即可得到尺寸收缩的净效应 $\eta_R$。
+
+\section{为什么不直接由局部含水率反演真实内部形变}
+
+设初始材料坐标为 $s$，真实材料映射为
+\[
+r=\chi(s,t).
+\]
+若只考虑径向收缩且长度保持不变，薄环干固体质量守恒可写为
+\begin{equation}
+\rho_d(\chi(s,t),t)
+\,\chi(s,t)
+\frac{\partial\chi}{\partial s}
+=
+\rho_{d,0}(s)s.
+\label{eq:drymass}
+\end{equation}
+
+如果再强制
+\[
+\chi(s,t)=\lambda(t)s,
+\qquad
+\lambda(t)=\frac{R(t)}{R_0},
+\]
+则
+\begin{equation}
+\rho_d(\lambda s,t)
+=
+\frac{\rho_{d,0}(s)}{\lambda^2(t)}.
+\label{eq:rhodsimilar}
+\end{equation}
+这说明严格同比例收缩隐含了较强的内部运动学约束。
+
+然而题目只给出了外半径 $R(t)$，没有给出内部位移、应力应变、本构关系、弹性参数或局部收缩率与含水率的定量关系。因此，仅凭 $R(t)$ 与 $C(r,t)$ 无法唯一反演真实的 $\chi(s,t)$。主模型采用相似收缩，是为了在不引入不可辨识参数的情况下封闭问题；其合理性需要通过下面的结构敏感性分析验证，而不是通过声称“实际一定同比例收缩”来保证。
+
+\section{第三层：非均匀收缩结构敏感性}
+
+\subsection{材料坐标与非均匀映射}
+
+定义初始归一化材料坐标
+\begin{equation}
+\xi=\frac{s}{R_0},
+\qquad 0\le\xi\le1.
+\label{eq:xi}
+\end{equation}
+构造满足同一实测外半径的映射族：
+\begin{equation}
+\boxed{
+\frac{r(\xi,t)}{R(t)}
+=
+\xi+a_*g(t)\xi(1-\xi)
+}
+\label{eq:nonuniform}
+\end{equation}
+其中 $a_*$ 控制非均匀程度，$g(t)$ 描述非均匀收缩随总体收缩逐渐建立的过程。
+
+推荐取
+\begin{equation}
+g(t)
+=
+\frac{1-R(t)/R_0}
+{1-R_{\mathrm{end}}/R_0},
+\label{eq:g}
+\end{equation}
+在观测区间内有 $g(0)=0$，并随总体收缩逐渐接近 $1$；附件~2 结束后可令 $g(t)=1$。
+
+式~\eqref{eq:nonuniform} 自动满足
+\begin{equation}
+r(0,t)=0,
+\qquad
+r(1,t)=R(t),
+\label{eq:endpoints}
+\end{equation}
+因此不同 $a_*$ 下外表面半径始终严格匹配附件~2。
+
+其雅可比为
+\begin{equation}
+r_\xi
+=
+\frac{\partial r}{\partial\xi}
+=
+R(t)
+\left[
+1+a_*g(t)(1-2\xi)
+\right].
+\label{eq:jacobian}
+\end{equation}
+只要
+\[
+|a_*g(t)|<1,
+\]
+就有 $r_\xi>0$，材料点径向顺序不会发生交叉。
+
+\subsection{参数取值}
+
+建议至少计算
+\begin{equation}
+\boxed{a_*=0,\quad0.1,\quad0.2.}
+\label{eq:avalues}
+\end{equation}
+其中：
+\begin{itemize}
+    \item $a_*=0$：严格退化为主模型的均匀相似收缩；
+    \item $a_*>0$：外层材料点间距压缩更强，可用于模拟“外层失水更多、局部收缩更明显”的合理非均匀扰动。
+\end{itemize}
+
+这组参数不是要识别真实内部形变，而是用于检验主结论对内部收缩场不确定性的敏感程度。
+
+\section{一般移动映射下的控制方程}
+
+在任意材料映射 $r=r(\xi,t)$ 下，径向微分算子满足
+\[
+\frac{\partial}{\partial r}
+=
+\frac{1}{r_\xi}
+\frac{\partial}{\partial\xi}.
+\]
+因此一般轴对称扩散算子可写成
+\begin{equation}
+\boxed{
+\frac{1}{r r_\xi}
+\frac{\partial}{\partial\xi}
+\left[
+\frac{r\Gamma}{r_\xi}
+\frac{\partial u}{\partial\xi}
+\right]
+}
+\label{eq:generalop}
+\end{equation}
+其中 $\Gamma=k$ 或 $D$。
+
+于是非均匀收缩敏感性模型中的温度方程为
+\begin{equation}
+\rho c_p
+\frac{\partial \widehat T}{\partial t}
+=
+\frac{1}{r r_\xi}
+\frac{\partial}{\partial\xi}
+\left[
+\frac{rk}{r_\xi}
+\frac{\partial\widehat T}{\partial\xi}
+\right],
+\label{eq:heatgeneral}
+\end{equation}
+水分方程为
+\begin{equation}
+\frac{\partial \widehat C}{\partial t}
+=
+\frac{1}{r r_\xi}
+\frac{\partial}{\partial\xi}
+\left[
+\frac{rD}{r_\xi}
+\frac{\partial\widehat C}{\partial\xi}
+\right].
+\label{eq:moistgeneral}
+\end{equation}
+
+中心边界仍为
+\begin{equation}
+\widehat T_\xi(0,t)=0,
+\qquad
+\widehat C_\xi(0,t)=0.
+\end{equation}
+表面边界变为
+\begin{equation}
+-\frac{k}{r_\xi(1,t)}
+\widehat T_\xi(1,t)
+=
+h\left[\widehat T(1,t)-T_a(t)\right],
+\label{eq:heatgeneralbc}
+\end{equation}
+\begin{equation}
+-\frac{D}{r_\xi(1,t)}
+\widehat C_\xi(1,t)
+=
+h_m\left[\widehat C(1,t)-C_a(t)\right].
+\label{eq:moistgeneralbc}
+\end{equation}
+
+当 $a_*=0$ 时，
+\[
+r=R(t)\xi,
+\qquad
+r_\xi=R(t),
+\]
+式~\eqref{eq:heatgeneral}--\eqref{eq:moistgeneral} 恰好退化为主模型式~\eqref{eq:heat_x}--\eqref{eq:moist_x}。因此非均匀模型是主模型的自然泛化，而不是另起一套无关模型。
+
+\section{收缩假设敏感度指标}
+
+对每一个 $a_*$，定义
+\begin{equation}
+t_{\mathrm{dry}}(a_*)
+=
+\inf\left\{
+t>0:
+\max_{0\le\xi\le1}\widehat C(\xi,t;a_*)<0.15
+\right\}.
+\label{eq:tdrya}
+\end{equation}
+
+以 $a_*=0$ 的相似收缩主模型为基准，定义相对结构敏感度
+\begin{equation}
+\boxed{
+\eta_a(a_*)
+=
+\frac{t_{\mathrm{dry}}(a_*)-t_{\mathrm{dry}}(0)}
+{t_{\mathrm{dry}}(0)}\times100\%.
+}
+\label{eq:etaa}
+\end{equation}
+并定义最大结构偏差
+\begin{equation}
+E_{\mathrm{shape}}
+=
+\max_{a_*\in\{0.1,0.2\}}
+|\eta_a(a_*)|.
+\label{eq:Eshape}
+\end{equation}
+
+若 $E_{\mathrm{shape}}$ 较小，则可以说明：虽然内部真实形变场不可观测，但在保持同一实测外半径的合理非均匀收缩扰动下，最终干燥时间变化有限，因此相似收缩闭合不会显著改变主要结论。
+
+这就是第四问中最关键的\textbf{敏感度测试}。
+
+\section{时间步加密检验}
+
+第四问真正需要重点检验的是内部收缩映射假设，而时间步长只属于数值离散精度问题，因此不再把它作为主要敏感性分析展开。正式计算采用
+\begin{equation}
+\boxed{\Delta t=1\,\mathrm{s}}.
+\label{eq:dtmain}
+\end{equation}
+考虑到整个烘干过程持续数十小时，$1\,\mathrm{s}$ 已远小于问题的宏观时间尺度。为验证该步长在加入移动边界后仍具有足够精度，仅进行一次时间步减半检验：固定主模型、空间网格、物性参数、边界条件和非线性迭代容差不变，另取
+\begin{equation}
+\Delta t=0.5\,\mathrm{s}.
+\label{eq:dthalf}
+\end{equation}
+分别得到
+\[
+t_{\mathrm{dry}}^{(1)},\qquad t_{\mathrm{dry}}^{(0.5)}.
+\]
+定义时间步加密相对差异
+\begin{equation}
+\boxed{
+E_{\Delta t}
+=
+\frac{
+\left|t_{\mathrm{dry}}^{(1)}-t_{\mathrm{dry}}^{(0.5)}\right|
+}{
+ t_{\mathrm{dry}}^{(0.5)}
+}\times100\%.
+}
+\label{eq:Edt}
+\end{equation}
+若 $E_{\Delta t}$ 足够小，则说明 $1\,\mathrm{s}$ 时间步对最终干燥时间的影响可以忽略，正式模型无需继续加密到 $0.25\,\mathrm{s}$。
+
+这里应明确区分三类分析：
+\begin{itemize}
+    \item $a_*$ 扰动是\textbf{模型结构敏感性}，用于检验相似收缩闭合；
+    \item $\Delta t=1\,\mathrm{s}$ 与 $0.5\,\mathrm{s}$ 的比较是\textbf{数值精度验证}，不是第四问的主要物理敏感性分析；
+    \item 固定半径对照不是敏感性检验，而是\textbf{几何收缩效应分离}。
+\end{itemize}
+
+\section{数值求解建议}
+
+三个层次均可沿用前两问的有限体积与 Picard 迭代思想。
+
+主模型在 $x\in[0,1]$ 上划分固定控制体。由于物理半径变化，控制体在真实空间中的尺度随 $R(t)$ 变化，但归一化网格不变，从而避免反复删除外层网格。
+
+每个时间层可按以下顺序：
+\begin{enumerate}[label=(\arabic*)]
+    \item 根据附件~2 插值得到当前 $R(t)$；
+    \item 根据当前 $C$ 更新 $\rho,c_p,k$；
+    \item 求解温度方程；
+    \item 用更新后的 $T,C$ 计算 $D(C,T)$；
+    \item 求解水分方程；
+    \item Picard 迭代至温度与含水率同时满足收敛容差；
+    \item 计算全域 $C_{\max}$ 并判断是否首次低于 $0.15$；
+    \item 若需要题目指定实际位置输出，则用
+    \[
+    x=\frac{r_{\mathrm{out}}}{R(t)}
+    \]
+    将实际半径位置映射到当前归一化网格；超过当前 $R(t)$ 的固定位置不再属于药材内部，最外列应使用当前表面值。
+\end{enumerate}
+
+非均匀敏感性模型只需把主模型的几何因子 $R(t)$ 替换为 $r(\xi,t)$ 和 $r_\xi(\xi,t)$，物性公式、边界环境、非线性迭代和终点判据保持完全一致。
+
+\section{建议的结果组织}
+
+推荐在论文第四问中按以下顺序报告结果。
+
+\subsection*{1. 正式第四问结果}
+报告
+\[
+t_{\mathrm{dry}}^{(4)}
+\]
+以及题目要求的每隔 $6\,\mathrm{h}$、各实际径向位置的含水率。
+
+\subsection*{2. 几何收缩效应}
+给出
+\[
+t_{\mathrm{dry}}^{(4,0)},\qquad
+ t_{\mathrm{dry}}^{(4)},\qquad
+\eta_R.
+\]
+推荐表格形式：
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+模型 & 半径 & 物性 & 干燥时间 \\
+\midrule
+固定尺寸对照 & $R_0$ & 附录4 & $t_{\mathrm{dry}}^{(4,0)}$ \\
+第四问主模型 & $R(t)$ & 附录4 & $t_{\mathrm{dry}}^{(4)}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+并报告 $\eta_R$，从而明确尺寸变化本身对干燥时长的影响。
+
+\subsection*{3. 收缩假设敏感性}
+推荐表格：
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+$a_*$ & $t_{\mathrm{dry}}(a_*)$ & 相对主模型变化 $\eta_a$ \\
+\midrule
+0 & 待计算 & 0 \\
+0.1 & 待计算 & 待计算 \\
+0.2 & 待计算 & 待计算 \\
+\bottomrule
+\end{tabular}
+\end{center}
+如果两组扰动下终点变化很小，即可说明相似收缩假设具有较好的结果稳健性。
+
+\subsection*{4. 时间步加密检验}
+数值精度部分只需简洁报告：
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+$\Delta t$/s & $t_{\mathrm{dry}}$/h & 相对差异 \\
+\midrule
+1.00 & 待计算 & $E_{\Delta t}$ \\
+0.50 & 待计算 & 参考值 \\
+\bottomrule
+\end{tabular}
+\end{center}
+若 $E_{\Delta t}$ 很小，可用一句话说明 $1\,\mathrm{s}$ 时间步已经满足最终干燥时间的数值精度要求，无需在第四问正文中继续展开更细时间步测试。
+
+\section{与第三问结果的关系}
+
+第三问结果可以在第四问结果分析末尾作为一个额外参照，但不要把它混入第四问的“尺寸效应”定义。
+
+若第三问干燥时间记为
+\[
+t_{\mathrm{dry}}^{(3)},
+\]
+则
+\[
+t_{\mathrm{dry}}^{(4)}-t_{\mathrm{dry}}^{(3)}
+\]
+反映的是从第三问到第四问的\textbf{总体模型变化}，其中同时混合了：
+\begin{enumerate}[label=(\arabic*)]
+    \item 附录3到附录4的物性经验式改变；
+    \item 固定半径到时变半径的几何改变。
+\end{enumerate}
+因此不能把该差值全部解释为“药材收缩造成的影响”。真正用于评价几何收缩效应的，应当是同样使用附录4的
+\[
+\boxed{
+t_{\mathrm{dry}}^{(4,0)}
+\quad\text{vs.}\quad
+t_{\mathrm{dry}}^{(4)}.
+}
+\]
+
+\section{最终推荐表述}
+
+第四问可以在论文中用下面的逻辑概括：
+
+\begin{quote}
+附件仅提供药材外表面半径 $R(t)$，缺乏内部径向位移场及收缩本构关系。为避免引入无法由题面数据辨识的额外参数，本文首先采用保持材料点径向次序的均匀相似收缩作为移动域的基准闭合，并在单位径向区间上求解附录4物性条件下的耦合传热传质方程。为单独评价尺寸变化的作用，进一步构造使用相同附录4物性但保持初始半径不变的固定尺寸对照模型。最后，在严格匹配同一实测外半径 $R(t)$ 的条件下，引入轻度非均匀收缩映射族进行结构敏感性检验，以考察内部收缩场不可观测性对最终干燥时长的影响。
+\end{quote}
+
+因此，本方案形成
+\[
+\boxed{
+\text{一个正式答案}
++
+\text{一个几何效应对照}
++
+\text{一个关键假设敏感性检验}
++
+\text{一个简洁的时间步加密验证}
+}
+\]
+既直接回答第四问，又能够解释尺寸收缩的影响来源，并对不可观测的内部收缩假设进行稳健性验证。
+
+\end{document}
