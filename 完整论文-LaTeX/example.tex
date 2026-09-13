@@ -79,6 +79,14 @@
 
 中药材热风干燥由表面对流换热、传质与药材内部的热量传导、水分扩散共同驱动，通常经历预热平衡和恒温干燥两个阶段。烘干过程中，烘房温度与空气水分浓度随时间变化，药材的热物性和水分扩散能力又受温度、含水率影响，持续失水还会引起外形尺寸收缩。针对药用根类材料，北美西洋参根干燥实验表明，根体可随失水发生显著体积收缩，且表皮会阻碍水分外逸并影响收缩过程\cite{sokhansanj1999}。因此，仅凭表面状态难以判断药材内部各处的温度和干基含水率是否均达到工艺要求。圆柱物料的热风干燥具有典型的非稳态热质传递特征\cite{liu2020,tzempelikos2015}。题目据此给出烘房环境记录、药材物性关系及半径变化数据，要求刻画内部温度场与含水率场的时空演化，并依据全域含水率约束确定烘干终点。
 
+图 \ref{fig:herbal-processing} 展示药材处理场景，为本文讨论的干燥工艺提供背景。
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{figures/herbal_processing_photo.png}
+\caption{药材处理场景}
+\label{fig:herbal-processing}
+\end{figure}
+
 \subsection{问题要求}
 
 本文需要解决以下四个问题：
@@ -129,45 +137,29 @@
 
 正文以 \(T\) 表示绝对温度。仅含温度导数和温差的导热方程使用摄氏温度计算会得到相同结果；附录三和附录四的 Arrhenius 型扩散系数则必须代入绝对温度。表格统一输出摄氏温度，含水率采用题目给出的干基定义。表 \ref{tab:symbols} 列出正文使用的核心符号，离散上下标只在有限体积小节内解释。
 
-\begin{longtable}{>{\centering\arraybackslash}p{0.16\textwidth}
-                  p{0.56\textwidth}
-                  >{\centering\arraybackslash}p{0.16\textwidth}}
-\caption{主要符号及含义}\label{tab:symbols}\\
+\begin{table}[H]
+\centering\small
+\setlength{\tabcolsep}{3pt}
+\caption{主要符号及含义}\label{tab:symbols}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lll lll@{}}
 \toprule
-符号 & 含义 & 单位\\
+符号 & 含义 & 单位 & 符号 & 含义 & 单位\\
 \midrule
-\endfirsthead
-\toprule
-符号 & 含义 & 单位\\
-\midrule
-\endhead
+\(t\) & 烘干时间 & \si{s} & \(C(r,t)\) & 药材干基含水率 & \si{kg/kg}\\
+\(r\) & 距轴线径向距离 & \si{m} & \(C_a(t)\) & 空气水分浓度 & \si{kg/kg}\\
+\(x\) & 归一化径向坐标 & 1 & \(\rho\) & 药材密度 & \si{kg/m^3}\\
+\(\xi\) & 非均匀收缩材料坐标 & 1 & \(c_p\) & 药材比热容 & \si{J/(kg.K)}\\
+\(L\) & 药材长度 & \si{m} & \(k\) & 药材导热系数 & \si{W/(m.K)}\\
+\(R\) & 固定模型半径 & \si{m} & \(D\) & 有效水分扩散系数 & \si{m^2/s}\\
+\(R(t)\) & 收缩模型半径 & \si{m} & \(h\) & 对流换热系数 & \si{W/(m^2.K)}\\
+\(r_\xi\) & 材料映射雅可比 & \si{m} & \(h_m\) & 对流传质系数 & \si{m/s}\\
+\(a_*\) & 非均匀收缩结构参数 & 1 & \(V_i\) & 径向控制体体积 & \si{m^3}\\
+\(T(r,t)\) & 药材绝对温度 & \si{K} & \(A_{i+\frac12}\) & 控制面面积 & \si{m^2}\\
+\(T_{\mathrm c}(r,t)\) & 药材摄氏温度 & \si{\degreeCelsius} & \(\Delta r\) & 径向网格步长 & \si{m}\\
+\(T_a(t)\) & 空气绝对温度 & \si{K} & \(\Delta t\) & 时间步长 & \si{s}\\
 \bottomrule
-\endfoot
-\(t\) & 烘干开始后的时间 & \si{s}\\
-\(r\) & 到药材轴线的径向距离 & \si{m}\\
-\(x\) & 收缩模型中的归一化径向坐标 & 1\\
-\(\xi\) & 非均匀收缩模型中的材料坐标 & 1\\
-\(L\) & 药材长度 & \si{m}\\
-\(R\) & 固定尺寸模型中的药材半径 & \si{m}\\
-\(R(t)\) & 收缩模型中的药材半径 & \si{m}\\
-\(r_\xi\) & 材料映射关于 \(\xi\) 的雅可比 & \si{m}\\
-\(a_*\) & 内部非均匀收缩的结构参数 & 1\\
-\(T(r,t)\) & 药材绝对温度 & \si{K}\\
-\(T_{\mathrm{c}}(r,t)\) & 药材摄氏温度 & \si{\degreeCelsius}\\
-\(T_a(t)\) & 烘房空气绝对温度 & \si{K}\\
-\(C(r,t)\) & 药材干基含水率 & \si{kg/kg}\\
-\(C_a(t)\) & 烘房空气水分浓度 & \si{kg/kg}\\
-\(\rho\) & 药材密度 & \si{kg/m^3}\\
-\(c_p\) & 药材比热容 & \si{J/(kg.K)}\\
-\(k\) & 药材导热系数 & \si{W/(m.K)}\\
-\(D\) & 有效水分扩散系数 & \si{m^2/s}\\
-\(h\) & 表面对流换热系数 & \si{W/(m^2.K)}\\
-\(h_m\) & 表面对流传质系数 & \si{m/s}\\
-\(V_i\) & 第 \(i\) 个径向控制体体积 & \si{m^3}\\
-\(A_{i+\frac12}\) & 相邻控制体之间的控制面面积 & \si{m^2}\\
-\(\Delta r\) & 径向网格步长 & \si{m}\\
-\(\Delta t\) & 时间步长 & \si{s}\\
-\end{longtable}
+\end{tabular*}
+\end{table}
 
 式中 \(T_{\mathrm{c}}=T-273.15\)。当正文给出附件一的原始温度时使用摄氏温度，代入附录三和附录四的 Arrhenius 型扩散系数时使用绝对温度，避免因温标混用造成数量级错误。
 
@@ -191,7 +183,13 @@ T=T(r,t),\qquad C=C(r,t),\qquad 0\leq r\leq R.
 \end{equation}
 式 \ref{eq:q1-fields} 保留径向梯度，能够直接输出题目指定的五个位置。该简化不代表轴向温差恒为零，其偏差范围尚需由二维抽样计算或端部测温数据确定。
 
-% 待插图：圆柱药材、径向坐标和表面对流边界示意图。
+图 \ref{fig:geometry-heat-mass} 给出圆柱几何、径向坐标和边界传递方向；箭头表示升温失水工况，不代表通量大小。
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/geometry_heat_mass_schematic.pdf}
+\caption{圆柱药材几何简化与径向传热传质示意图}
+\label{fig:geometry-heat-mass}
+\end{figure}
 
 \subsubsection{问题一的温度模型}
 
@@ -1175,7 +1173,7 @@ DOI: 10.1016/j.jfoodeng.2014.05.010.
 \texttt{repro\_manifest.py} & 复现清单与文件哈希生成程序\\
 \texttt{problem A/附件/} & 为保证离线复现而随包保留的赛题原始附件\\
 \texttt{results/} & 四问结果工作簿、关键结果、敏感性与收敛性数据、复现清单\\
-\texttt{figures/} & 正文实际引用的 15 幅 PDF 图件\\
+\texttt{figures/} & 正文实际引用的 17 幅图件（16 幅 PDF 与 1 幅 PNG）\\
 \texttt{AI工具使用详情.pdf}、\texttt{AI使用报告.docx} & 按 2026 年试行规定整理的 AI 工具使用详情及其可编辑审核稿，提交前由参赛队逐项复核\\
 \texttt{SHA256SUMS.txt} & 支撑材料各文件的 SHA-256 校验值\\
 \bottomrule

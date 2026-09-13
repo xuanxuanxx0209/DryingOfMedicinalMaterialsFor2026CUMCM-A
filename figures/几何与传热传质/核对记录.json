@@ -1,0 +1,33 @@
+{
+  "source": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\problem A\\A题.pdf",
+  "source_sha256": "052d8014bff5727c019b72e44fdffaf5c145ce04050dd938baaf3527db331736",
+  "geometry": {
+    "L_m": 0.25,
+    "R_m": 0.02,
+    "diameter_cm": 4.0,
+    "end_to_side_area_ratio": 0.08
+  },
+  "initial": {
+    "T_C": 28.0,
+    "C_dry_basis_kg_kg": 2.55
+  },
+  "scope": "固定半径的一维径向模型；不表示问题四半径恒定",
+  "direction": "外法向为正；升温时 q_out<0，失水时 J_out>0",
+  "size_mm": [
+    180,
+    110
+  ],
+  "png_dpi": 600,
+  "qa": [
+    {
+      "version": "几何与传热传质示意图",
+      "text_count": 21,
+      "clipped_text": []
+    },
+    {
+      "version": "几何与传热传质示意图_黑白",
+      "text_count": 21,
+      "clipped_text": []
+    }
+  ]
+}

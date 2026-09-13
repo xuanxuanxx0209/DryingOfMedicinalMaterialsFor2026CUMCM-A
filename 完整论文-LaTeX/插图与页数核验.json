@@ -1,0 +1,99 @@
+{
+  "body_pages": 30,
+  "full_pages": 149,
+  "body_identical_in_full": true,
+  "figure_numbering": [
+    [
+      "fig:herbal-processing",
+      "1",
+      "2"
+    ],
+    [
+      "fig:geometry-heat-mass",
+      "2",
+      "6"
+    ],
+    [
+      "fig:q1-air-boundary",
+      "3",
+      "7"
+    ],
+    [
+      "fig:q1-fields",
+      "4",
+      "10"
+    ],
+    [
+      "fig:q1-convergence",
+      "5",
+      "10"
+    ],
+    [
+      "fig:q2-boundary",
+      "6",
+      "11"
+    ],
+    [
+      "fig:q2-temperature",
+      "7",
+      "13"
+    ],
+    [
+      "fig:q2-moisture",
+      "8",
+      "14"
+    ],
+    [
+      "fig:q2-gap",
+      "9",
+      "15"
+    ],
+    [
+      "fig:q2-sensitivity",
+      "10",
+      "16"
+    ],
+    [
+      "fig:q3-threshold",
+      "11",
+      "17"
+    ],
+    [
+      "fig:q3-profiles",
+      "12",
+      "18"
+    ],
+    [
+      "fig:q3-sensitivity",
+      "13",
+      "19"
+    ],
+    [
+      "fig:q4-radius",
+      "14",
+      "20"
+    ],
+    [
+      "fig:q4-moisture",
+      "15",
+      "24"
+    ],
+    [
+      "fig:q4-comparison",
+      "16",
+      "25"
+    ],
+    [
+      "fig:q4-shape",
+      "17",
+      "26"
+    ]
+  ],
+  "all_references_resolved": true,
+  "new_assets_match_originals": true,
+  "blank_pages": [],
+  "source_sha256": "cb1209b597ba2789a5959cbc6f585ab41b4c955e8f439297779ab4c12d2d042d",
+  "body_sha256": "a9852e08bd3b074bc495e04760e632f35db599d877332cbaa0524e8ae7c3899b",
+  "full_sha256": "7470fb1c96f46f6205c6eb10d315c35ef1f48961ffc974ff463d703e9cdf0960",
+  "layout_change": "符号表改为双栏三线表，保留24个符号；正文文字字号、页边距和推导结果未改动。"
+}
