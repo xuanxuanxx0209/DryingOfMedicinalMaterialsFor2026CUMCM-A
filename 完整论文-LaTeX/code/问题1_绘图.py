@@ -18,7 +18,7 @@ sys.path.insert(0, str(FIGURE_TOOLS))
 
 from export_figure import export_figure
 from setup_style import setup_style
-from utils.plot_style import PALETTE, add_panel_labels, audit_design, audit_layout
+from utils.plot_style import PALETTE, audit_design, audit_layout
 
 
 FIGURES_DIR = PROJECT_ROOT / "figures"
@@ -68,7 +68,6 @@ def plot_raw_boundary() -> None:
     )
     axes[0].set_xlabel("时间 / min")
     axes[0].set_ylabel("温度 / ℃")
-    axes[0].set_title("烘房温度")
     axes[0].set_xlim(0, 30)
 
     axes[1].plot(
@@ -83,9 +82,7 @@ def plot_raw_boundary() -> None:
     )
     axes[1].set_xlabel("时间 / min")
     axes[1].set_ylabel("水分浓度 / kg·kg$^{-1}$")
-    axes[1].set_title("空气水分浓度")
     axes[1].set_xlim(0, 30)
-    add_panel_labels(axes)
     export(figure, "raw_q1_air_boundary", (6.3, 2.45))
 
 
@@ -97,12 +94,11 @@ def plot_convergence() -> None:
     order = ["时间步减半", "空间步减半"]
     colors = [PALETTE["primary"], PALETTE["contrast"]]
     figure, axes = plt.subplots(1, 2, figsize=(6.3, 2.4), layout="constrained")
-    for axis, variable, title, unit in (
-        (axes[0], "温度_C", "温度离散误差", "最大绝对差 / ℃"),
+    for axis, variable, unit in (
+        (axes[0], "温度_C", "最大绝对差 / ℃"),
         (
             axes[1],
             "水分浓度_kg_per_kg",
-            "含水率离散误差",
             "最大绝对差 / kg·kg$^{-1}$",
         ),
     ):
@@ -124,8 +120,6 @@ def plot_convergence() -> None:
         axis.set_ylim(-0.55, 1.55)
         axis.set_xlim(left=0)
         axis.set_xlabel(unit)
-        axis.set_title(title)
-    add_panel_labels(axes)
     export(figure, "process_q1_convergence", (6.3, 2.4))
 
 
@@ -143,12 +137,11 @@ def plot_result_fields() -> None:
 
     figure, axes = plt.subplots(1, 2, figsize=(6.3, 2.55), layout="constrained")
     meshes = []
-    for axis, field, title, color_map, color_label in (
-        (axes[0], temperature_field, "药材温度场", "magma", "温度 / ℃"),
+    for axis, field, color_map, color_label in (
+        (axes[0], temperature_field, "magma", "温度 / ℃"),
         (
             axes[1],
             moisture_field,
-            "药材含水率场",
             "viridis",
             "含水率 / kg·kg$^{-1}$",
         ),
@@ -163,12 +156,10 @@ def plot_result_fields() -> None:
         meshes.append(mesh)
         axis.set_xlabel("距轴线距离 / cm")
         axis.set_ylabel("时间 / min")
-        axis.set_title(title)
         axis.set_xlim(0, 2)
         axis.set_ylim(0, 30)
         colorbar = figure.colorbar(mesh, ax=axis, pad=0.02)
         colorbar.set_label(color_label)
-    add_panel_labels(axes)
     export(figure, "result_q1_fields", (6.3, 2.55))
 
 

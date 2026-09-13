@@ -6,11 +6,11 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-09-11T11:14:35.861961</dc:date>
+    <dc:date>2026-09-13T17:41:23.442275</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.10.6, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -32,8 +32,8 @@ z
    <g id="patch_2">
     <path d="M 54.88 137.53952 
 L 215.22211 137.53952 
-L 215.22211 17.68 
-L 54.88 17.68 
+L 215.22211 2.88 
+L 54.88 2.88 
 z
 " style="fill: #ffffff"/>
    </g>
@@ -41,12 +41,12 @@ z
     <g id="xtick_1">
      <g id="line2d_1">
       <defs>
-       <path id="m3b576230a7" d="M 0 0 
+       <path id="ma677f27fb4" d="M 0 0 
 L 0 3.5 
 " style="stroke: #000000; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#m3b576230a7" x="54.88" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#ma677f27fb4" x="54.88" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_1">
@@ -56,7 +56,7 @@ L 0 3.5
     <g id="xtick_2">
      <g id="line2d_2">
       <g>
-       <use xlink:href="#m3b576230a7" x="118.810195" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#ma677f27fb4" x="118.810195" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_2">
@@ -66,7 +66,7 @@ L 0 3.5
     <g id="xtick_3">
      <g id="line2d_3">
       <g>
-       <use xlink:href="#m3b576230a7" x="182.74039" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#ma677f27fb4" x="182.74039" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_3">
@@ -81,39 +81,39 @@ L 0 3.5
     <g id="ytick_1">
      <g id="line2d_4">
       <defs>
-       <path id="m1447a43c03" d="M 0 0 
+       <path id="mfb11c2a629" d="M 0 0 
 L -3.5 0 
 " style="stroke: #000000; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#m1447a43c03" x="54.88" y="106.147741" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mfb11c2a629" x="54.88" y="102.27155" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_5">
-      <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: end" x="47.88" y="109.747741" transform="rotate(-0 47.88 109.747741)">时间步减半</text>
+      <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: end" x="47.88" y="105.87155" transform="rotate(-0 47.88 105.87155)">时间步减半</text>
      </g>
     </g>
     <g id="ytick_2">
      <g id="line2d_5">
       <g>
-       <use xlink:href="#m1447a43c03" x="54.88" y="49.071779" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mfb11c2a629" x="54.88" y="38.14797" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_6">
-      <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: end" x="47.88" y="52.671779" transform="rotate(-0 47.88 52.671779)">空间步减半</text>
+      <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: end" x="47.88" y="41.74797" transform="rotate(-0 47.88 41.74797)">空间步减半</text>
      </g>
     </g>
    </g>
    <g id="LineCollection_1">
-    <path d="M 54.88 106.147741 
-L 207.586771 106.147741 
-" clip-path="url(#pa6094f0f8d)" style="fill: none; stroke: #0072b2; stroke-width: 1.2"/>
+    <path d="M 54.88 102.27155 
+L 207.586771 102.27155 
+" clip-path="url(#p0f67bd2721)" style="fill: none; stroke: #0072b2; stroke-width: 1.2"/>
    </g>
    <g id="line2d_6">
-    <path d="M 207.586771 106.147741 
-" clip-path="url(#pa6094f0f8d)" style="fill: none; stroke: #0072b2; stroke-width: 1.2; stroke-linecap: square"/>
+    <path d="M 207.586771 102.27155 
+" clip-path="url(#p0f67bd2721)" style="fill: none; stroke: #0072b2; stroke-width: 1.2; stroke-linecap: square"/>
     <defs>
-     <path id="m166f57fef4" d="M 0 2.5 
+     <path id="mad12eb90fb" d="M 0 2.5 
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
 C 2.236584 1.29895 2.5 0.663008 2.5 0 
 C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
@@ -125,33 +125,33 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #0072b2; stroke-width: 0.9"/>
     </defs>
-    <g clip-path="url(#pa6094f0f8d)">
-     <use xlink:href="#m166f57fef4" x="207.586771" y="106.147741" style="fill: #ffffff; stroke: #0072b2; stroke-width: 0.9"/>
+    <g clip-path="url(#p0f67bd2721)">
+     <use xlink:href="#mad12eb90fb" x="207.586771" y="102.27155" style="fill: #ffffff; stroke: #0072b2; stroke-width: 0.9"/>
     </g>
    </g>
    <g id="LineCollection_2">
-    <path d="M 54.88 49.071779 
-L 69.581536 49.071779 
-" clip-path="url(#pa6094f0f8d)" style="fill: none; stroke: #d55e00; stroke-width: 1.2"/>
+    <path d="M 54.88 38.14797 
+L 69.581536 38.14797 
+" clip-path="url(#p0f67bd2721)" style="fill: none; stroke: #d55e00; stroke-width: 1.2"/>
    </g>
    <g id="line2d_7">
-    <path d="M 69.581536 49.071779 
-" clip-path="url(#pa6094f0f8d)" style="fill: none; stroke: #d55e00; stroke-width: 1.2; stroke-linecap: square"/>
+    <path d="M 69.581536 38.14797 
+" clip-path="url(#p0f67bd2721)" style="fill: none; stroke: #d55e00; stroke-width: 1.2; stroke-linecap: square"/>
     <defs>
-     <path id="m6af1f790f2" d="M -2.5 2.5 
+     <path id="m11cddfdea1" d="M -2.5 2.5 
 L 2.5 2.5 
 L 2.5 -2.5 
 L -2.5 -2.5 
 z
 " style="stroke: #d55e00; stroke-width: 0.9; stroke-linejoin: miter"/>
     </defs>
-    <g clip-path="url(#pa6094f0f8d)">
-     <use xlink:href="#m6af1f790f2" x="69.581536" y="49.071779" style="fill: #ffffff; stroke: #d55e00; stroke-width: 0.9; stroke-linejoin: miter"/>
+    <g clip-path="url(#p0f67bd2721)">
+     <use xlink:href="#m11cddfdea1" x="69.581536" y="38.14797" style="fill: #ffffff; stroke: #d55e00; stroke-width: 0.9; stroke-linejoin: miter"/>
     </g>
    </g>
    <g id="patch_3">
     <path d="M 54.88 137.53952 
-L 54.88 17.68 
+L 54.88 2.88 
 " style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="patch_4">
@@ -160,24 +160,18 @@ L 215.22211 137.53952
 " style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_7">
-    <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="207.586771" y="95.817106" transform="rotate(-0 207.586771 95.817106)">0.00024</text>
+    <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="207.586771" y="90.954249" transform="rotate(-0 207.586771 90.954249)">0.00024</text>
    </g>
    <g id="text_8">
-    <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="69.581536" y="38.741144" transform="rotate(-0 69.581536 38.741144)">2.3e-05</text>
-   </g>
-   <g id="text_9">
-    <text style="font-weight: 700; font-size: 8px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: end" x="46.88" y="14.6" transform="rotate(-0 46.88 14.6)">a</text>
-   </g>
-   <g id="text_10">
-    <text style="font-size: 11px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="135.051055" y="11.68" transform="rotate(-0 135.051055 11.68)">温度离散误差</text>
+    <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="69.581536" y="26.830668" transform="rotate(-0 69.581536 26.830668)">2.3e-05</text>
    </g>
   </g>
   <g id="axes_2">
    <g id="patch_5">
     <path d="M 281.67543 137.53952 
 L 442.017539 137.53952 
-L 442.017539 17.68 
-L 281.67543 17.68 
+L 442.017539 2.88 
+L 281.67543 2.88 
 z
 " style="fill: #ffffff"/>
    </g>
@@ -185,44 +179,44 @@ z
     <g id="xtick_4">
      <g id="line2d_8">
       <g>
-       <use xlink:href="#m3b576230a7" x="281.67543" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#ma677f27fb4" x="281.67543" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="text_11">
+     <g id="text_9">
       <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="281.67543" y="151.73952" transform="rotate(-0 281.67543 151.73952)">0.0000</text>
      </g>
     </g>
     <g id="xtick_5">
      <g id="line2d_9">
       <g>
-       <use xlink:href="#m3b576230a7" x="325.24691" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#ma677f27fb4" x="325.24691" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="text_12">
+     <g id="text_10">
       <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="325.24691" y="151.73952" transform="rotate(-0 325.24691 151.73952)">0.0001</text>
      </g>
     </g>
     <g id="xtick_6">
      <g id="line2d_10">
       <g>
-       <use xlink:href="#m3b576230a7" x="368.818391" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#ma677f27fb4" x="368.818391" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="text_13">
+     <g id="text_11">
       <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="368.818391" y="151.73952" transform="rotate(-0 368.818391 151.73952)">0.0002</text>
      </g>
     </g>
     <g id="xtick_7">
      <g id="line2d_11">
       <g>
-       <use xlink:href="#m3b576230a7" x="412.389871" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#ma677f27fb4" x="412.389871" y="137.53952" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="text_14">
+     <g id="text_12">
       <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="412.389871" y="151.73952" transform="rotate(-0 412.389871 151.73952)">0.0003</text>
      </g>
     </g>
-    <g id="text_15">
+    <g id="text_13">
      <!-- 最大绝对差 / kg·kg$^{-1}$ -->
      <g transform="translate(314.146485 167.07952)">
       <text>
@@ -249,51 +243,51 @@ z
     <g id="ytick_3">
      <g id="line2d_12">
       <g>
-       <use xlink:href="#m1447a43c03" x="281.67543" y="106.147741" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mfb11c2a629" x="281.67543" y="102.27155" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="text_16">
-      <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: end" x="274.67543" y="109.747741" transform="rotate(-0 274.67543 109.747741)">时间步减半</text>
+     <g id="text_14">
+      <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: end" x="274.67543" y="105.87155" transform="rotate(-0 274.67543 105.87155)">时间步减半</text>
      </g>
     </g>
     <g id="ytick_4">
      <g id="line2d_13">
       <g>
-       <use xlink:href="#m1447a43c03" x="281.67543" y="49.071779" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#mfb11c2a629" x="281.67543" y="38.14797" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="text_17">
-      <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: end" x="274.67543" y="52.671779" transform="rotate(-0 274.67543 52.671779)">空间步减半</text>
+     <g id="text_15">
+      <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: end" x="274.67543" y="41.74797" transform="rotate(-0 274.67543 41.74797)">空间步减半</text>
      </g>
     </g>
    </g>
    <g id="LineCollection_3">
-    <path d="M 281.67543 106.147741 
-L 304.067135 106.147741 
-" clip-path="url(#pe47d6fd4e3)" style="fill: none; stroke: #0072b2; stroke-width: 1.2"/>
+    <path d="M 281.67543 102.27155 
+L 304.067135 102.27155 
+" clip-path="url(#pfde950915f)" style="fill: none; stroke: #0072b2; stroke-width: 1.2"/>
    </g>
    <g id="line2d_14">
-    <path d="M 304.067135 106.147741 
-" clip-path="url(#pe47d6fd4e3)" style="fill: none; stroke: #0072b2; stroke-width: 1.2; stroke-linecap: square"/>
-    <g clip-path="url(#pe47d6fd4e3)">
-     <use xlink:href="#m166f57fef4" x="304.067135" y="106.147741" style="fill: #ffffff; stroke: #0072b2; stroke-width: 0.9"/>
+    <path d="M 304.067135 102.27155 
+" clip-path="url(#pfde950915f)" style="fill: none; stroke: #0072b2; stroke-width: 1.2; stroke-linecap: square"/>
+    <g clip-path="url(#pfde950915f)">
+     <use xlink:href="#mad12eb90fb" x="304.067135" y="102.27155" style="fill: #ffffff; stroke: #0072b2; stroke-width: 0.9"/>
     </g>
    </g>
    <g id="LineCollection_4">
-    <path d="M 281.67543 49.071779 
-L 434.382201 49.071779 
-" clip-path="url(#pe47d6fd4e3)" style="fill: none; stroke: #d55e00; stroke-width: 1.2"/>
+    <path d="M 281.67543 38.14797 
+L 434.382201 38.14797 
+" clip-path="url(#pfde950915f)" style="fill: none; stroke: #d55e00; stroke-width: 1.2"/>
    </g>
    <g id="line2d_15">
-    <path d="M 434.382201 49.071779 
-" clip-path="url(#pe47d6fd4e3)" style="fill: none; stroke: #d55e00; stroke-width: 1.2; stroke-linecap: square"/>
-    <g clip-path="url(#pe47d6fd4e3)">
-     <use xlink:href="#m6af1f790f2" x="434.382201" y="49.071779" style="fill: #ffffff; stroke: #d55e00; stroke-width: 0.9; stroke-linejoin: miter"/>
+    <path d="M 434.382201 38.14797 
+" clip-path="url(#pfde950915f)" style="fill: none; stroke: #d55e00; stroke-width: 1.2; stroke-linecap: square"/>
+    <g clip-path="url(#pfde950915f)">
+     <use xlink:href="#m11cddfdea1" x="434.382201" y="38.14797" style="fill: #ffffff; stroke: #d55e00; stroke-width: 0.9; stroke-linejoin: miter"/>
     </g>
    </g>
    <g id="patch_6">
     <path d="M 281.67543 137.53952 
-L 281.67543 17.68 
+L 281.67543 2.88 
 " style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="patch_7">
@@ -301,26 +295,20 @@ L 281.67543 17.68
 L 442.017539 137.53952 
 " style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-   <g id="text_18">
-    <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="304.067135" y="95.817106" transform="rotate(-0 304.067135 95.817106)">5.1e-05</text>
+   <g id="text_16">
+    <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="304.067135" y="90.954249" transform="rotate(-0 304.067135 90.954249)">5.1e-05</text>
    </g>
-   <g id="text_19">
-    <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="434.382201" y="38.741144" transform="rotate(-0 434.382201 38.741144)">0.00035</text>
-   </g>
-   <g id="text_20">
-    <text style="font-weight: 700; font-size: 8px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: end" x="273.67543" y="14.6" transform="rotate(-0 273.67543 14.6)">b</text>
-   </g>
-   <g id="text_21">
-    <text style="font-size: 11px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="361.846485" y="11.68" transform="rotate(-0 361.846485 11.68)">含水率离散误差</text>
+   <g id="text_17">
+    <text style="font-size: 9px; font-family: 'Noto Serif SC', 'Times New Roman', 'Times', 'DejaVu Serif', serif; text-anchor: middle" x="434.382201" y="26.830668" transform="rotate(-0 434.382201 26.830668)">0.00035</text>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="pa6094f0f8d">
-   <rect x="54.88" y="17.68" width="160.34211" height="119.85952"/>
+  <clipPath id="p0f67bd2721">
+   <rect x="54.88" y="2.88" width="160.34211" height="134.65952"/>
   </clipPath>
-  <clipPath id="pe47d6fd4e3">
-   <rect x="281.67543" y="17.68" width="160.34211" height="119.85952"/>
+  <clipPath id="pfde950915f">
+   <rect x="281.67543" y="2.88" width="160.34211" height="134.65952"/>
   </clipPath>
  </defs>
 </svg>

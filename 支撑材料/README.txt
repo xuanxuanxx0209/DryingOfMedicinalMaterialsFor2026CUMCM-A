@@ -28,7 +28,7 @@ Python 3.12；依赖见 requirements.txt。Numba 为问题四的可选加速依�
 
 四、输入与输出
 
-输入位于 problem A/附件。主要输出位于 results；正文实际引用的 16 幅 PDF 图件位于 figures。result1.xlsx 至 result4.xlsx 分别对应四个子问题。results/复现清单.json 记录最终问题四复现参数、运行命令和输入文件哈希。
+输入位于 problem A/附件。主要输出位于 results；正文实际引用的 15 幅 PDF 图件位于 figures。result1.xlsx 至 result4.xlsx 分别对应四个子问题。results/复现清单.json 记录最终问题四复现参数、运行命令和输入文件哈希。
 
 五、提交前核验
 

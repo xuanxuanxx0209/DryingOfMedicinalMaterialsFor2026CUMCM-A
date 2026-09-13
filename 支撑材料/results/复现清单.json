@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at_utc": "2026-09-13T08:34:05.279563+00:00",
+  "created_at_utc": "2026-09-13T09:59:36.706901+00:00",
   "purpose": "CUMCM 2026 A题支撑材料的相对路径复现清单",
   "random_seed": 0,
   "runtime": {
@@ -57,18 +57,18 @@
     },
     {
       "path": "论文图件优化.py",
-      "sha256": "a089aa9153f335d4e5f900b0a70fe61cfe1702b9ee817b7fdef6e0d2c6e4bacf",
-      "bytes": 10714
+      "sha256": "8758b453e0e53101773e50da7cfcccb97ec83fda36ef2bb25c1b502f3940bd4f",
+      "bytes": 10334
     },
     {
       "path": "问题1_绘图.py",
-      "sha256": "0cb1c0d422b02b3ab4a50ac0794447ecd920c997714f51bda56b75bdff13fccf",
-      "bytes": 6549
+      "sha256": "d913cad0e16e29cf2acf671e7f482a830dd856cc8fde68f15251abed6998faeb",
+      "bytes": 6152
     },
     {
       "path": "问题2_绘图.py",
-      "sha256": "ea9c62c4e8b26ced3a59dd3e3a67a2297dc785123b2f0f13db99a8136df9b045",
-      "bytes": 13714
+      "sha256": "c3d1bbaa8aa4d03d34b63daddae2baa7635f8c8488effa1fbb9a3d738b36c15e",
+      "bytes": 13656
     },
     {
       "path": "问题3_绘图.py",
@@ -77,8 +77,8 @@
     },
     {
       "path": "问题4_复现.py",
-      "sha256": "7041e5b2846f1ff769d9ea0c2acd8b39dcb59bc7272f3d22c7489e60bcbbf5c2",
-      "bytes": 13167
+      "sha256": "410285852119969630d0d11bb142fa119cd31309cd4c51b1e74a13cf1a3546c9",
+      "bytes": 13397
     },
     {
       "path": "问题4_求解.py",

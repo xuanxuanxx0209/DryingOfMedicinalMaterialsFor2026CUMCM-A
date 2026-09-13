@@ -104,7 +104,6 @@ def plot_boundary_series(boundary: pd.DataFrame) -> None:
     axes[1].set_ylabel("空气水分浓度  千克每千克")
     axes[1].set_xlim(0, 3)
     axes[1].ticklabel_format(axis="y", style="plain", useOffset=False)
-    add_panel_labels(axes)
     finish(fig, "raw_q2_boundary_series", (6.3, 4.2))
 
 
@@ -246,7 +245,6 @@ def plot_sensitivity(summary: dict) -> None:
         axis.set_xlabel(xlabel)
         axis.set_xlim(left=0)
         axis.invert_yaxis()
-    add_panel_labels(axes)
     finish(fig, "process_q2_sensitivity", (6.3, 3.7))
 
 

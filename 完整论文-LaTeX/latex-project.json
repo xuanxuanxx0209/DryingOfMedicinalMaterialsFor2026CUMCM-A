@@ -23,34 +23,6 @@
   },
   "resource_bindings": [
     {
-      "source": "figures/raw_q1_air_boundary.pdf",
-      "destination": "figures/raw_q1_air_boundary.pdf",
-      "sha256": "121ed9c737277ddd81c0892f5154a6de18a87508b0b2f23b6a062e11950fc26c",
-      "hash_mode": "content",
-      "bound_at": "2026-09-11T03:16:45.615312+00:00"
-    },
-    {
-      "source": "figures/result_q1_fields.pdf",
-      "destination": "figures/result_q1_fields.pdf",
-      "sha256": "1488d21312cf09caf4426f64a37c09ee2d07cd98ae3222b0c89722a46eb9280a",
-      "hash_mode": "content",
-      "bound_at": "2026-09-11T03:16:45.787075+00:00"
-    },
-    {
-      "source": "figures/process_q1_convergence.pdf",
-      "destination": "figures/process_q1_convergence.pdf",
-      "sha256": "0ef611dab04b8caecad2eaaa0767c4190c552176753a528268b8e37428f2f9fa",
-      "hash_mode": "content",
-      "bound_at": "2026-09-11T03:16:45.934738+00:00"
-    },
-    {
-      "source": "figures/raw_q2_boundary_series.pdf",
-      "destination": "figures/raw_q2_boundary_series.pdf",
-      "sha256": "c3dfbb79e3f90ff46f53ced70c90b3997812057b49380772afaa992d3b4e1300",
-      "hash_mode": "content",
-      "bound_at": "2026-09-11T14:56:48.330889+00:00"
-    },
-    {
       "source": "figures/process_q2_picard_iterations.pdf",
       "destination": "figures/process_q2_picard_iterations.pdf",
       "sha256": "160959566e570b09f6a8ac1bf58bb9e7867f7ced16cae5eeb32413eade65ea0f",
@@ -70,13 +42,6 @@
       "sha256": "914a039360402e445301f68bcb83701b5d6776b099e160fde0663111299db213",
       "hash_mode": "content",
       "bound_at": "2026-09-11T14:56:55.575355+00:00"
-    },
-    {
-      "source": "figures/process_q2_sensitivity.pdf",
-      "destination": "figures/process_q2_sensitivity.pdf",
-      "sha256": "2f2dbe4c4af7f598a32a7e5354e56879e0e3444f78090e71d3c81960e0c11b60",
-      "hash_mode": "content",
-      "bound_at": "2026-09-11T14:56:59.704206+00:00"
     },
     {
       "source": "figures/result_q3_threshold.pdf",
@@ -128,20 +93,6 @@
       "bound_at": "2026-09-12T10:17:33.430429+00:00"
     },
     {
-      "source": "figures/q4/process_q4_refinement.pdf",
-      "destination": "figures/process_q4_refinement.pdf",
-      "sha256": "87d0c7d7f88a73839f77297404835f94150fb7c21d20137127daa2506adbbd6f",
-      "hash_mode": "content",
-      "bound_at": "2026-09-12T10:17:35.002324+00:00"
-    },
-    {
-      "source": "figures/paper_review/result_q2_gap_review.pdf",
-      "destination": "figures/result_q2_gap_review.pdf",
-      "sha256": "c175ef767c29362a185a18ba71a98873bd56210922fce628792edd345ca205df",
-      "hash_mode": "content",
-      "bound_at": "2026-09-13T08:17:26.436743+00:00"
-    },
-    {
       "source": "figures/paper_review/result_q2_moisture_review.pdf",
       "destination": "figures/result_q2_moisture_review.pdf",
       "sha256": "3e043138455714e6bc10dde2cc28ae3e1f8b1729e1a344d61c73e19c9224d0e8",
@@ -154,20 +105,6 @@
       "sha256": "eab24bc144db52d077051af856ebab00f49884de2f49ad661002993cfcdb05fe",
       "hash_mode": "content",
       "bound_at": "2026-09-13T08:17:26.652157+00:00"
-    },
-    {
-      "source": "figures/paper_review/result_q3_threshold_review.pdf",
-      "destination": "figures/result_q3_threshold_review.pdf",
-      "sha256": "e8cc63977df618dd23943b07d508df02139b798e77be76b6e8ad7b7c6b74c858",
-      "hash_mode": "content",
-      "bound_at": "2026-09-13T08:17:26.754037+00:00"
-    },
-    {
-      "source": "figures/paper_review/result_q4_shape_review.pdf",
-      "destination": "figures/result_q4_shape_review.pdf",
-      "sha256": "bd8bcf1a1f09f5c3c87db3396ac74ef7e1bc719473f1cd837b2fea6305707e74",
-      "hash_mode": "content",
-      "bound_at": "2026-09-13T08:17:26.858403+00:00"
     },
     {
       "source": "figures/paper_review/result_q4_threshold_review.pdf",
@@ -198,13 +135,6 @@
       "bound_at": "2026-09-13T08:19:04.616648+00:00"
     },
     {
-      "source": "问题4_复现.py",
-      "destination": "code/问题4_复现.py",
-      "sha256": "7041e5b2846f1ff769d9ea0c2acd8b39dcb59bc7272f3d22c7489e60bcbbf5c2",
-      "hash_mode": "content",
-      "bound_at": "2026-09-13T08:19:04.703547+00:00"
-    },
-    {
       "source": "问题4_素材整理.py",
       "destination": "code/问题4_素材整理.py",
       "sha256": "55e30fc24804cca920c4b33a1cbd3e53a05eec3bb73ebfe465c0b05dd5e42c6b",
@@ -212,39 +142,11 @@
       "bound_at": "2026-09-13T08:19:04.796253+00:00"
     },
     {
-      "source": "问题1_绘图.py",
-      "destination": "code/问题1_绘图.py",
-      "sha256": "0cb1c0d422b02b3ab4a50ac0794447ecd920c997714f51bda56b75bdff13fccf",
-      "hash_mode": "content",
-      "bound_at": "2026-09-13T08:19:04.892179+00:00"
-    },
-    {
-      "source": "问题2_绘图.py",
-      "destination": "code/问题2_绘图.py",
-      "sha256": "ea9c62c4e8b26ced3a59dd3e3a67a2297dc785123b2f0f13db99a8136df9b045",
-      "hash_mode": "content",
-      "bound_at": "2026-09-13T08:19:04.987217+00:00"
-    },
-    {
       "source": "问题3_绘图.py",
       "destination": "code/问题3_绘图.py",
       "sha256": "34d1d9d55bdb2786bb2dfc71f325e563b5ec6d2d42ad3d2102566be21b98eab6",
       "hash_mode": "content",
       "bound_at": "2026-09-13T08:19:05.082351+00:00"
-    },
-    {
-      "source": "问题4_绘图.py",
-      "destination": "code/问题4_绘图.py",
-      "sha256": "772d05099cd4e9c7ff3eca5f0ed27af1a9c95b0acf227e25dcc90e7763ac0c98",
-      "hash_mode": "content",
-      "bound_at": "2026-09-13T08:19:05.175573+00:00"
-    },
-    {
-      "source": "论文图件优化.py",
-      "destination": "code/论文图件优化.py",
-      "sha256": "a089aa9153f335d4e5f900b0a70fe61cfe1702b9ee817b7fdef6e0d2c6e4bacf",
-      "hash_mode": "content",
-      "bound_at": "2026-09-13T08:19:05.270351+00:00"
     },
     {
       "source": "utils/plot_style.py",
@@ -280,6 +182,97 @@
       "sha256": "db9bf7b357fafe49b1595492ceb3fd7401a2150d551725347aa1e9efc684a09a",
       "hash_mode": "content",
       "bound_at": "2026-09-13T08:19:05.761446+00:00"
+    },
+    {
+      "source": "figures/raw_q1_air_boundary.pdf",
+      "destination": "figures/raw_q1_air_boundary.pdf",
+      "sha256": "a1ebc18c77ed89ef4cdd63f6fc91c4fb8c72ad80489bda0f0be85c5ae632e7f3",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:31.871553+00:00"
+    },
+    {
+      "source": "figures/result_q1_fields.pdf",
+      "destination": "figures/result_q1_fields.pdf",
+      "sha256": "c1728e855c46eb399e40a0fe94637d07fec72c0d635a92a3b0bfe0287e2dbb73",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:31.961395+00:00"
+    },
+    {
+      "source": "figures/process_q1_convergence.pdf",
+      "destination": "figures/process_q1_convergence.pdf",
+      "sha256": "489a4ab1b7ed80bf5cbe5f14bf3f6ba205598d3e311f25837a012e367a9b456e",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:32.043831+00:00"
+    },
+    {
+      "source": "figures/raw_q2_boundary_series.pdf",
+      "destination": "figures/raw_q2_boundary_series.pdf",
+      "sha256": "ac43f1a634137a5f1164aa3a4db4fd13f60285d04b745d3d3c3f114e1c0ed6b9",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:32.129047+00:00"
+    },
+    {
+      "source": "figures/process_q2_sensitivity.pdf",
+      "destination": "figures/process_q2_sensitivity.pdf",
+      "sha256": "75c1649faa1461f652f4664824f61b1ad7c6a12f818645f3e72bfa07d320dde4",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:32.214063+00:00"
+    },
+    {
+      "source": "figures/paper_review/result_q2_gap_review.pdf",
+      "destination": "figures/result_q2_gap_review.pdf",
+      "sha256": "2d5bd2e6f8aee85a62f16fb457c8afa78a70abcb98e03590046536c29f4fa20d",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:32.294652+00:00"
+    },
+    {
+      "source": "figures/paper_review/result_q3_threshold_review.pdf",
+      "destination": "figures/result_q3_threshold_review.pdf",
+      "sha256": "74cb3f1c7f0229923a52d961a73a785206ae99d8ba7edece06556afb75cf1d28",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:32.377121+00:00"
+    },
+    {
+      "source": "figures/paper_review/result_q4_shape_review.pdf",
+      "destination": "figures/result_q4_shape_review.pdf",
+      "sha256": "aa59c09d1330a530a97f1d0f1b63e0a3883932dfb0ec335126a7036bda69364c",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:32.462649+00:00"
+    },
+    {
+      "source": "问题1_绘图.py",
+      "destination": "code/问题1_绘图.py",
+      "sha256": "d913cad0e16e29cf2acf671e7f482a830dd856cc8fde68f15251abed6998faeb",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:32.548481+00:00"
+    },
+    {
+      "source": "问题2_绘图.py",
+      "destination": "code/问题2_绘图.py",
+      "sha256": "c3d1bbaa8aa4d03d34b63daddae2baa7635f8c8488effa1fbb9a3d738b36c15e",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:32.637901+00:00"
+    },
+    {
+      "source": "论文图件优化.py",
+      "destination": "code/论文图件优化.py",
+      "sha256": "8758b453e0e53101773e50da7cfcccb97ec83fda36ef2bb25c1b502f3940bd4f",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:32.724381+00:00"
+    },
+    {
+      "source": "问题4_复现.py",
+      "destination": "code/问题4_复现.py",
+      "sha256": "410285852119969630d0d11bb142fa119cd31309cd4c51b1e74a13cf1a3546c9",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:45:32.806899+00:00"
+    },
+    {
+      "source": "问题4_绘图.py",
+      "destination": "code/问题4_绘图.py",
+      "sha256": "494a6c00ae10d386a9657fbd3b9f2b99afdae28bfc6775e9cb857115cc0bb867",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T09:50:37.519034+00:00"
     }
   ],
   "created_at": "2026-09-10T17:59:28.878415+00:00"

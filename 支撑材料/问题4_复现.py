@@ -30,7 +30,7 @@ def validate_run(s):
     assert m['min_mapping_Jacobian_m']>0
     assert m['max_radial_moisture_increase']<1e-8 and m['max_step_Cmax_increase']<1e-8
 
-def write_outputs(base,runs,out,verification):
+def write_result4_workbook(base,out):
     res=out/'results';res.mkdir(parents=True,exist_ok=True)
     t=base['time_s'];R=base['radius_m'];C=base['moisture'];T=base['temperature_c'];x=np.linspace(0,1,C.shape[1])
     arr=q.sample(base,.001)
@@ -43,7 +43,7 @@ def write_outputs(base,runs,out,verification):
     for i,tt in enumerate(t[1:],2):
         ws.cell(i,1,float(tt))
         for j,v in enumerate(arr[i-1],2):
-            cell=ws.cell(i,j,None if np.isnan(v) else float(v));cell.number_format='0.0000'
+            cell=ws.cell(i,j,None if np.isnan(v) else round(float(v),4));cell.number_format='0.0000'
     ws.freeze_panes='B2';wb.save(res/'result4.xlsx');wb.close()
     # Re-open and verify every value, mask and numeric format.
     wb=openpyxl.load_workbook(res/'result4.xlsx',data_only=True);ws=wb.active
@@ -52,8 +52,14 @@ def write_outputs(base,runs,out,verification):
         assert ws.cell(i,1).value==t[i-1]
         for j,expected in enumerate(arr[i-1],2):
             val=ws.cell(i,j).value
-            assert (val is None) if np.isnan(expected) else (abs(val-expected)<1e-12 and ws.cell(i,j).number_format=='0.0000')
+            rounded=None if np.isnan(expected) else round(float(expected),4)
+            assert (val is None) if rounded is None else (val==rounded and ws.cell(i,j).number_format=='0.0000')
     wb.close()
+    return t,R,C,T,arr
+
+def write_outputs(base,runs,out,verification):
+    res=out/'results';res.mkdir(parents=True,exist_ok=True)
+    t,R,C,T,arr=write_result4_workbook(base,out)
     mask=(t>0)&((t%21600==0)|(t==t[-1]));table=q.sample(base)[mask]
     df=pd.DataFrame(table,columns=['r0_cm','r0.5_cm','r1_cm','r1.5_cm','surface'])
     df.insert(0,'radius_cm',R[mask]*100);df.insert(0,'time_h',t[mask]/3600);df.insert(0,'time_s',t[mask])

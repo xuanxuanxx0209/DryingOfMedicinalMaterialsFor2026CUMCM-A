@@ -63,14 +63,13 @@ dc=c.iloc[:,1].to_numpy(float)-c.iloc[:,-1].to_numpy(float)
 assert abs(dt[-1]-.1169)<1e-9 and abs(dc[-1]-.7581)<1e-9
 pd.DataFrame({'time_h':hours,'surface_minus_center_T_C':dt,'center_minus_surface_C_kg_kg':dc}).to_csv(QA/'q2_gap_data.csv',index=False)
 fig,axs=plt.subplots(2,1,figsize=(5.8,3.3),sharex=True,layout='constrained')
-for ax,v,color,style,marker,label,title in [
-    (axs[0],dt,ORANGE,'-','o','表面－中心温差 / ℃','a  径向温差先增大后减小'),
-    (axs[1],dc,BLUE,'--','s','中心－表面含水率差 / (kg/kg)','b  含水率差在 3 h 时仍然存在')]:
+for ax,v,color,style,marker,label in [
+    (axs[0],dt,ORANGE,'-','o','表面－中心温差 / ℃'),
+    (axs[1],dc,BLUE,'--','s','中心－表面含水率差 / (kg/kg)')]:
     ax.plot(hours,v,color=color,ls=style,lw=1.15)
     ii=np.searchsorted(hours,np.arange(.5,3.01,.5))
     ax.plot(hours[ii],v[ii],ls='none',marker=marker,ms=3.5,color=color)
     ax.set(ylabel=label,xlim=(0,3.1),ylim=(0,float(v.max())*1.22))
-    ax.set_title(title,loc='left')
     unit='℃' if ax is axs[0] else 'kg/kg'
     ax.annotate(f'{v[-1]:.4f} {unit}',(3,v[-1]),xytext=(-6,14),textcoords='offset points',ha='right',fontsize=9)
 axs[1].set_xlabel('时间 / h')
@@ -109,13 +108,11 @@ ax.plot(end/3600,p.maximum_moisture.iloc[-1],'o',ms=4,color=BLUE)
 ax.annotate(f'{end/3600:.4f} h',(end/3600,.15),xytext=(-5,32),textcoords='offset points',ha='right',arrowprops={'arrowstyle':'-','lw':.6})
 ax.text(.97,.89,'阈值 0.15 kg/kg',ha='right',transform=ax.transAxes,color=ORANGE)
 ax.set(xlabel='时间 / h',ylabel='全域最大含水率 / (kg/kg)',xlim=(0,60),ylim=(0,2.7))
-ax.set_title('a  全程干燥轨迹',loc='left')
 ax=axs[1]
 for x,y,marker,color in zip(last.time_s-end,excess,['s','o'],[ORANGE,BLUE]):
     ax.scatter(x,y,s=26,marker=marker,color=color,zorder=3)
 ax.axhline(0,color='#555555',ls='--',lw=.8)
 ax.set(xlabel='相对终点时间 / s',ylabel=r'阈值偏差 / ($10^{-6}$ kg/kg)',xlim=(-70,12),ylim=(-4,21),xticks=[-60,-40,-20,0])
-ax.set_title('b  已保存记录的阈值偏差',loc='left')
 ax.annotate(f'前一常规记录\n+{excess.iloc[0]:.4f}',(-56,excess.iloc[0]),xytext=(7,-3),textcoords='offset points',va='top',fontsize=8)
 ax.annotate(f'终点记录\n{excess.iloc[-1]:.4f}',(0,excess.iloc[-1]),xytext=(-10,24),textcoords='offset points',ha='right',fontsize=8,arrowprops={'arrowstyle':'-','lw':.6})
 finish(fig,'result_q3_threshold_review','终点已保存值严格低于阈值，首次时刻由原求解器逐秒检测。',
@@ -131,7 +128,6 @@ fig,axs=plt.subplots(1,2,figsize=(5.8,2.65),layout='constrained')
 for a,col,ls in [(0,BLUE,'-'),(.1,ORANGE,'--'),(.2,GREEN,'-.')]:
     axs[0].plot(xi,a*g*xi*(1-xi),color=col,ls=ls,lw=1.2,label=fr'$a_*={a:g}$')
 axs[0].set(xlabel=r'初始材料坐标 $\xi$',ylabel=r'映射偏离 $r/R-\xi$',xlim=(0,1),ylim=(-.004,.075))
-axs[0].set_title('a  主模型终点时刻的映射扰动',loc='left')
 axs[0].legend(frameon=False,loc='upper center',ncol=3,fontsize=7,handlelength=1.6,columnspacing=.8)
 values=[0,s['eta_shape_percent']['0.1'],s['eta_shape_percent']['0.2']]
 for j,(v,col,marker) in enumerate(zip(values,[BLUE,ORANGE,GREEN],['o','s','D'])):
@@ -140,7 +136,6 @@ for j,(v,col,marker) in enumerate(zip(values,[BLUE,ORANGE,GREEN],['o','s','D']))
 axs[1].axvline(0,color='#777777',lw=.7)
 axs[1].set(yticks=[0,1,2],yticklabels=[r'$a_*=0$',r'$a_*=0.1$',r'$a_*=0.2$'],
            xlabel='相对主模型的时长变化 / %',xlim=(-.03,.43),ylim=(-.45,2.45))
-axs[1].set_title('b  同一外半径下的终点变化',loc='left')
 pd.DataFrame({'xi':xi,**{f'a_{a}':a*g*xi*(1-xi) for a in [0,.1,.2]}}).to_csv(QA/'q4_mapping_data.csv',index=False)
 finish(fig,'result_q4_shape_review','相同外半径下的内部映射扰动对应所检验情景中至多0.3143%的时长变化。',
        ['results/问题4_结果摘要.json','results/q4_plot_data/radius.csv','results/问题4_情景汇总.csv'],
