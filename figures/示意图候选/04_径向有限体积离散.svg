@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1000" viewBox="0 0 1800 1000" fill="#18324b">
+  <defs>
+    <marker id="arr" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#49657d"/></marker>
+    <marker id="hot" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#e87535"/></marker>
+    <filter id="shadow"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#18324b" flood-opacity="0.13"/></filter>
+    <style>text{font-family:'SimHei','Microsoft YaHei','Noto Sans CJK SC',sans-serif}.title{font-size:50px;font-weight:700}.h{font-size:34px;font-weight:700}.b{font-size:30px}.s{font-size:26px;fill:#617487}.math{font-family:'Times New Roman','SimHei',serif;font-size:30px}</style>
+  </defs>
+  <rect width="1800" height="1000" fill="#fff"/>
+  <rect width="1800" height="108" fill="#f4f8fb"/>
+  <text x="70" y="67" class="title">一维径向有限体积离散：环形守恒单元</text>
+
+  <g filter="url(#shadow)">
+    <rect x="60" y="160" width="720" height="690" rx="26" fill="#fafcfd" stroke="#a9becd" stroke-width="3"/>
+  </g>
+  <text x="100" y="215" class="h">圆柱横截面与环形控制体</text>
+  <circle cx="415" cy="500" r="255" fill="#f7ead7" stroke="#7e5633" stroke-width="5"/>
+  <circle cx="415" cy="500" r="215" fill="#fff8ec" stroke="#caa174" stroke-width="2"/>
+  <circle cx="415" cy="500" r="175" fill="#f5e6cf" stroke="#caa174" stroke-width="2"/>
+  <circle cx="415" cy="500" r="135" fill="#fff8ec" stroke="#caa174" stroke-width="2"/>
+  <circle cx="415" cy="500" r="95" fill="#f5e6cf" stroke="#caa174" stroke-width="2"/>
+  <circle cx="415" cy="500" r="55" fill="#fff8ec" stroke="#caa174" stroke-width="2"/>
+  <path d="M415 325 A175 175 0 0 1 590 500 A175 175 0 0 1 415 675 A175 175 0 0 1 240 500 A175 175 0 0 1 415 325 M415 365 A135 135 0 0 1 550 500 A135 135 0 0 1 415 635 A135 135 0 0 1 280 500 A135 135 0 0 1 415 365" fill="#efb45e" fill-rule="evenodd" opacity="0.58"/>
+  <line x1="415" y1="500" x2="670" y2="500" stroke="#385269" stroke-width="4" marker-end="url(#arr)"/>
+  <circle cx="415" cy="500" r="7" fill="#18324b"/>
+  <circle cx="550" cy="500" r="7" fill="#18324b"/>
+  <text x="431" y="482" class="math">r = 0</text>
+  <text x="523" y="482" class="math">r_i</text>
+  <text x="675" y="482" class="math">R</text>
+  <path d="M615 278 C690 250 712 296 690 340" fill="none" stroke="#e87535" stroke-width="6" marker-end="url(#hot)"/>
+  <text x="551" y="260" class="b" fill="#c65f29">表面对流通量</text>
+  <rect x="104" y="730" width="615" height="83" rx="18" fill="#eef5f9"/>
+  <text x="133" y="764" class="b">中心控制体内侧面积 A(-1/2) = 0</text>
+  <text x="133" y="796" class="s">自然满足轴线对称，避免圆柱坐标形式奇点</text>
+
+  <g filter="url(#shadow)">
+    <rect x="840" y="160" width="900" height="690" rx="26" fill="#fafcfd" stroke="#a9becd" stroke-width="3"/>
+  </g>
+  <text x="890" y="215" class="h">展开为一维径向网格</text>
+  <line x1="930" y1="475" x2="1645" y2="475" stroke="#385269" stroke-width="5" marker-end="url(#arr)"/>
+  <text x="1665" y="484" class="math">r</text>
+
+  <g stroke="#839aab" stroke-width="3" stroke-dasharray="8 7">
+    <line x1="1030" y1="355" x2="1030" y2="610"/>
+    <line x1="1220" y1="355" x2="1220" y2="610"/>
+    <line x1="1410" y1="355" x2="1410" y2="610"/>
+  </g>
+  <rect x="1030" y="390" width="190" height="170" fill="#eaf3f8"/>
+  <rect x="1220" y="390" width="190" height="170" fill="#f4bd67" opacity="0.75"/>
+  <rect x="1410" y="390" width="190" height="170" fill="#eaf3f8"/>
+  <g fill="#18324b">
+    <circle cx="1125" cy="475" r="10"/><circle cx="1315" cy="475" r="10"/><circle cx="1505" cy="475" r="10"/>
+  </g>
+  <text x="1125" y="525" class="math" text-anchor="middle">r(i-1)</text>
+  <text x="1315" y="525" class="math" text-anchor="middle">r(i)</text>
+  <text x="1505" y="525" class="math" text-anchor="middle">r(i+1)</text>
+  <text x="1030" y="340" class="math" text-anchor="middle">r(i-3/2)</text>
+  <text x="1220" y="340" class="math" text-anchor="middle">r(i-1/2)</text>
+  <text x="1410" y="340" class="math" text-anchor="middle">r(i+1/2)</text>
+  <text x="1315" y="590" class="h" text-anchor="middle">第 i 个环形控制体</text>
+  <path d="M1205 430 H1270" stroke="#49657d" stroke-width="5" stroke-linecap="round"/>
+  <path d="M1360 430 H1425" stroke="#49657d" stroke-width="5" stroke-linecap="round"/>
+  <text x="1175" y="410" class="math" text-anchor="middle">G(i-1/2)</text>
+  <text x="1455" y="410" class="math" text-anchor="middle">G(i+1/2)</text>
+
+  <rect x="900" y="625" width="780" height="188" rx="20" fill="#eef5f9"/>
+  <text x="930" y="668" class="b">对控制体 i 的有符号贡献</text>
+  <text x="930" y="708" class="math">Phi_L = G(i-1/2)[u(i-1)-u(i)]</text>
+  <text x="930" y="748" class="math">Phi_R = G(i+1/2)[u(i+1)-u(i)]</text>
+  <text x="930" y="788" class="s">储存项 = Phi_L + Phi_R；公共面贡献在全域求和后抵消</text>
+
+  <rect x="60" y="892" width="1680" height="66" rx="18" fill="#18324b"/>
+  <text x="900" y="934" class="b" text-anchor="middle" fill="#fff">守恒离散 → 三对角线性方程组 → Thomas 算法；非线性物性通过时间层内迭代更新</text>
+</svg>

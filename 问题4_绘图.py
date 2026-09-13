@@ -18,6 +18,33 @@ from utils.plot_style import publication_subplots
 COLORS=['#0072B2','#D55E00','#009E73','#CC79A7','#666666']
 STYLES=['-','--','-.',':','-']
 
+def refinement_figure(verification):
+    fig,ax=publication_subplots(1,1,width='report',aspect=.60)
+    ys=np.arange(len(verification))
+    ax.scatter(verification.table_max_abs_kg_kg,ys,s=38,color=COLORS[0],marker='D')
+    for y,value in zip(ys,verification.table_max_abs_kg_kg):
+        coefficient,exponent=f'{value:.4e}'.split('e')
+        ax.annotate(rf'${coefficient}\times10^{{{int(exponent)}}}$ kg/kg',
+                    (value,y),xytext=(10,0),textcoords='offset points',
+                    va='center',ha='left',fontsize=9)
+    ax.axvline(5e-5,color=COLORS[1],ls='--',lw=1,label='四位小数半单位')
+    labels=[v.replace('space_','网格 ').replace('time_','时间步 ').replace('_',' / ') for v in verification.scenario]
+    ax.set_yticks(ys,labels);ax.set_xlabel('共同表6位置的最大绝对差 / (kg/kg)');ax.set_ylim(-.6,len(ys)-.4)
+    ax.ticklabel_format(axis='x',style='sci',scilimits=(0,0));ax.legend(loc='lower right',frameon=False)
+    return fig
+
+def figure16_only():
+    setup_style(journal='general',lang='zh',serif_for_zh=True)
+    plt.rcParams.update({'font.size':9,'axes.labelsize':9,'xtick.labelsize':8,'ytick.labelsize':8,'legend.fontsize':8,'svg.fonttype':'none','pdf.fonttype':42})
+    verification=pd.read_csv(q.ROOT/'results/问题4_数值加密.csv')
+    fig=refinement_figure(verification)
+    stem=q.ROOT/'figures/q4/process_q4_refinement'
+    export_figure(fig,str(stem),formats=['pdf','svg','png'],dpi=300,size_inches=tuple(fig.get_size_inches()),grayscale_preview=True)
+    gp=stem.with_name(stem.name+'_grayscale.png')
+    with Image.open(gp) as im:im.copy().save(stem.parent/'_qa'/gp.name,dpi=(300,300))
+    gp.unlink()
+    plt.close(fig)
+
 def main(out=q.ROOT):
     out=Path(out);res=out/'results';figdir=out/'figures/q4';figdir.mkdir(parents=True,exist_ok=True)
     data=res/'q4_plot_data';data.mkdir(parents=True,exist_ok=True)
@@ -83,12 +110,7 @@ def main(out=q.ROOT):
     finish(fig,'process_q4_iterations','每秒耦合迭代在规定的40次上限内收敛。','results/问题4_迭代统计.csv','频数柱状图','频数统计覆盖主模型全部时间步，非采样频数。')
 
     # Process 3: numerical errors compared on common six-hour table locations.
-    fig,ax=figax();ys=np.arange(len(verification))
-    ax.scatter(verification.table_max_abs_kg_kg,ys,s=38,color=COLORS[0],marker='D')
-    ax.axvline(5e-5,color=COLORS[1],ls='--',lw=1,label='四位小数半单位')
-    labels=[v.replace('space_','网格 ').replace('time_','时间步 ').replace('_',' / ') for v in verification.scenario]
-    ax.set_yticks(ys,labels);ax.set_xlabel('共同表6位置的最大绝对差 / (kg/kg)');ax.set_ylim(-.6,len(ys)-.4)
-    ax.ticklabel_format(axis='x',style='sci',scilimits=(0,0));ax.legend(loc='lower right',frameon=False)
+    fig=refinement_figure(verification)
     finish(fig,'process_q4_refinement','时空加密误差按预先冻结的表值门槛核验。','results/问题4_数值加密.csv','点图','共同6h时刻与固定实际距离/表面值比较；终点时间差另外列在CSV中。')
 
     # Result 1: full threshold trajectories, semilog makes the endpoint visible.
@@ -148,4 +170,6 @@ def main(out=q.ROOT):
     for c in contracts:text += [f"## {c['name']}",c['claim'],f"图注：{c['caption']}",f"证据：{c['source']}",'']
     (figdir/'图表说明.md').write_text('\n'.join(text),encoding='utf-8')
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    if '--figure16-only' in sys.argv:figure16_only()
+    else:main()

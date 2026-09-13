@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1000" viewBox="0 0 1800 1000" fill="#18324b">
+  <defs>
+    <linearGradient id="air" x1="0" x2="1"><stop offset="0" stop-color="#fff4de"/><stop offset="1" stop-color="#ffe4ce"/></linearGradient>
+    <radialGradient id="sample"><stop offset="0" stop-color="#cba56e"/><stop offset="0.7" stop-color="#a67643"/><stop offset="1" stop-color="#7d4f2d"/></radialGradient>
+    <marker id="orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#e86e2f"/></marker>
+    <marker id="blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#2b84bd"/></marker>
+    <marker id="gray" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0 0L11 5.5L0 11Z" fill="#385269"/></marker>
+    <filter id="shadow"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#18324b" flood-opacity="0.14"/></filter>
+    <style>
+      text{font-family:'SimHei','Microsoft YaHei','Noto Sans CJK SC',sans-serif}.title{font-size:50px;font-weight:700}.h{font-size:34px;font-weight:700}.b{font-size:30px}.s{font-size:26px;fill:#607486}.math{font-family:'Times New Roman','SimHei',serif;font-size:30px}
+    </style>
+  </defs>
+  <rect width="1800" height="1000" fill="#fff"/>
+  <rect width="1800" height="108" fill="#f4f8fb"/>
+  <text x="70" y="67" class="title">热风烘干的热质传递过程与一维径向简化</text>
+
+  <g filter="url(#shadow)">
+    <rect x="60" y="155" width="1045" height="650" rx="26" fill="url(#air)" stroke="#d8a974" stroke-width="3"/>
+    <rect x="90" y="186" width="985" height="588" rx="18" fill="#fffaf2" stroke="#e8c49a" stroke-width="2"/>
+  </g>
+  <text x="105" y="235" class="h">烘房侧视图</text>
+  <text x="105" y="270" class="s">环境边界由附件 1 给出：Ta(t)，Ca(t)</text>
+  <text x="105" y="304" class="s">侧壁采用第三类换热/传质边界：h，hm</text>
+
+  <g fill="none" stroke="#e86e2f" stroke-width="8" marker-end="url(#orange)" opacity="0.9">
+    <path d="M115 345 C300 320 360 350 500 338"/>
+    <path d="M115 455 C290 430 350 465 500 450"/>
+    <path d="M115 565 C285 540 355 575 500 560"/>
+    <path d="M735 338 C855 326 940 350 1035 336"/>
+    <path d="M735 450 C860 438 940 462 1035 448"/>
+    <path d="M735 560 C860 548 940 572 1035 558"/>
+  </g>
+  <text x="112" y="670" class="b" fill="#cc5a25">热风沿侧壁掠过</text>
+
+  <g filter="url(#shadow)">
+    <path d="M445 390 C455 340 505 315 575 315 H760 C830 315 880 340 890 390 V555 C880 605 830 630 760 630 H575 C505 630 455 605 445 555 Z" fill="#9a693a" stroke="#704824" stroke-width="4"/>
+    <ellipse cx="460" cy="472" rx="92" ry="157" fill="url(#sample)" stroke="#704824" stroke-width="4"/>
+    <ellipse cx="880" cy="472" rx="92" ry="157" fill="#8c5c34" stroke="#704824" stroke-width="4"/>
+    <path d="M490 360 C560 342 760 342 842 362M490 585 C560 603 760 603 842 585" stroke="#c79d6c" stroke-width="5" fill="none" opacity="0.65"/>
+  </g>
+  <line x1="460" y1="690" x2="880" y2="690" stroke="#385269" stroke-width="3" marker-start="url(#gray)" marker-end="url(#gray)"/>
+  <line x1="460" y1="655" x2="460" y2="712" stroke="#385269" stroke-width="3"/>
+  <line x1="880" y1="655" x2="880" y2="712" stroke="#385269" stroke-width="3"/>
+  <text x="670" y="735" class="b" text-anchor="middle">L = 25 cm</text>
+
+  <g stroke="#e86e2f" stroke-width="7" marker-end="url(#orange)">
+    <path d="M655 275 V335"/><path d="M655 669 V609"/>
+  </g>
+  <g stroke="#2b84bd" stroke-width="7" marker-end="url(#blue)">
+    <path d="M705 355 V282"/><path d="M705 590 V663"/>
+  </g>
+  <rect x="806" y="224" width="230" height="86" rx="17" fill="#fff" stroke="#e86e2f" stroke-width="2"/>
+  <line x1="828" y1="252" x2="882" y2="252" stroke="#e86e2f" stroke-width="6" marker-end="url(#orange)"/>
+  <text x="900" y="260" class="b">热量向内传递</text>
+  <line x1="828" y1="286" x2="882" y2="286" stroke="#2b84bd" stroke-width="6" marker-end="url(#blue)"/>
+  <text x="900" y="294" class="b">水分向外迁移</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1165" y="155" width="575" height="650" rx="26" fill="#f8fbfd" stroke="#aac0d0" stroke-width="3"/>
+  </g>
+  <text x="1210" y="215" class="h">横截面：只保留径向梯度</text>
+  <circle cx="1453" cy="474" r="216" fill="#f7e7d0" stroke="#7d4f2d" stroke-width="5"/>
+  <circle cx="1453" cy="474" r="164" fill="#efd5b2" stroke="#d1a06a" stroke-width="2"/>
+  <circle cx="1453" cy="474" r="111" fill="#e6c397" stroke="#d1a06a" stroke-width="2"/>
+  <circle cx="1453" cy="474" r="58" fill="#dbad77" stroke="#d1a06a" stroke-width="2"/>
+  <circle cx="1453" cy="474" r="7" fill="#18324b"/>
+  <line x1="1453" y1="474" x2="1669" y2="474" stroke="#385269" stroke-width="4" marker-end="url(#gray)"/>
+  <text x="1555" y="455" class="math">r</text>
+  <text x="1680" y="455" class="math">R</text>
+  <text x="1453" y="735" class="b" text-anchor="middle">R0 = 2 cm</text>
+
+  <g stroke="#e86e2f" stroke-width="6" marker-end="url(#orange)">
+    <path d="M1705 370 L1640 402"/><path d="M1707 576 L1640 543"/>
+  </g>
+  <g stroke="#2b84bd" stroke-width="6" marker-end="url(#blue)">
+    <path d="M1630 350 L1702 315"/><path d="M1632 598 L1702 633"/>
+  </g>
+  <text x="1207" y="770" class="s">轴线：dT/dr = 0，dC/dr = 0</text>
+
+  <rect x="60" y="850" width="1680" height="100" rx="22" fill="#f4f8fb" stroke="#cedbe4" stroke-width="2"/>
+  <g>
+    <circle cx="110" cy="900" r="26" fill="#4b91b5"/><text x="110" y="909" text-anchor="middle" font-size="28" font-weight="700" fill="#fff">1</text>
+    <text x="150" y="909" class="b">轴对称</text>
+    <circle cx="410" cy="900" r="26" fill="#4b91b5"/><text x="410" y="909" text-anchor="middle" font-size="28" font-weight="700" fill="#fff">2</text>
+    <text x="450" y="909" class="b">T = T(r,t)，C = C(r,t)</text>
+    <circle cx="905" cy="900" r="26" fill="#4b91b5"/><text x="905" y="909" text-anchor="middle" font-size="28" font-weight="700" fill="#fff">3</text>
+    <text x="945" y="909" class="b">L/R = 12.5</text>
+    <circle cx="1210" cy="900" r="26" fill="#4b91b5"/><text x="1210" y="909" text-anchor="middle" font-size="28" font-weight="700" fill="#fff">4</text>
+    <text x="1250" y="909" class="b">端面/侧面积 = R/L = 0.08</text>
+  </g>
+</svg>

@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="518.740157pt" height="300.472441pt" viewBox="0 0 518.740157 300.472441" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-13T16:56:12.393425</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.6, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 300.472441 
+L 518.740157 300.472441 
+L 518.740157 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 29.568189 39.36189 
+L 489.171969 39.36189 
+Q 496.953071 39.36189 496.953071 34.854803 
+L 496.953071 23.737323 
+Q 496.953071 19.230236 489.171969 19.230236 
+L 29.568189 19.230236 
+Q 21.787087 19.230236 21.787087 23.737323 
+L 21.787087 34.854803 
+Q 21.787087 39.36189 29.568189 39.36189 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #f4f7f9; stroke: #d4dee5; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 33.19937 155.04378 
+L 121.385197 155.04378 
+Q 132.79748 155.04378 132.79748 148.433386 
+L 132.79748 54.685984 
+Q 132.79748 48.075591 121.385197 48.075591 
+L 33.19937 48.075591 
+Q 21.787087 48.075591 21.787087 54.685984 
+L 21.787087 148.433386 
+Q 21.787087 155.04378 33.19937 155.04378 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #edf4fa; stroke: #2166ac; stroke-width: 1.25; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 154.584567 155.04378 
+L 242.770394 155.04378 
+Q 254.182677 155.04378 254.182677 148.433386 
+L 254.182677 54.685984 
+Q 254.182677 48.075591 242.770394 48.075591 
+L 154.584567 48.075591 
+Q 143.172283 48.075591 143.172283 54.685984 
+L 143.172283 148.433386 
+Q 143.172283 155.04378 154.584567 155.04378 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #edf7fa; stroke: #4393c3; stroke-width: 1.25; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 275.969764 155.04378 
+L 364.155591 155.04378 
+Q 375.567874 155.04378 375.567874 148.433386 
+L 375.567874 54.685984 
+Q 375.567874 48.075591 364.155591 48.075591 
+L 275.969764 48.075591 
+Q 264.55748 48.075591 264.55748 54.685984 
+L 264.55748 148.433386 
+Q 264.55748 155.04378 275.969764 155.04378 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #f3f0f8; stroke: #762a83; stroke-width: 1.25; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 397.354961 155.04378 
+L 485.540787 155.04378 
+Q 496.953071 155.04378 496.953071 148.433386 
+L 496.953071 54.685984 
+Q 496.953071 48.075591 485.540787 48.075591 
+L 397.354961 48.075591 
+Q 385.942677 48.075591 385.942677 54.685984 
+L 385.942677 148.433386 
+Q 385.942677 155.04378 397.354961 155.04378 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #eef7f1; stroke: #1b7837; stroke-width: 1.25; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 32.16189 279.739843 
+L 225.133228 279.739843 
+Q 235.508031 279.739843 235.508031 273.730394 
+L 235.508031 190.199055 
+Q 235.508031 184.189606 225.133228 184.189606 
+L 32.16189 184.189606 
+Q 21.787087 184.189606 21.787087 190.199055 
+L 21.787087 273.730394 
+Q 21.787087 279.739843 32.16189 279.739843 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #fff7f5; stroke: #e5a08f; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 255.220157 279.739843 
+L 486.578268 279.739843 
+Q 496.953071 279.739843 496.953071 273.730394 
+L 496.953071 190.199055 
+Q 496.953071 184.189606 486.578268 184.189606 
+L 255.220157 184.189606 
+Q 244.845354 184.189606 244.845354 190.199055 
+L 244.845354 273.730394 
+Q 244.845354 279.739843 255.220157 279.739843 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #f6fafc; stroke: #afc2d0; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 339.256063 231.664252 
+L 467.384882 231.664252 
+Q 472.572283 231.664252 472.572283 228.659528 
+L 472.572283 219.645354 
+Q 472.572283 216.64063 467.384882 216.64063 
+L 339.256063 216.64063 
+Q 334.068661 216.64063 334.068661 219.645354 
+L 334.068661 228.659528 
+Q 334.068661 231.664252 339.256063 231.664252 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #d9e2e8; stroke: #a7b6c1; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 339.256063 251.495433 
+L 387.160493 251.495433 
+Q 392.347894 251.495433 392.347894 248.490709 
+L 392.347894 239.476535 
+Q 392.347894 236.471811 387.160493 236.471811 
+L 339.256063 236.471811 
+Q 334.068661 236.471811 334.068661 239.476535 
+L 334.068661 248.490709 
+Q 334.068661 251.495433 339.256063 251.495433 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #63a979; stroke: #1b7837; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 33.19937 76.32 
+L 121.385197 76.32 
+Q 132.79748 76.32 132.79748 69.709606 
+L 132.79748 54.685984 
+Q 132.79748 48.075591 121.385197 48.075591 
+L 33.19937 48.075591 
+Q 21.787087 48.075591 21.787087 54.685984 
+L 21.787087 69.709606 
+Q 21.787087 76.32 33.19937 76.32 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #2166ac"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 24.899528 74.517165 
+L 129.685039 74.517165 
+L 129.685039 62.197795 
+L 24.899528 62.197795 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #2166ac"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 154.584567 76.32 
+L 242.770394 76.32 
+Q 254.182677 76.32 254.182677 69.709606 
+L 254.182677 54.685984 
+Q 254.182677 48.075591 242.770394 48.075591 
+L 154.584567 48.075591 
+Q 143.172283 48.075591 143.172283 54.685984 
+L 143.172283 69.709606 
+Q 143.172283 76.32 154.584567 76.32 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #4393c3"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 146.284724 74.517165 
+L 251.070236 74.517165 
+L 251.070236 62.197795 
+L 146.284724 62.197795 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #4393c3"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 275.969764 76.32 
+L 364.155591 76.32 
+Q 375.567874 76.32 375.567874 69.709606 
+L 375.567874 54.685984 
+Q 375.567874 48.075591 364.155591 48.075591 
+L 275.969764 48.075591 
+Q 264.55748 48.075591 264.55748 54.685984 
+L 264.55748 69.709606 
+Q 264.55748 76.32 275.969764 76.32 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #762a83"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 267.669921 74.517165 
+L 372.455433 74.517165 
+L 372.455433 62.197795 
+L 267.669921 62.197795 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #762a83"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 397.354961 76.32 
+L 485.540787 76.32 
+Q 496.953071 76.32 496.953071 69.709606 
+L 496.953071 54.685984 
+Q 496.953071 48.075591 485.540787 48.075591 
+L 397.354961 48.075591 
+Q 385.942677 48.075591 385.942677 54.685984 
+L 385.942677 69.709606 
+Q 385.942677 76.32 397.354961 76.32 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #1b7837"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 389.055118 74.517165 
+L 493.84063 74.517165 
+L 493.84063 62.197795 
+L 389.055118 62.197795 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #1b7837"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 38.905512 123.494173 
+L 115.679055 123.494173 
+Q 124.497638 123.494173 124.497638 118.386142 
+L 124.497638 110.573858 
+Q 124.497638 105.465827 115.679055 105.465827 
+L 38.905512 105.465827 
+Q 30.086929 105.465827 30.086929 110.573858 
+L 30.086929 118.386142 
+Q 30.086929 123.494173 38.905512 123.494173 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #ffffff; stroke: #2166ac; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 160.290709 123.494173 
+L 237.064252 123.494173 
+Q 245.882835 123.494173 245.882835 118.386142 
+L 245.882835 110.573858 
+Q 245.882835 105.465827 237.064252 105.465827 
+L 160.290709 105.465827 
+Q 151.472126 105.465827 151.472126 110.573858 
+L 151.472126 118.386142 
+Q 151.472126 123.494173 160.290709 123.494173 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #ffffff; stroke: #4393c3; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 281.675906 123.494173 
+L 358.449449 123.494173 
+Q 367.268031 123.494173 367.268031 118.386142 
+L 367.268031 110.573858 
+Q 367.268031 105.465827 358.449449 105.465827 
+L 281.675906 105.465827 
+Q 272.857323 105.465827 272.857323 110.573858 
+L 272.857323 118.386142 
+Q 272.857323 123.494173 281.675906 123.494173 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #ffffff; stroke: #762a83; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_22">
+    <path d="M 403.061102 123.494173 
+L 479.834646 123.494173 
+Q 488.653228 123.494173 488.653228 118.386142 
+L 488.653228 110.573858 
+Q 488.653228 105.465827 479.834646 105.465827 
+L 403.061102 105.465827 
+Q 394.24252 105.465827 394.24252 110.573858 
+L 394.24252 118.386142 
+Q 394.24252 123.494173 403.061102 123.494173 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #ffffff; stroke: #1b7837; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_23">
+    <path d="M 133.278987 101.559685 
+Q 137.985502 101.559685 141.294475 101.559685 
+" clip-path="url(#pd8e15c9b58)" style="fill: none; stroke: #8ea2b2; stroke-width: 1.25; stroke-linecap: round"/>
+    <path d="M 137.294475 99.559685 
+L 141.294475 101.559685 
+L 137.294475 103.559685 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #8ea2b2; stroke: #8ea2b2; stroke-width: 1.25; stroke-linecap: round"/>
+   </g>
+   <g id="patch_24">
+    <path d="M 254.664184 101.559685 
+Q 259.370699 101.559685 262.679672 101.559685 
+" clip-path="url(#pd8e15c9b58)" style="fill: none; stroke: #8ea2b2; stroke-width: 1.25; stroke-linecap: round"/>
+    <path d="M 258.679672 99.559685 
+L 262.679672 101.559685 
+L 258.679672 103.559685 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #8ea2b2; stroke: #8ea2b2; stroke-width: 1.25; stroke-linecap: round"/>
+   </g>
+   <g id="patch_25">
+    <path d="M 376.04938 101.559685 
+Q 380.755896 101.559685 384.064868 101.559685 
+" clip-path="url(#pd8e15c9b58)" style="fill: none; stroke: #8ea2b2; stroke-width: 1.25; stroke-linecap: round"/>
+    <path d="M 380.064868 99.559685 
+L 384.064868 101.559685 
+L 380.064868 103.559685 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #8ea2b2; stroke: #8ea2b2; stroke-width: 1.25; stroke-linecap: round"/>
+   </g>
+   <g id="patch_26">
+    <path d="M 105.782845 232.565669 
+Q 130.719686 232.565669 154.426689 232.565669 
+" clip-path="url(#pd8e15c9b58)" style="fill: none; stroke-dasharray: 4.07,1.76; stroke-dashoffset: 0; stroke: #b2182b; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 150.426689 230.565669 
+L 154.426689 232.565669 
+L 150.426689 234.565669 
+z
+" clip-path="url(#pd8e15c9b58)" style="fill: #b2182b; stroke-dasharray: 4.07,1.76; stroke-dashoffset: 0; stroke: #b2182b; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 34.23685 148.433386 
+L 34.23685 136.414488 
+" clip-path="url(#pd8e15c9b58)" style="fill: none; stroke: #2166ac; stroke-width: 2.4; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 155.622047 148.433386 
+L 155.622047 136.414488 
+" clip-path="url(#pd8e15c9b58)" style="fill: none; stroke: #4393c3; stroke-width: 2.4; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 277.007244 148.433386 
+L 277.007244 136.414488 
+" clip-path="url(#pd8e15c9b58)" style="fill: none; stroke: #762a83; stroke-width: 2.4; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 398.392441 148.433386 
+L 398.392441 136.414488 
+" clip-path="url(#pd8e15c9b58)" style="fill: none; stroke: #1b7837; stroke-width: 2.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #222222" x="9.337323" y="16.7399" transform="rotate(-0 9.337323 16.7399)">a</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #18324b" x="24.899528" y="17.178146" transform="rotate(-0 24.899528 17.178146)">四问沿同一热质传递主线逐层增加模型复杂度</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #617487" x="259.370079" y="31.650674" transform="rotate(-0 259.370079 31.650674)">共同结构：圆柱一维径向方程  ·  侧壁第三类换热/传质边界  ·  径向有限体积法  ·  箭头表示继承</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #ffffff" x="32.16189" y="64.677717" transform="rotate(-0 32.16189 64.677717)">问题一</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: end; fill: #ffffff" x="122.422677" y="64.264397" transform="rotate(-0 122.422677 64.264397)">0–1800 s</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #18324b" x="33.19937" y="86.887752" transform="rotate(-0 33.19937 86.887752)">预热场重构</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="33.19937" y="102.862643" transform="rotate(-0 33.19937 102.862643)">常物性 · 固定半径 R0</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #2166ac" x="77.292283" y="116.546602" transform="rotate(-0 77.292283 116.546602)">输入：附件 1 + 附录 2</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #617487" x="33.19937" y="133.673531" transform="rotate(-0 33.19937 133.673531)">边界插值；Fourier / Fick 扩散</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="40.461732" y="144.628312" transform="rotate(-0 40.461732 144.628312)">输出  T(r,t)、C(r,t)</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #ffffff" x="153.547087" y="64.677717" transform="rotate(-0 153.547087 64.677717)">问题二</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: end; fill: #ffffff" x="243.807874" y="64.264397" transform="rotate(-0 243.807874 64.264397)">0–3 h</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #18324b" x="154.584567" y="86.887752" transform="rotate(-0 154.584567 86.887752)">全程变物性耦合</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="154.584567" y="102.862643" transform="rotate(-0 154.584567 102.862643)">固定半径 · 顺序耦合</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #4393c3" x="198.67748" y="116.546602" transform="rotate(-0 198.67748 116.546602)">替换：附录 3 物性经验式</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #617487" x="154.584567" y="133.811812" transform="rotate(-0 154.584567 133.811812)">物性反馈：C→ρ,c_p,k；T,C→D</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="161.846929" y="144.628312" transform="rotate(-0 161.846929 144.628312)">输出  每 0.5 h 径向场</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #ffffff" x="274.932283" y="64.677717" transform="rotate(-0 274.932283 64.677717)">问题三</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: end; fill: #ffffff" x="365.193071" y="64.264397" transform="rotate(-0 365.193071 64.264397)">固定 R0</text>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #18324b" x="275.969764" y="86.887752" transform="rotate(-0 275.969764 86.887752)">固定域干燥终点</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="275.969764" y="102.862643" transform="rotate(-0 275.969764 102.862643)">沿用问题二变物性模型</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #762a83" x="320.062677" y="116.546602" transform="rotate(-0 320.062677 116.546602)">新增：稳定边界延拓 + 阈值</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #617487" x="275.969764" y="133.673531" transform="rotate(-0 275.969764 133.673531)">逐秒判定：max C &lt; 0.15</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="283.232126" y="144.628312" transform="rotate(-0 283.232126 144.628312)">终点  57.4322 h</text>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #ffffff" x="396.31748" y="64.677717" transform="rotate(-0 396.31748 64.677717)">问题四</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: end; fill: #ffffff" x="486.578268" y="64.264397" transform="rotate(-0 486.578268 64.264397)">移动 R(t)</text>
+   </g>
+   <g id="text_27">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #18324b" x="397.354961" y="86.887752" transform="rotate(-0 397.354961 86.887752)">收缩域干燥终点</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="397.354961" y="102.862643" transform="rotate(-0 397.354961 102.862643)">材料坐标 x = r/R(t)</text>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #1b7837" x="441.447874" y="116.546602" transform="rotate(-0 441.447874 116.546602)">替换：附件 2 + 附录 4</text>
+   </g>
+   <g id="text_30">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #617487" x="397.354961" y="133.673531" transform="rotate(-0 397.354961 133.673531)">单位网格；终点 R=1.2000 cm</text>
+   </g>
+   <g id="text_31">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="404.617323" y="144.628312" transform="rotate(-0 404.617323 144.628312)">终点  51.0775 h</text>
+   </g>
+   <g id="text_32">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #222222" x="9.337323" y="175.088876" transform="rotate(-0 9.337323 175.088876)">b</text>
+   </g>
+   <g id="text_33">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #18324b" x="24.899528" y="175.527122" transform="rotate(-0 24.899528 175.527122)">收缩效应必须在同一物性口径下比较</text>
+   </g>
+   <g id="text_34">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #b2182b" x="35.274331" y="200.190788" transform="rotate(-0 35.274331 200.190788)">不可用于分离收缩效应</text>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #762a83" x="39.424252" y="218.24406" transform="rotate(-0 39.424252 218.24406)">问题三</text>
+   </g>
+   <g id="text_36">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="39.424252" y="229.824712" transform="rotate(-0 39.424252 229.824712)">附录 3 物性 · 固定 R0</text>
+   </g>
+   <g id="text_37">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #762a83" x="39.424252" y="243.158347" transform="rotate(-0 39.424252 243.158347)">57.4322 h</text>
+   </g>
+   <g id="text_38">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #b2182b" x="130.72252" y="221.411483" transform="rotate(-0 130.72252 221.411483)">物性与几何同时改变</text>
+   </g>
+   <g id="text_39">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #1b7837" x="168.071811" y="218.24406" transform="rotate(-0 168.071811 218.24406)">问题四</text>
+   </g>
+   <g id="text_40">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="168.071811" y="229.824712" transform="rotate(-0 168.071811 229.824712)">附录 4 物性 · 收缩 R(t)</text>
+   </g>
+   <g id="text_41">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #1b7837" x="168.071811" y="243.158347" transform="rotate(-0 168.071811 243.158347)">51.0775 h</text>
+   </g>
+   <g id="text_42">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="35.274331" y="266.920595" transform="rotate(-0 35.274331 266.920595)">结论：两题时长差不能全部归因于半径收缩。</text>
+   </g>
+   <g id="text_43">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #18324b" x="258.332598" y="200.190788" transform="rotate(-0 258.332598 200.190788)">有效对照：两情景均采用附录 4 物性</text>
+   </g>
+   <g id="text_44">
+    <text style="font-size: 7.5px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #617487" x="258.332598" y="210.594476" transform="rotate(-0 258.332598 210.594476)">空气边界、初值与数值算法相同；仅半径边界不同</text>
+   </g>
+   <g id="text_45">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="259.370079" y="226.356816" transform="rotate(-0 259.370079 226.356816)">固定 R0</text>
+   </g>
+   <g id="text_46">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="259.370079" y="246.187997" transform="rotate(-0 259.370079 246.187997)">收缩 R(t)</text>
+   </g>
+   <g id="text_47">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="475.684724" y="226.356816" transform="rotate(-0 475.684724 226.356816)">129.7964 h</text>
+   </g>
+   <g id="text_48">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #1b7837" x="395.460335" y="246.187997" transform="rotate(-0 395.460335 246.187997)">51.0775 h</text>
+   </g>
+   <g id="text_49">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #24384a" x="259.370079" y="269.299449" transform="rotate(-0 259.370079 269.299449)">Δt = −78.7189 h</text>
+   </g>
+   <g id="text_50">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'Helvetica', 'Liberation Sans', sans-serif; text-anchor: start; fill: #1b7837" x="357.930709" y="269.299449" transform="rotate(-0 357.930709 269.299449)">终点缩短 60.6480%</text>
+   </g>
+   <g id="line2d_5">
+    <path d="M 122.941417 240.678425 
+L 138.503622 225.053858 
+" clip-path="url(#pd8e15c9b58)" style="fill: none; stroke: #b2182b; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 122.941417 225.053858 
+L 138.503622 240.678425 
+" clip-path="url(#pd8e15c9b58)" style="fill: none; stroke: #b2182b; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pd8e15c9b58">
+   <rect x="0" y="0" width="518.740157" height="300.472441"/>
+  </clipPath>
+ </defs>
+</svg>

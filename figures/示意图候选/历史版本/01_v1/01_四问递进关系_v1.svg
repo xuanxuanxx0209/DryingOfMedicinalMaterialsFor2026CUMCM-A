@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1050" viewBox="0 0 1800 1050" fill="#18324b">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#18324b" flood-opacity="0.13"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#49657d"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#e8763d"/>
+    </marker>
+    <style>
+      text{font-family:'SimHei','Microsoft YaHei','Noto Sans CJK SC',sans-serif}
+      .title{font-size:50px;font-weight:700}
+      .subtitle{font-size:28px;fill:#617487}
+      .h{font-size:34px;font-weight:700}
+      .b{font-size:30px}
+      .s{font-size:26px;fill:#5d7184}
+      .tag{font-size:28px;font-weight:700}
+      .line{fill:none;stroke:#49657d;stroke-width:4;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1800" height="1050" fill="#ffffff"/>
+  <rect x="0" y="0" width="1800" height="112" fill="#f4f8fb"/>
+  <text x="70" y="66" class="title">四问递进关系与统一证据链</text>
+  <text x="1730" y="66" class="subtitle" text-anchor="end">从预热场重构到收缩域终点</text>
+
+  <text x="74" y="157" class="h">逐问新增输入</text>
+  <g filter="url(#shadow)">
+    <rect x="65" y="184" rx="22" width="315" height="150" fill="#fff8eb" stroke="#f0c477" stroke-width="2"/>
+    <circle cx="112" cy="231" r="23" fill="#f5b74f"/>
+    <path d="M100 231h24M112 219v24" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    <text x="151" y="238" class="h">问题一输入</text>
+    <text x="95" y="282" class="b">几何、初值与附件 1</text>
+    <text x="95" y="313" class="s">附录 2 常物性；R0 = 2 cm</text>
+
+    <rect x="65" y="366" rx="22" width="315" height="150" fill="#eef7fb" stroke="#79b9d4" stroke-width="2"/>
+    <path d="M95 437 C120 399 145 471 172 419 C192 384 218 458 248 414 C273 378 297 440 344 406" fill="none" stroke="#3c96bd" stroke-width="5"/>
+    <text x="95" y="400" class="h">问题二新增</text>
+    <text x="95" y="478" class="b">附录 3 变物性经验式</text>
+    <text x="95" y="505" class="s">ρ(C)，cp(C)，k(C)，D(C,T)</text>
+
+    <rect x="65" y="548" rx="22" width="315" height="150" fill="#f4f1fb" stroke="#a695d7" stroke-width="2"/>
+    <text x="95" y="591" class="h">问题三新增</text>
+    <text x="95" y="633" class="b">全域阈值 C &lt; 0.15</text>
+    <text x="95" y="669" class="s">2.5–4 h 稳定段均值延拓</text>
+
+    <rect x="65" y="730" rx="22" width="315" height="150" fill="#eef9f2" stroke="#83c79a" stroke-width="2"/>
+    <text x="95" y="774" class="h">问题四新增</text>
+    <text x="137" y="808" class="b">附件 2 实测半径 R(t)</text>
+    <text x="137" y="862" class="s">附录 4 新物性经验式</text>
+  </g>
+
+  <path d="M380 258 H443" class="line"/>
+  <path d="M380 441 H443" class="line"/>
+  <path d="M380 623 H443" class="line"/>
+  <path d="M380 805 H443" class="line"/>
+
+  <g filter="url(#shadow)">
+    <rect x="455" y="160" rx="25" width="740" height="164" fill="#fff8eb" stroke="#e6ad50" stroke-width="3"/>
+    <rect x="455" y="160" rx="25" width="124" height="164" fill="#f2b54e"/>
+    <text x="517" y="232" class="h" text-anchor="middle" fill="#fff">问题一</text>
+    <text x="517" y="270" class="tag" text-anchor="middle" fill="#fff">0–1800 s</text>
+    <text x="615" y="212" class="h">预热平衡：常物性一维径向模型</text>
+    <text x="615" y="252" class="b">分段线性空气边界 + Fourier 导热 + Fick 扩散</text>
+    <text x="615" y="287" class="s">输出：T(r,t)、C(r,t) 的完整预热场</text>
+
+    <rect x="455" y="367" rx="25" width="740" height="164" fill="#eef7fb" stroke="#65add0" stroke-width="3"/>
+    <rect x="455" y="367" rx="25" width="124" height="164" fill="#4296bd"/>
+    <text x="517" y="439" class="h" text-anchor="middle" fill="#fff">问题二</text>
+    <text x="517" y="477" class="tag" text-anchor="middle" fill="#fff">0–3 h</text>
+    <text x="615" y="419" class="h">全程演化：变物性顺序耦合</text>
+    <text x="615" y="459" class="b">C → ρ、cp、k；T、C → D；时间层内 Picard 迭代</text>
+    <text x="615" y="494" class="s">输出：前三小时温度场与含水率场</text>
+
+    <rect x="455" y="574" rx="25" width="740" height="164" fill="#f4f1fb" stroke="#9482cc" stroke-width="3"/>
+    <rect x="455" y="574" rx="25" width="124" height="164" fill="#806bb8"/>
+    <text x="517" y="646" class="h" text-anchor="middle" fill="#fff">问题三</text>
+    <text x="517" y="684" class="tag" text-anchor="middle" fill="#fff">固定半径</text>
+    <text x="615" y="626" class="h">固定域终点：全域严格阈值</text>
+    <text x="615" y="666" class="b">延拓稳定空气边界；逐秒检查 max C(r,t) &lt; 0.15</text>
+    <text x="615" y="701" class="s">终点：57.4322 h；控制位置经计算确认为轴线</text>
+
+    <rect x="455" y="781" rx="25" width="740" height="164" fill="#eef9f2" stroke="#69b582" stroke-width="3"/>
+    <rect x="455" y="781" rx="25" width="124" height="164" fill="#4d9f69"/>
+    <text x="517" y="853" class="h" text-anchor="middle" fill="#fff">问题四</text>
+    <text x="517" y="891" class="tag" text-anchor="middle" fill="#fff">移动半径</text>
+    <text x="615" y="833" class="h">收缩域终点：材料坐标映射</text>
+    <text x="615" y="873" class="b">r = xR(t)，固定单位网格；附录 4 物性同步更新</text>
+    <text x="615" y="908" class="s">终点：51.0775 h；半径 1.2000 cm</text>
+  </g>
+
+  <path d="M825 324 V355" class="line"/>
+  <path d="M825 531 V562" class="line"/>
+  <path d="M825 738 V769" class="line"/>
+
+  <text x="1280" y="157" class="h">关键判定与对照</text>
+  <g filter="url(#shadow)">
+    <rect x="1260" y="184" rx="24" width="470" height="190" fill="#f8fbfd" stroke="#9bb3c5" stroke-width="2"/>
+    <text x="1300" y="230" class="h">统一终点条件</text>
+    <rect x="1300" y="253" rx="15" width="390" height="66" fill="#18324b"/>
+    <text x="1495" y="296" text-anchor="middle" font-size="30px" font-weight="700" fill="#fff">max C(r,t) &lt; 0.15 kg/kg</text>
+    <text x="1300" y="346" class="s">检查全域节点，而非预设中心点</text>
+
+    <rect x="1260" y="420" rx="24" width="470" height="250" fill="#fff7f3" stroke="#e69a73" stroke-width="2"/>
+    <text x="1300" y="468" class="h">净几何效应必须同口径比较</text>
+    <text x="1300" y="513" class="b">附录 4 + 收缩半径</text>
+    <text x="1690" y="513" class="tag" text-anchor="end" fill="#4d9f69">51.0775 h</text>
+    <path d="M1300 538 H1690" stroke="#d5dde4" stroke-width="2"/>
+    <text x="1300" y="578" class="b">附录 4 + 固定 R0</text>
+    <text x="1690" y="578" class="tag" text-anchor="end" fill="#c85e2d">129.7964 h</text>
+    <text x="1300" y="629" class="b" fill="#c85e2d">缩短 60.6480%</text>
+
+    <rect x="1260" y="716" rx="24" width="470" height="164" fill="#fef4f2" stroke="#dc7a66" stroke-width="2"/>
+    <circle cx="1305" cy="760" r="21" fill="#dc6a55"/>
+    <text x="1305" y="768" text-anchor="middle" font-size="30px" font-weight="700" fill="#fff">!</text>
+    <text x="1343" y="768" class="h">解释边界</text>
+    <text x="1300" y="814" class="b">问题三与问题四同时改变物性公式，</text>
+    <text x="1300" y="848" class="b">二者时长差不能全部归因于收缩。</text>
+  </g>
+
+  <path d="M1195 656 H1248" class="line"/>
+  <path d="M1195 863 H1248" class="line"/>
+  <rect x="65" y="988" width="1665" height="2" fill="#dbe4ea"/>
+  <text x="898" y="1025" class="s" text-anchor="middle">同一套空气边界、初值、阈值与数值框架贯穿四问；新增因素逐层引入</text>
+</svg>

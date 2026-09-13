@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1050" viewBox="0 0 1800 1050" fill="#18324b">
+  <defs>
+    <marker id="arr" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#49657d"/></marker>
+    <marker id="green" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#4e9f6b"/></marker>
+    <filter id="shadow"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#18324b" flood-opacity="0.13"/></filter>
+    <style>text{font-family:'SimHei','Microsoft YaHei','Noto Sans CJK SC',sans-serif}.title{font-size:50px;font-weight:700}.h{font-size:34px;font-weight:700}.b{font-size:30px}.s{font-size:26px;fill:#617487}.math{font-family:'Times New Roman','SimHei',serif;font-size:30px}</style>
+  </defs>
+  <rect width="1800" height="1050" fill="#fff"/>
+  <rect width="1800" height="108" fill="#f4f8fb"/>
+  <text x="70" y="67" class="title">收缩物理域到固定材料坐标的映射</text>
+
+  <g filter="url(#shadow)">
+    <rect x="55" y="155" width="520" height="690" rx="26" fill="#fafcfd" stroke="#a9becd" stroke-width="3"/>
+  </g>
+  <text x="95" y="213" class="h">① 物理域随时间收缩</text>
+  <circle cx="310" cy="470" r="205" fill="#f6e7d1" stroke="#8a5d34" stroke-width="5" stroke-dasharray="12 8"/>
+  <circle cx="310" cy="470" r="123" fill="#dcae78" stroke="#6f4726" stroke-width="5"/>
+  <g fill="none" stroke="#b37b43" stroke-width="2">
+    <circle cx="310" cy="470" r="41"/><circle cx="310" cy="470" r="82"/>
+  </g>
+  <g stroke="#4e9f6b" stroke-width="5" marker-end="url(#green)">
+    <path d="M310 230 V326"/><path d="M310 710 V614"/><path d="M70 470 H166"/><path d="M550 470 H454"/>
+  </g>
+  <line x1="310" y1="470" x2="515" y2="470" stroke="#8a5d34" stroke-width="4"/>
+  <line x1="310" y1="470" x2="433" y2="470" stroke="#4e9f6b" stroke-width="6"/>
+  <text x="411" y="449" class="math">R(t)</text>
+  <text x="486" y="449" class="math">R0</text>
+  <text x="95" y="755" class="b">R0 = 2.000 cm</text>
+  <text x="95" y="791" class="b">R(t) 最终接近 1.198 cm</text>
+
+  <path d="M590 500 H705" stroke="#49657d" stroke-width="6" marker-end="url(#arr)"/>
+  <text x="648" y="470" class="math" text-anchor="middle">x = r/R(t)</text>
+
+  <g filter="url(#shadow)">
+    <rect x="720" y="155" width="520" height="690" rx="26" fill="#f5faf7" stroke="#83bd96" stroke-width="3"/>
+  </g>
+  <text x="760" y="213" class="h">② 映射到固定单位区间</text>
+  <line x1="800" y1="470" x2="1160" y2="470" stroke="#4e9f6b" stroke-width="8" marker-end="url(#green)"/>
+  <g stroke="#18324b" stroke-width="3">
+    <line x1="800" y1="440" x2="800" y2="500"/><line x1="890" y1="445" x2="890" y2="495"/><line x1="980" y1="440" x2="980" y2="500"/><line x1="1070" y1="445" x2="1070" y2="495"/><line x1="1160" y1="440" x2="1160" y2="500"/>
+  </g>
+  <text x="800" y="540" class="math" text-anchor="middle">0</text>
+  <text x="890" y="540" class="math" text-anchor="middle">¼</text>
+  <text x="980" y="540" class="math" text-anchor="middle">½</text>
+  <text x="1070" y="540" class="math" text-anchor="middle">¾</text>
+  <text x="1160" y="540" class="math" text-anchor="middle">1</text>
+  <text x="980" y="600" class="math" text-anchor="middle">r = xR(t), 0 ≤ x ≤ 1</text>
+  <rect x="770" y="655" width="420" height="132" rx="20" fill="#fff" stroke="#c5dfce" stroke-width="2"/>
+  <text x="980" y="700" class="b" text-anchor="middle">网格拓扑保持不变</text>
+  <text x="980" y="740" class="b" text-anchor="middle">几何变化通过 1/R^2(t) 放大扩散项</text>
+  <text x="980" y="773" class="s" text-anchor="middle">无需随外表面内移而删减网格</text>
+
+  <path d="M1255 500 H1328" stroke="#49657d" stroke-width="6" marker-end="url(#arr)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="1340" y="155" width="405" height="690" rx="26" fill="#faf8fd" stroke="#a997d1" stroke-width="3"/>
+  </g>
+  <text x="1380" y="213" class="h">③ 同口径几何对照</text>
+  <text x="1380" y="263" class="s">两情景均用附录 4 物性</text>
+  <text x="1380" y="300" class="s">环境、初值与算法相同</text>
+  <text x="1380" y="337" class="s">仅半径边界不同</text>
+  <circle cx="1460" cy="443" r="78" fill="#f6e7d1" stroke="#8a5d34" stroke-width="4"/>
+  <text x="1570" y="428" class="b">固定 R0</text>
+  <text x="1570" y="468" class="h" fill="#bd5d34">129.7964 h</text>
+  <line x1="1380" y1="555" x2="1705" y2="555" stroke="#d6dfe5" stroke-width="2"/>
+  <circle cx="1460" cy="677" r="50" fill="#dcae78" stroke="#6f4726" stroke-width="4"/>
+  <circle cx="1460" cy="677" r="78" fill="none" stroke="#8a5d34" stroke-width="3" stroke-dasharray="10 8"/>
+  <text x="1570" y="662" class="b">实测 R(t)</text>
+  <text x="1570" y="702" class="h" fill="#4e9f6b">51.0775 h</text>
+  <text x="1542" y="782" class="b" text-anchor="middle">扩散距离缩短</text>
+  <text x="1542" y="823" class="h" text-anchor="middle" fill="#4e9f6b">终点缩短 60.6480%</text>
+
+  <rect x="55" y="892" width="1690" height="102" rx="22" fill="#fef4f2" stroke="#dc8b78" stroke-width="2"/>
+  <circle cx="106" cy="943" r="27" fill="#d86c56"/><text x="106" y="952" text-anchor="middle" font-size="30" font-weight="700" fill="#fff">!</text>
+  <text x="151" y="934" class="b">附件 2 只观测外半径，内部材料点位移不可唯一辨识；相似收缩是闭合假设，需用非均匀映射做结构敏感性检验。</text>
+  <text x="151" y="969" class="s">固定物理位置可能随表面内移而离开药材域，不能把域外位置误当成新的表面点。</text>
+</svg>

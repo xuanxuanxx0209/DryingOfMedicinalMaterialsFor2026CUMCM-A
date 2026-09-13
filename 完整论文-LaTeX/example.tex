@@ -77,7 +77,7 @@
 
 \subsection{问题背景}
 
-中药材热风干燥由表面对流换热、传质与药材内部的热量传导、水分扩散共同驱动，通常经历预热平衡和恒温干燥两个阶段。烘干过程中，烘房温度与空气水分浓度随时间变化，药材的热物性和水分扩散能力又受温度、含水率影响，持续失水还会引起外形尺寸收缩。因此，仅凭表面状态难以判断药材内部各处的温度和干基含水率是否均达到工艺要求。圆柱物料的热风干燥具有典型的非稳态热质传递特征\cite{liu2020,tzempelikos2015}。题目据此给出烘房环境记录、药材物性关系及半径变化数据，要求刻画内部温度场与含水率场的时空演化，并依据全域含水率约束确定烘干终点。
+中药材热风干燥由表面对流换热、传质与药材内部的热量传导、水分扩散共同驱动，通常经历预热平衡和恒温干燥两个阶段。烘干过程中，烘房温度与空气水分浓度随时间变化，药材的热物性和水分扩散能力又受温度、含水率影响，持续失水还会引起外形尺寸收缩。针对药用根类材料，北美西洋参根干燥实验表明，根体可随失水发生显著体积收缩，且表皮会阻碍水分外逸并影响收缩过程\cite{sokhansanj1999}。因此，仅凭表面状态难以判断药材内部各处的温度和干基含水率是否均达到工艺要求。圆柱物料的热风干燥具有典型的非稳态热质传递特征\cite{liu2020,tzempelikos2015}。题目据此给出烘房环境记录、药材物性关系及半径变化数据，要求刻画内部温度场与含水率场的时空演化，并依据全域含水率约束确定烘干终点。
 
 \subsection{问题要求}
 
@@ -1089,17 +1089,23 @@ E_C^{\max}=\max\left\{E_C^N,E_C^{\Delta t}\right\}
 \raggedright
 \begin{thebibliography}{99}
 
+\bibitem{sokhansanj1999}
+SOKHANSANJ S, BAILEY W G, VAN DALFSEN K B.
+Drying of North American ginseng roots (Panax quinquefolius L.)[J].
+Drying Technology, 1999, 17(10): 2293--2308.
+DOI: 10.1080/07373939908917684.
+
+\bibitem{liu2020}
+刘格含, 王鹏, 吴小华, 等.
+农产品热风干燥传热传质数值模拟研究进展[J].
+食品工业科技, 2020, 41(22): 342--350, 357.
+DOI: 10.13386/j.issn1002-0306.2020010245.
+
 \bibitem{tzempelikos2015}
 TZEMPELIKOS D A, MITRAKOS D, VOUROS A P, et al.
 Numerical modeling of heat and mass transfer during convective drying of cylindrical quince slices[J].
 Journal of Food Engineering, 2015, 156: 10--21.
 DOI: 10.1016/j.jfoodeng.2015.01.017.
-
-\bibitem{silva2014}
-DA SILVA W P, E SILVA C M D P S, GAMA F J A.
-Estimation of thermo-physical properties of products with cylindrical shape during drying: The coupling between mass and heat[J].
-Journal of Food Engineering, 2014, 141: 65--73.
-DOI: 10.1016/j.jfoodeng.2014.05.010.
 
 \bibitem{hussain2003}
 HUSSAIN M M, DINCER I.
@@ -1107,11 +1113,15 @@ Two-dimensional heat and moisture transfer analysis of a cylindrical moist objec
 International Journal of Heat and Mass Transfer, 2003, 46(21): 4033--4039.
 DOI: 10.1016/S0017-9310(03)00229-1.
 
-\bibitem{liu2020}
-刘格含, 王鹏, 吴小华, 等.
-农产品热风干燥传热传质数值模拟研究进展[J].
-食品工业科技, 2020, 41(22): 342--350, 357.
-DOI: 10.13386/j.issn1002-0306.2020010245.
+\bibitem{eymard2000}
+EYMARD R, GALLOU\"ET T, HERBIN R.
+Finite volume methods[M]//CIARLET P G, LIONS J L. Handbook of Numerical Analysis. Amsterdam: Elsevier, 2000, 7: 713--1018.
+DOI: 10.1016/S1570-8659(00)07005-8.
+
+\bibitem{quarteroni2007}
+QUARTERONI A, SACCO R, SALERI F.
+Numerical Mathematics[M]. 2nd ed. Berlin, Heidelberg: Springer, 2007.
+DOI: 10.1007/b98885.
 
 \bibitem{adrover2019general}
 ADROVER A, BRASIELLO A, PONSO G.
@@ -1125,15 +1135,11 @@ A moving boundary model for food isothermal drying and shrinkage: One-dimensiona
 Journal of Food Process Engineering, 2019, 42(6): e13178.
 DOI: 10.1111/jfpe.13178.
 
-\bibitem{eymard2000}
-EYMARD R, GALLOU\"ET T, HERBIN R.
-Finite volume methods[M]//CIARLET P G, LIONS J L. Handbook of Numerical Analysis. Amsterdam: Elsevier, 2000, 7: 713--1018.
-DOI: 10.1016/S1570-8659(00)07005-8.
-
-\bibitem{quarteroni2007}
-QUARTERONI A, SACCO R, SALERI F.
-Numerical Mathematics[M]. 2nd ed. Berlin, Heidelberg: Springer, 2007.
-DOI: 10.1007/b98885.
+\bibitem{silva2014}
+DA SILVA W P, E SILVA C M D P S, GAMA F J A.
+Estimation of thermo-physical properties of products with cylindrical shape during drying: The coupling between mass and heat[J].
+Journal of Food Engineering, 2014, 141: 65--73.
+DOI: 10.1016/j.jfoodeng.2014.05.010.
 
 \end{thebibliography}
 \endgroup
