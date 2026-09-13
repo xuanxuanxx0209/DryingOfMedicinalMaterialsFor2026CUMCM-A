@@ -19,7 +19,7 @@
     "qa": [
       [
         "WARN",
-        "以下文字可能超出画布被裁切：['时间 / h', '中心－表面含水率差 / (kg/kg)']。跑 finalize_figure(fig) 或导出时 bbox_inches='tight' 兜底；标题/标签过长可换行或缩短。"
+        "以下文字可能超出画布被裁切：['中心－表面含水率差 / (kg/kg)']。跑 finalize_figure(fig) 或导出时 bbox_inches='tight' 兜底；标题/标签过长可换行或缩短。"
       ]
     ],
     "scope": "deterministic simulation outputs; no inferential confidence interval"
@@ -41,12 +41,7 @@
       3.0
     ],
     "dpi": 300,
-    "qa": [
-      [
-        "WARN",
-        "以下文字可能超出画布被裁切：['时间 / h', '到轴线的实际距离 / cm']。跑 finalize_figure(fig) 或导出时 bbox_inches='tight' 兜底；标题/标签过长可换行或缩短。"
-      ]
-    ],
+    "qa": [],
     "scope": "deterministic simulation outputs; no inferential confidence interval"
   },
   {
@@ -66,12 +61,7 @@
       3.0
     ],
     "dpi": 300,
-    "qa": [
-      [
-        "WARN",
-        "以下文字可能超出画布被裁切：['时间 / h', '到轴线的实际距离 / cm']。跑 finalize_figure(fig) 或导出时 bbox_inches='tight' 兜底；标题/标签过长可换行或缩短。"
-      ]
-    ],
+    "qa": [],
     "scope": "deterministic simulation outputs; no inferential confidence interval"
   },
   {
@@ -98,7 +88,7 @@
     "qa": [
       [
         "WARN",
-        "以下文字可能超出画布被裁切：['时间 / h', '全域最大含水率 / (kg/kg)', '相对终点时间 / s']。跑 finalize_figure(fig) 或导出时 bbox_inches='tight' 兜底；标题/标签过长可换行或缩短。"
+        "以下文字可能超出画布被裁切：['全域最大含水率 / (kg/kg)']。跑 finalize_figure(fig) 或导出时 bbox_inches='tight' 兜底；标题/标签过长可换行或缩短。"
       ]
     ],
     "scope": "deterministic simulation outputs; no inferential confidence interval"
@@ -109,7 +99,7 @@
     "sources": [
       {
         "path": "results/问题4_结果摘要.json",
-        "sha256": "a83ac8cc31a328751d77ce129d94b47bbece42d5050d13e3fceab4216a70b3dc"
+        "sha256": "1e2bcada59d2e2845d9f854551e72c0f84fcab4883dfeaffefb14238efade6bb"
       },
       {
         "path": "results/q4_plot_data/radius.csv",
@@ -117,7 +107,7 @@
       },
       {
         "path": "results/问题4_情景汇总.csv",
-        "sha256": "2f76d5eedb14fd32fe487e2ba4ea98234aae535cef4986dd041b25bcf264238c"
+        "sha256": "23b6dd5d7f626f4fde8c52725a6dceff37071e94a13854704d9c258aff07bb19"
       }
     ],
     "caption": "左幅按主模型终点t=51.0775h计算，g=0.9975062344，绘制的是假设映射而非实测位移；右幅为确定性情景，无置信区间。",
@@ -131,7 +121,7 @@
     "qa": [
       [
         "WARN",
-        "以下文字可能超出画布被裁切：['映射偏离 $r/R-\\\\xi$']。跑 finalize_figure(fig) 或导出时 bbox_inches='tight' 兜底；标题/标签过长可换行或缩短。"
+        "以下文字可能超出画布被裁切：['初始材料坐标 $\\\\xi$', '映射偏离 $r/R-\\\\xi$']。跑 finalize_figure(fig) 或导出时 bbox_inches='tight' 兜底；标题/标签过长可换行或缩短。"
       ]
     ],
     "scope": "deterministic simulation outputs; no inferential confidence interval"
@@ -160,7 +150,7 @@
     "qa": [
       [
         "WARN",
-        "以下文字可能超出画布被裁切：['时间 / h', '全域最大含水率 / (kg/kg)']。跑 finalize_figure(fig) 或导出时 bbox_inches='tight' 兜底；标题/标签过长可换行或缩短。"
+        "以下文字可能超出画布被裁切：['全域最大含水率 / (kg/kg)']。跑 finalize_figure(fig) 或导出时 bbox_inches='tight' 兜底；标题/标签过长可换行或缩短。"
       ]
     ],
     "scope": "deterministic simulation outputs; no inferential confidence interval"

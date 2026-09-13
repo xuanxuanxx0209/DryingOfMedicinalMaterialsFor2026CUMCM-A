@@ -1,0 +1,14 @@
+﻿claim,evidence,paper_location,check
+附录4物性,题面第4页；问题4_求解.py props,existing eq:q4-properties,"ρ,cp,k,D系数一致，Arrhenius温度用K"
+相似收缩与表面条件,题目分析报告.md Q4；geometry/kernel,existing eq:moving-heat / moving-moisture / moving-boundaries,保留既有正确公式
+一般非均匀映射,题目分析报告.md Q4；geometry,eq:q4-nonuniform-map,"rξ>0；同外半径a*=0,±0.1,±0.2"
+固定半径反事实,results/q4_runs/fixed.json,eq:q4-geometry-result,模型内对照；必须同附录4，不得替用Q3
+正式干燥时间,results/问题4_结果摘要.json dry_time_s/h,tab:q4-moisture,全部节点每1秒检验严格<0.15
+表6,results/问题4_表6含水率.csv；Q4/表6_可插入.tex,tab:q4-moisture,浮点结果生成，结构性空值保留
+完整结果Excel,results/result4.xlsx,待下一轮附录清单,60s间隔加终点；22列、四位显示
+ηR,results/问题4_结果摘要.json eta_geometry_percent,eq:q4-geometry-result,分母为同物性固定半径时长；不作真实因果解释
+ηa及Eshape,results/问题4_结果摘要.json eta_shape_percent/E_shape_percent,eq:q4-shape-error,双侧确定性结构扰动，不是置信区间
+h、hm终点敏感性,results/问题4_边界参数敏感性.csv,tab:q4-transfer-sensitivity,分别±20%单因素完整复算
+数值误差,results/问题4_数值加密.csv,eq:q4-refinement-error,空间与时间分别检验，同6h表格位置
+离散平衡,results/q4_runs/main.json,existing eq:global-moisture-balance,有效方程残差，不是物理质量守恒证明
+12幅候选图,figures/q4/图表契约.json 与图表说明.md,已选图入正文，其余保留为候选,各图PDF/SVG/PNG，灰度在_qa

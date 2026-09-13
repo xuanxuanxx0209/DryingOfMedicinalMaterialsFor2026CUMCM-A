@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-13T08:34:05.279563+00:00",
+  "purpose": "CUMCM 2026 A题支撑材料的相对路径复现清单",
+  "random_seed": 0,
+  "runtime": {
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "input_files": [
+    {
+      "path": "problem A/附件/附件1.xlsx",
+      "sha256": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+      "bytes": 16586
+    },
+    {
+      "path": "problem A/附件/附件2.xlsx",
+      "sha256": "5563acbfa4b4afb10cc6c03e2207e5369bf39da27576672aff14cc5c32e704af",
+      "bytes": 11485
+    },
+    {
+      "path": "problem A/附件/附件3/result1.xlsx",
+      "sha256": "23b261b295c1b787d000eebbca6521c37075107b6fcf78724f8d395ce1798ff4",
+      "bytes": 10073
+    },
+    {
+      "path": "problem A/附件/附件3/result2.xlsx",
+      "sha256": "23b261b295c1b787d000eebbca6521c37075107b6fcf78724f8d395ce1798ff4",
+      "bytes": 10073
+    },
+    {
+      "path": "problem A/附件/附件3/result3.xlsx",
+      "sha256": "07e4793d620a7f899804c0298d49a16a197960440fd47f8bb780c57ec27e2859",
+      "bytes": 9345
+    },
+    {
+      "path": "problem A/附件/附件3/result4.xlsx",
+      "sha256": "86e9300ffa3d30c43de895ea6723da943e85b8740b137bcae5af7107f076eeac",
+      "bytes": 9351
+    }
+  ],
+  "source_files": [
+    {
+      "path": "repro_manifest.py",
+      "sha256": "db9bf7b357fafe49b1595492ceb3fd7401a2150d551725347aa1e9efc684a09a",
+      "bytes": 4332
+    },
+    {
+      "path": "全程干燥求解.py",
+      "sha256": "ef4e115bd22cf5022742bbbbec28e1a6f21b8dc0f9d0d5b58828748ba079d94c",
+      "bytes": 62883
+    },
+    {
+      "path": "药材烘干求解.py",
+      "sha256": "18e1d75a38672867cfed7570d04ed1f5194ce6ffc65e23f5d64c98022d7c0ab4",
+      "bytes": 22541
+    },
+    {
+      "path": "论文图件优化.py",
+      "sha256": "a089aa9153f335d4e5f900b0a70fe61cfe1702b9ee817b7fdef6e0d2c6e4bacf",
+      "bytes": 10714
+    },
+    {
+      "path": "问题1_绘图.py",
+      "sha256": "0cb1c0d422b02b3ab4a50ac0794447ecd920c997714f51bda56b75bdff13fccf",
+      "bytes": 6549
+    },
+    {
+      "path": "问题2_绘图.py",
+      "sha256": "ea9c62c4e8b26ced3a59dd3e3a67a2297dc785123b2f0f13db99a8136df9b045",
+      "bytes": 13714
+    },
+    {
+      "path": "问题3_绘图.py",
+      "sha256": "34d1d9d55bdb2786bb2dfc71f325e563b5ec6d2d42ad3d2102566be21b98eab6",
+      "bytes": 17493
+    },
+    {
+      "path": "问题4_复现.py",
+      "sha256": "7041e5b2846f1ff769d9ea0c2acd8b39dcb59bc7272f3d22c7489e60bcbbf5c2",
+      "bytes": 13167
+    },
+    {
+      "path": "问题4_求解.py",
+      "sha256": "98227ebb985c144d13ae5062ae42a3eb81090c1000bcfeaa219bd19e8b5fe3e6",
+      "bytes": 11008
+    },
+    {
+      "path": "问题4_素材整理.py",
+      "sha256": "55e30fc24804cca920c4b33a1cbd3e53a05eec3bb73ebfe465c0b05dd5e42c6b",
+      "bytes": 12319
+    },
+    {
+      "path": "问题4_绘图.py",
+      "sha256": "494a6c00ae10d386a9657fbd3b9f2b99afdae28bfc6775e9cb857115cc0bb867",
+      "bytes": 12417
+    },
+    {
+      "path": "figure_tools/export_figure.py",
+      "sha256": "40ce3bcd31dfc4b33e38a1cb180c75dc730ee6fa046f04934c79f285c6f890c1",
+      "bytes": 6450
+    },
+    {
+      "path": "figure_tools/setup_style.py",
+      "sha256": "d58ef81684577bb605a92733dd2ca48ade03b4f819b3d255fd62f319be7fea82",
+      "bytes": 11794
+    },
+    {
+      "path": "figure_tools/visual_qa.py",
+      "sha256": "67675709e523c76e2748d50749de7bc6332f07df865379b26d024321fb40120f",
+      "bytes": 12677
+    },
+    {
+      "path": "utils/plot_style.py",
+      "sha256": "e9fa501fe72ff89b913e1f777e0b5925a118b95b9d324288c59e906f27592b9a",
+      "bytes": 17654
+    }
+  ],
+  "quick_checks": [
+    "python -X utf8 药材烘干求解.py --mode smoke",
+    "python -X utf8 全程干燥求解.py --mode smoke",
+    "python -X utf8 全程干燥求解.py --mode q3-smoke",
+    "python -X utf8 问题4_求解.py --smoke --output results/P1_q4_smoke.json"
+  ],
+  "full_reproduction": [
+    "python -X utf8 药材烘干求解.py --mode q1",
+    "python -X utf8 全程干燥求解.py --mode q2",
+    "python -X utf8 全程干燥求解.py --mode q3",
+    "python -X utf8 问题4_复现.py --output-root ."
+  ],
+  "principal_outputs": [
+    "results/result1.xlsx",
+    "results/result2.xlsx",
+    "results/result3.xlsx",
+    "results/result4.xlsx"
+  ]
+}

@@ -1,0 +1,219 @@
+{
+  "mode": "q3_full",
+  "inputs": {
+    "problem A\\附件\\附件1.xlsx": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+    "problem A\\附件\\附件3\\result3.xlsx": "07e4793d620a7f899804c0298d49a16a197960440fd47f8bb780c57ec27e2859"
+  },
+  "stable_air": {
+    "sample_count": 91,
+    "temperature_mean_c": 50.004945054945054,
+    "temperature_std_c": 0.15401643715885288,
+    "temperature_min_c": 49.757,
+    "temperature_max_c": 50.246,
+    "moisture_mean_kg_per_kg": 0.04999373626373625,
+    "moisture_std_kg_per_kg": 0.0001534629450327611,
+    "moisture_min_kg_per_kg": 0.04975,
+    "moisture_max_kg_per_kg": 0.05025,
+    "last_temperature_c": 50.165,
+    "last_moisture_kg_per_kg": 0.04986
+  },
+  "parameters": {
+    "temporal_scheme": "backward_euler_start_then_bdf2",
+    "authoritative_time_step_s": 1.0,
+    "authoritative_radial_intervals": 320,
+    "record_interval_s": 60.0,
+    "drying_threshold_kg_per_kg": 0.15,
+    "heat_transfer_coefficient_w_per_m2_k": 25.0,
+    "mass_transfer_coefficient_m_per_s": 8e-07,
+    "coupling_temperature_tolerance_c": 1e-08,
+    "coupling_moisture_tolerance_kg_per_kg": 1e-10,
+    "coupling_max_iterations": 40
+  },
+  "dry_time_s": 206756.0,
+  "dry_time_h": 57.43222222222222,
+  "table_times_s": [
+    21600.0,
+    43200.0,
+    64800.0,
+    86400.0,
+    108000.0,
+    129600.0,
+    151200.0,
+    172800.0,
+    194400.0,
+    206756.0
+  ],
+  "requested_radii_cm": [
+    0.0,
+    0.5,
+    1.0,
+    1.5,
+    2.0
+  ],
+  "moisture_kg_per_kg": [
+    [
+      1.01691847,
+      0.98809268,
+      0.90149416,
+      0.75499796,
+      0.53280982
+    ],
+    [
+      0.45610313,
+      0.44312076,
+      0.4030399,
+      0.32971413,
+      0.16418312
+    ],
+    [
+      0.29880929,
+      0.29151944,
+      0.26868142,
+      0.22527101,
+      0.08450111
+    ],
+    [
+      0.23776687,
+      0.23270626,
+      0.21668908,
+      0.18549724,
+      0.06648904
+    ],
+    [
+      0.20578685,
+      0.20180658,
+      0.1891225,
+      0.1640251,
+      0.05984159
+    ],
+    [
+      0.18583688,
+      0.18248716,
+      0.17176159,
+      0.15030272,
+      0.05664233
+    ],
+    [
+      0.17202298,
+      0.16908764,
+      0.15965569,
+      0.14062892,
+      0.05484421
+    ],
+    [
+      0.16178345,
+      0.15914264,
+      0.15063373,
+      0.13335845,
+      0.05372491
+    ],
+    [
+      0.15382302,
+      0.15140335,
+      0.1435897,
+      0.12764347,
+      0.05297601
+    ],
+    [
+      0.14999973,
+      0.14768376,
+      0.1401968,
+      0.12487822,
+      0.05265283
+    ]
+  ],
+  "sensitivity": [
+    {
+      "case": "温度_减1总体标准差",
+      "temperature_c": 49.8509286177862,
+      "air_moisture_kg_per_kg": 0.04999373626373625,
+      "heat_transfer_coefficient_w_per_m2_k": 25.0,
+      "mass_transfer_coefficient_m_per_s": 8e-07,
+      "dry_time_s": 207770.0,
+      "dry_time_h": 57.71388888888889,
+      "relative_change": 0.00490433167598522
+    },
+    {
+      "case": "温度_加1总体标准差",
+      "temperature_c": 50.158961492103906,
+      "air_moisture_kg_per_kg": 0.04999373626373625,
+      "heat_transfer_coefficient_w_per_m2_k": 25.0,
+      "mass_transfer_coefficient_m_per_s": 8e-07,
+      "dry_time_s": 205748.0,
+      "dry_time_h": 57.15222222222222,
+      "relative_change": -0.004875311961926135
+    },
+    {
+      "case": "空气水分_减1总体标准差",
+      "temperature_c": 50.004945054945054,
+      "air_moisture_kg_per_kg": 0.04984027331870349,
+      "heat_transfer_coefficient_w_per_m2_k": 25.0,
+      "mass_transfer_coefficient_m_per_s": 8e-07,
+      "dry_time_s": 206743.0,
+      "dry_time_h": 57.42861111111111,
+      "relative_change": -6.287604712801563e-05
+    },
+    {
+      "case": "空气水分_加1总体标准差",
+      "temperature_c": 50.004945054945054,
+      "air_moisture_kg_per_kg": 0.05014719920876901,
+      "heat_transfer_coefficient_w_per_m2_k": 25.0,
+      "mass_transfer_coefficient_m_per_s": 8e-07,
+      "dry_time_s": 206768.0,
+      "dry_time_h": 57.43555555555555,
+      "relative_change": 5.8039428118168274e-05
+    },
+    {
+      "case": "附件末条记录",
+      "temperature_c": 50.165,
+      "air_moisture_kg_per_kg": 0.04986,
+      "heat_transfer_coefficient_w_per_m2_k": 25.0,
+      "mass_transfer_coefficient_m_per_s": 8e-07,
+      "dry_time_s": 205698.0,
+      "dry_time_h": 57.138333333333335,
+      "relative_change": -0.005117142912418503
+    },
+    {
+      "case": "端面通量上界",
+      "temperature_c": 50.004945054945054,
+      "air_moisture_kg_per_kg": 0.04999373626373625,
+      "heat_transfer_coefficient_w_per_m2_k": 27.0,
+      "mass_transfer_coefficient_m_per_s": 8.64e-07,
+      "dry_time_s": 205025.0,
+      "dry_time_h": 56.951388888888886,
+      "relative_change": -0.008372187506045774
+    }
+  ],
+  "verification": {
+    "time_step_gate_passed": true,
+    "time_step_dry_times_s": {
+      "1.0": 206569.0,
+      "0.5": 206568.5,
+      "0.25": 206568.5
+    },
+    "time_base_to_reference_difference_s": 0.5,
+    "time_half_to_reference_difference_s": 0.0,
+    "space_refined_dry_time_s": 206756.0,
+    "space_time_difference_s": 187.0,
+    "space_time_relative_difference": 0.0009044477548414557,
+    "space_table_max_absolute_difference_kg_per_kg": 0.00010307220105282289,
+    "space_fine_relative_difference": null,
+    "maximum_recorded_moisture_increase_kg_per_kg": 3.9968028886505635e-15,
+    "moisture_balance_relative_error": 6.87164504449458e-10,
+    "max_coupling_iterations": 4,
+    "max_temperature_linear_residual": 3.0248695026912096e-14,
+    "max_moisture_linear_residual": 2.4207763896896015e-15,
+    "final_system_condition_numbers": {
+      "temperature_final": 8386.072282635245,
+      "moisture_final": 1771.934911129194
+    }
+  },
+  "runtime_seconds": 737.5315757000062,
+  "environment": {
+    "python": "3.13.7",
+    "numpy": "2.3.3",
+    "scipy": "1.16.2",
+    "openpyxl": "3.1.5",
+    "platform": "Windows-11-10.0.26200-SP0"
+  }
+}

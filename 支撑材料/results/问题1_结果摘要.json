@@ -1,0 +1,165 @@
+{
+  "mode": "q1_full",
+  "input_sha256": {
+    "problem A\\附件\\附件1.xlsx": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7"
+  },
+  "parameters": {
+    "authoritative": {
+      "radial_spacing_m": 0.000125,
+      "time_step_s": 0.25
+    },
+    "time_refined": {
+      "radial_spacing_m": 0.000125,
+      "time_step_s": 0.125
+    },
+    "space_refined": {
+      "radial_spacing_m": 6.25e-05,
+      "time_step_s": 0.25
+    },
+    "diffusivity_formula": "7e-9*exp(-0.89/C)",
+    "picard_tolerance": 1e-10
+  },
+  "requested_times_s": [
+    100.0,
+    300.0,
+    600.0,
+    900.0,
+    1200.0,
+    1500.0,
+    1800.0
+  ],
+  "requested_radii_cm": [
+    0.0,
+    0.5,
+    1.0,
+    1.5,
+    2.0
+  ],
+  "temperature_c": [
+    [
+      28.00005737,
+      28.00036025,
+      28.00409981,
+      28.03283319,
+      28.18020317
+    ],
+    [
+      28.04098167,
+      28.06368893,
+      28.15161783,
+      28.368319,
+      28.84906292
+    ],
+    [
+      28.45373519,
+      28.53642344,
+      28.80430328,
+      29.31621572,
+      30.1654425
+    ],
+    [
+      29.32477603,
+      29.45871176,
+      29.87585354,
+      30.61645239,
+      31.73062187
+    ],
+    [
+      30.54317503,
+      30.71021113,
+      31.22274622,
+      32.11288474,
+      33.42787634
+    ],
+    [
+      31.99613401,
+      32.18713025,
+      32.76636065,
+      33.74652071,
+      35.12042478
+    ],
+    [
+      33.57564236,
+      33.77229423,
+      34.3644385,
+      35.36236153,
+      36.7857331
+    ]
+  ],
+  "moisture_kg_per_kg": [
+    [
+      2.55,
+      2.55,
+      2.55,
+      2.54999993,
+      2.2476142
+    ],
+    [
+      2.55,
+      2.55,
+      2.55,
+      2.54918239,
+      2.05110303
+    ],
+    [
+      2.55,
+      2.55,
+      2.54998809,
+      2.53524451,
+      1.87711429
+    ],
+    [
+      2.55,
+      2.54999978,
+      2.54967967,
+      2.50452558,
+      1.75481774
+    ],
+    [
+      2.54999998,
+      2.54999278,
+      2.54817049,
+      2.4645653,
+      1.65863528
+    ],
+    [
+      2.54999928,
+      2.5499369,
+      2.5445268,
+      2.42061717,
+      1.57878397
+    ],
+    [
+      2.54999221,
+      2.54972153,
+      2.53828266,
+      2.37548373,
+      1.51028354
+    ]
+  ],
+  "verification": {
+    "max_temperature_difference_time_refined_c": 0.00023886486087931758,
+    "max_moisture_difference_time_refined_kg_per_kg": 5.139073736382116e-05,
+    "max_temperature_difference_space_refined_c": 2.29962319480137e-05,
+    "max_moisture_difference_space_refined_kg_per_kg": 0.00035047413918487536,
+    "authoritative_moisture_balance_relative_error": 2.354919328203821e-14,
+    "time_refined_moisture_balance_relative_error": 5.046218467507971e-16,
+    "space_refined_moisture_balance_relative_error": 9.8240277703127e-14,
+    "authoritative_max_picard_iterations": 4,
+    "time_refined_max_picard_iterations": 3,
+    "space_refined_max_picard_iterations": 4,
+    "authoritative_heat_matrix_condition_number": 1888.9578777398656,
+    "authoritative_moisture_matrix_condition_number": 1253.6669645420197
+  },
+  "outputs": {
+    "workbook": "results\\result1.xlsx",
+    "key_table": "results/问题1_关键结果.csv",
+    "convergence": "results/问题1_网格收敛.csv"
+  },
+  "environment": {
+    "python": "3.13.7",
+    "numpy": "2.3.3",
+    "openpyxl": "3.1.5",
+    "platform": "Windows-11-10.0.26200-SP0"
+  }
+}

@@ -137,44 +137,149 @@
     {
       "source": "figures/paper_review/result_q2_gap_review.pdf",
       "destination": "figures/result_q2_gap_review.pdf",
-      "sha256": "a273aac399099c9c28bd29e7f74776079ea9cb7117a78df95fb46d80cb4d451f",
+      "sha256": "c175ef767c29362a185a18ba71a98873bd56210922fce628792edd345ca205df",
       "hash_mode": "content",
-      "bound_at": "2026-09-12T17:10:11.087962+00:00"
+      "bound_at": "2026-09-13T08:17:26.436743+00:00"
     },
     {
       "source": "figures/paper_review/result_q2_moisture_review.pdf",
       "destination": "figures/result_q2_moisture_review.pdf",
-      "sha256": "6e56796a3e213b930c1116a2b9e82caad6118c820797847b52227a95f91c76fc",
+      "sha256": "3e043138455714e6bc10dde2cc28ae3e1f8b1729e1a344d61c73e19c9224d0e8",
       "hash_mode": "content",
-      "bound_at": "2026-09-12T17:10:11.231178+00:00"
+      "bound_at": "2026-09-13T08:17:26.548605+00:00"
     },
     {
       "source": "figures/paper_review/result_q2_temperature_review.pdf",
       "destination": "figures/result_q2_temperature_review.pdf",
-      "sha256": "f92ece53cb7e8ff91a4dbe38611a6eaa55587e50d44e7ce3a5e00f5e107ee4b6",
+      "sha256": "eab24bc144db52d077051af856ebab00f49884de2f49ad661002993cfcdb05fe",
       "hash_mode": "content",
-      "bound_at": "2026-09-12T17:10:11.374458+00:00"
+      "bound_at": "2026-09-13T08:17:26.652157+00:00"
     },
     {
       "source": "figures/paper_review/result_q3_threshold_review.pdf",
       "destination": "figures/result_q3_threshold_review.pdf",
-      "sha256": "c12635678538ee767ee5eba063b33c039bcc131d933a6b7f3e9468a1a50a2dbf",
+      "sha256": "e8cc63977df618dd23943b07d508df02139b798e77be76b6e8ad7b7c6b74c858",
       "hash_mode": "content",
-      "bound_at": "2026-09-12T17:10:11.518863+00:00"
+      "bound_at": "2026-09-13T08:17:26.754037+00:00"
     },
     {
       "source": "figures/paper_review/result_q4_shape_review.pdf",
       "destination": "figures/result_q4_shape_review.pdf",
-      "sha256": "ff0af645b5d2e361684e294e5bf8666581db67b905f0a28b0e59ed523ab311da",
+      "sha256": "bd8bcf1a1f09f5c3c87db3396ac74ef7e1bc719473f1cd837b2fea6305707e74",
       "hash_mode": "content",
-      "bound_at": "2026-09-12T17:10:11.666943+00:00"
+      "bound_at": "2026-09-13T08:17:26.858403+00:00"
     },
     {
       "source": "figures/paper_review/result_q4_threshold_review.pdf",
       "destination": "figures/result_q4_threshold_review.pdf",
-      "sha256": "8565a42edbaa29a84825a25c7e600ca0e3395958c116a39d38a5594f6f096ef2",
+      "sha256": "21d6f06845a14598c78eb559d4dad9efe666fdfd2de0f2e9f16b235dc35b44c0",
       "hash_mode": "content",
-      "bound_at": "2026-09-12T17:10:11.839782+00:00"
+      "bound_at": "2026-09-13T08:17:26.960465+00:00"
+    },
+    {
+      "source": "药材烘干求解.py",
+      "destination": "code/药材烘干求解.py",
+      "sha256": "18e1d75a38672867cfed7570d04ed1f5194ce6ffc65e23f5d64c98022d7c0ab4",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:04.407585+00:00"
+    },
+    {
+      "source": "全程干燥求解.py",
+      "destination": "code/全程干燥求解.py",
+      "sha256": "ef4e115bd22cf5022742bbbbec28e1a6f21b8dc0f9d0d5b58828748ba079d94c",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:04.519293+00:00"
+    },
+    {
+      "source": "问题4_求解.py",
+      "destination": "code/问题4_求解.py",
+      "sha256": "98227ebb985c144d13ae5062ae42a3eb81090c1000bcfeaa219bd19e8b5fe3e6",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:04.616648+00:00"
+    },
+    {
+      "source": "问题4_复现.py",
+      "destination": "code/问题4_复现.py",
+      "sha256": "7041e5b2846f1ff769d9ea0c2acd8b39dcb59bc7272f3d22c7489e60bcbbf5c2",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:04.703547+00:00"
+    },
+    {
+      "source": "问题4_素材整理.py",
+      "destination": "code/问题4_素材整理.py",
+      "sha256": "55e30fc24804cca920c4b33a1cbd3e53a05eec3bb73ebfe465c0b05dd5e42c6b",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:04.796253+00:00"
+    },
+    {
+      "source": "问题1_绘图.py",
+      "destination": "code/问题1_绘图.py",
+      "sha256": "0cb1c0d422b02b3ab4a50ac0794447ecd920c997714f51bda56b75bdff13fccf",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:04.892179+00:00"
+    },
+    {
+      "source": "问题2_绘图.py",
+      "destination": "code/问题2_绘图.py",
+      "sha256": "ea9c62c4e8b26ced3a59dd3e3a67a2297dc785123b2f0f13db99a8136df9b045",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:04.987217+00:00"
+    },
+    {
+      "source": "问题3_绘图.py",
+      "destination": "code/问题3_绘图.py",
+      "sha256": "34d1d9d55bdb2786bb2dfc71f325e563b5ec6d2d42ad3d2102566be21b98eab6",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:05.082351+00:00"
+    },
+    {
+      "source": "问题4_绘图.py",
+      "destination": "code/问题4_绘图.py",
+      "sha256": "772d05099cd4e9c7ff3eca5f0ed27af1a9c95b0acf227e25dcc90e7763ac0c98",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:05.175573+00:00"
+    },
+    {
+      "source": "论文图件优化.py",
+      "destination": "code/论文图件优化.py",
+      "sha256": "a089aa9153f335d4e5f900b0a70fe61cfe1702b9ee817b7fdef6e0d2c6e4bacf",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:05.270351+00:00"
+    },
+    {
+      "source": "utils/plot_style.py",
+      "destination": "code/utils/plot_style.py",
+      "sha256": "e9fa501fe72ff89b913e1f777e0b5925a118b95b9d324288c59e906f27592b9a",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:05.372286+00:00"
+    },
+    {
+      "source": "figure_tools/setup_style.py",
+      "destination": "code/figure_tools/setup_style.py",
+      "sha256": "d58ef81684577bb605a92733dd2ca48ade03b4f819b3d255fd62f319be7fea82",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:05.467904+00:00"
+    },
+    {
+      "source": "figure_tools/export_figure.py",
+      "destination": "code/figure_tools/export_figure.py",
+      "sha256": "40ce3bcd31dfc4b33e38a1cb180c75dc730ee6fa046f04934c79f285c6f890c1",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:05.566802+00:00"
+    },
+    {
+      "source": "figure_tools/visual_qa.py",
+      "destination": "code/figure_tools/visual_qa.py",
+      "sha256": "67675709e523c76e2748d50749de7bc6332f07df865379b26d024321fb40120f",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:05.660552+00:00"
+    },
+    {
+      "source": "repro_manifest.py",
+      "destination": "code/repro_manifest.py",
+      "sha256": "db9bf7b357fafe49b1595492ceb3fd7401a2150d551725347aa1e9efc684a09a",
+      "hash_mode": "content",
+      "bound_at": "2026-09-13T08:19:05.761446+00:00"
     }
   ],
   "created_at": "2026-09-10T17:59:28.878415+00:00"

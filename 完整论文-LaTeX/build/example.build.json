@@ -1,29 +1,29 @@
 {
   "schema_version": 1,
-  "created_at": "2026-09-12T17:11:14.277259+00:00",
+  "created_at": "2026-09-13T08:26:01.597607+00:00",
   "passed": true,
   "main_tex": "example.tex",
-  "project_root": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文-LaTeX",
-  "source_sha256": "f0a72b16cefe6fdc2eb06e746c17e3e0f07370528c044bba4e146216fb793fdc",
-  "compiled_source_sha256": "f0a72b16cefe6fdc2eb06e746c17e3e0f07370528c044bba4e146216fb793fdc",
-  "post_build_source_sha256": "f0a72b16cefe6fdc2eb06e746c17e3e0f07370528c044bba4e146216fb793fdc",
-  "pdf_sha256": "d9934e9f758dc5a841a6af757fcf92dc33389dd397ed9570f4af276e4282f78f",
-  "project_manifest_sha256": "e29ddc11d8f92db6e15cfa77cb3ce9fb405f5fcd95cba4b814c25552f9d2556c",
+  "project_root": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\完整论文-LaTeX",
+  "source_sha256": "97e4d861884d980f770eb56f9c1b2e48214feb28ee1ba17013590bb7bccdfc63",
+  "compiled_source_sha256": "97e4d861884d980f770eb56f9c1b2e48214feb28ee1ba17013590bb7bccdfc63",
+  "post_build_source_sha256": "97e4d861884d980f770eb56f9c1b2e48214feb28ee1ba17013590bb7bccdfc63",
+  "pdf_sha256": "bf80c3ad57b41a3e011281e342a94b45f080928f08e410b0a6a616b5f3cabd17",
+  "project_manifest_sha256": "6aa48c003886b00a8321ea9ce8fdf56e846718b308d673ccb8949bdf348b509f",
   "engine": "xelatex",
   "tools": {
     "latexmk": {
-      "path": "D:\\texlive\\2026\\bin\\windows\\latexmk.EXE",
-      "version": "perl: warning: Setting locale failed."
+      "path": "C:\\Users\\27632\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\latexmk.EXE",
+      "version": "Initial Win CP for (console input, console output, system): (CP936, CP65001, CP936)"
     },
     "xelatex": {
-      "path": "D:\\texlive\\2026\\bin\\windows\\xelatex.EXE",
-      "version": "XeTeX 3.141592653-2.6-0.999998 (TeX Live 2026)"
+      "path": "C:\\Users\\27632\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\xelatex.EXE",
+      "version": "MiKTeX-XeTeX 4.18 (MiKTeX 26.5)"
     }
   },
   "commands": [
     {
       "command": [
-        "D:\\texlive\\2026\\bin\\windows\\latexmk.EXE",
+        "C:\\Users\\27632\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\latexmk.EXE",
         "-norc",
         "-gg",
         "-xelatex",
@@ -35,9 +35,9 @@
         "-outdir=build",
         "example.tex"
       ],
-      "cwd": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文-LaTeX",
+      "cwd": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\完整论文-LaTeX",
       "returncode": 0,
-      "duration_seconds": 11.469
+      "duration_seconds": 55.75
     }
   ],
   "warnings": [],
@@ -47,5 +47,5 @@
     "reason": null
   },
   "issues": [],
-  "reproduce": "C:\\Users\\23572\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe C:\\Users\\23572\\.codex\\skills\\math-modeling\\tools\\latex\\scripts\\latex_paper.py build C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文-LaTeX\\example.tex --engine xelatex --timeout 240 --publish C:\\Users\\23572\\Desktop\\CUMCM-2026\\完整论文.pdf --overwrite"
+  "reproduce": "C:\\Users\\27632\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe C:\\Users\\27632\\.codex\\skills\\cumcm-step-review\\tools\\latex\\scripts\\latex_paper.py build C:\\Users\\27632\\Desktop\\26CUMCM_A\\完整论文-LaTeX\\example.tex --engine xelatex --timeout 300 --publish C:\\Users\\27632\\Desktop\\26CUMCM_A\\完整论文.pdf --overwrite"
 }

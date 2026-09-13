@@ -30,6 +30,11 @@
   \setCJKfamilyfont{zhkai}{FandolKai-Regular}
   \setCJKfamilyfont{zhfs}{FandolFang-Regular}
 }
+\IfFontExistsTF{NSimSun}{
+  \setmonofont{NSimSun}[AutoFakeBold=2]
+}{
+  \IfFontExistsTF{Consolas}{\setmonofont{Consolas}}{}
+}
 \providecommand{\songti}{\CJKfamily{zhsong}}
 \providecommand{\heiti}{\CJKfamily{zhhei}}
 \providecommand{\kaishu}{\CJKfamily{zhkai}}
@@ -387,6 +392,8 @@ D\left(C_i^{(\ell)}\right)
 \end{tabular}
 \end{table}
 
+温度表显示外表面始终先于内部升温，且径向温差随加热过程逐渐向轴线传播，这与外表面对流换热、内部导热的边界条件和传递方向一致。
+
 \begin{table}[htbp]
 \centering
 \caption{三十分钟内药材干基含水率（对应题面表 2）}
@@ -472,7 +479,7 @@ u_{\operatorname{nb}(f)}^{n+1,m+1}
 \right).
 \label{eq:q2-fvm-unified}
 \end{equation}
-温度方程取 \(u=T\)、\(\beta=\rho c_p\)、\(\Gamma=k\)，水分方程取 \(u=C\)、\(\beta=1\)、\(\Gamma=D\)。相邻节点的物性算术平均值代表控制面物性，同一内部控制面的通量在相邻控制体中符号相反，求和后能够抵消。这一性质保证所建有效场方程在离散层面的通量平衡；由于模型未另行定义干固体质量库存和含湿总焓，它不表示已经验证真实水分质量或总焓守恒。
+温度方程取 \(u=T\)、\(\beta=\rho c_p\)、\(\Gamma=k\)，水分方程取 \(u=C\)、\(\beta=1\)、\(\Gamma=D\)。相邻节点的物性算术平均值代表控制面物性，同一内部控制面的通量在相邻控制体中符号相反，求和后能够抵消。有限体积法以控制体积分和界面通量平衡为基本构造\cite{eymard2000}。这一性质保证所建有效场方程在离散层面的通量平衡；由于模型未另行定义干固体质量库存和含湿总焓，它不表示已经验证真实水分质量或总焓守恒。
 
 轴线控制面的面积为零，式 \ref{eq:q2-fvm-unified} 自然满足对称条件。表面控制体把外侧通量改写为
 \begin{equation}
@@ -491,7 +498,7 @@ S_{C,N}=-h_mA_R\left(C_N-C_a\right).
 \frac{3u_i^{n+1}-4u_i^n+u_i^{n-1}}{2\Delta t}.
 \label{eq:q2-bdf2}
 \end{equation}
-每次物性固定后，温度和含水率各形成一个三对角线性系统，并用追赶法求解。
+每次物性固定后，温度和含水率各形成一个三对角线性系统，并用追赶法求解。时间离散和非线性迭代的数值分析依据参见 Quarteroni 等的专著\cite{quarteroni2007}。
 
 同一时间层内依次更新温度、扩散系数、含水率和热物性。当相邻两轮温度的最大绝对差低于 \(10^{-8}\,\si{\degreeCelsius}\)，且含水率的最大绝对差低于 \(10^{-10}\,\si{kg/kg}\) 时停止迭代。程序把迭代上限设为四十次，实际有四千二百九十个时间层经过三次迭代收敛，六千五百一十个时间层经过四次迭代收敛，未触及上限。
 
@@ -529,6 +536,8 @@ S_{C,N}=-h_mA_R\left(C_N-C_a\right).
 \caption{问题二前三小时的径向温度场}
 \label{fig:q2-temperature}
 \end{figure}
+
+该温度场进一步表明：早期热量主要积聚在近表层，随后等温线逐渐变平，因而径向温差在后段明显收敛。
 
 \begin{table}[htbp]
 \centering
@@ -1082,7 +1091,7 @@ E_C^{\max}=\max\left\{E_C^N,E_C^{\Delta t}\right\}
 
 问题三的长时空气边界采用稳定段均值，其结论以烘房在实测结束后继续维持同一平台工况为前提。总体标准差扰动和末条记录替代使终点时长变化不超过 \SI{0.5117}{\percent}；这些确定性情景只反映所设范围内的响应，不构成统计置信区间。将换热系数和传质系数同时放大 \SI{8}{\percent} 的集总应力情景使时长缩短 \SI{0.8372}{\percent}，但不能作为真实二维端面效应的误差上界。问题四按式 \ref{eq:q4-air-error} 检验五个空气边界情景，最大绝对时长变化为 \(E_{\mathrm{air}}=0.5058\%\)，对应附件末条记录替代情景。按式 \ref{eq:q4-transfer-sensitivity} 对 \(h\) 和 \(h_m\) 分别作 \(\pm20\%\) 单因素扰动时，最大绝对时长变化为 \(0.0353\%\) 和 \(1.3454\%\)，仅适用于该扰动范围。主模型在 \SI{51.0775}{h} 结束，早于半径观测终点，因而没有调用末值保持规则。问题四只观测外表面半径，内部映射参数没有实验标定。\(a_*=\pm0.1,\pm0.2\) 四组结构扰动给出 \(E_{\mathrm{shape}}=0.3143\%\)，该数值只适用于式 \ref{eq:q4-nonuniform-map} 的映射族。缺少内部位移和热质通量观测时，现有数据不能辨识局部孔隙演化或多相传递参数，因此该指标不是所有收缩机制的不确定性上界。
 
-\CumcmAIUsed{模型一致性核查、程序调试、图表制作、论文结构起草、语言校核及 \LaTeX{} 排版}
+\CumcmAIUsed{程序调试、图表制作、论文结构起草、语言校核及排版}
 
 \begingroup
 \raggedright
@@ -1124,27 +1133,89 @@ A moving boundary model for food isothermal drying and shrinkage: One-dimensiona
 Journal of Food Process Engineering, 2019, 42(6): e13178.
 DOI: 10.1111/jfpe.13178.
 
+\bibitem{eymard2000}
+EYMARD R, GALLOU\"ET T, HERBIN R.
+Finite volume methods[M]//CIARLET P G, LIONS J L. Handbook of Numerical Analysis. Amsterdam: Elsevier, 2000, 7: 713--1018.
+DOI: 10.1016/S1570-8659(00)07005-8.
+
+\bibitem{quarteroni2007}
+QUARTERONI A, SACCO R, SALERI F.
+Numerical Mathematics[M]. 2nd ed. Berlin, Heidelberg: Springer, 2007.
+DOI: 10.1007/b98885.
+
 \end{thebibliography}
 \endgroup
 
+\ifdefined\CUMCMBodyOnly
+\else
 \clearpage
 \begin{appendices}
 
 \section{支撑材料清单}
 
-% 待补：在程序、结果表、正式图和 AI 工具使用详情全部冻结后，
-% 按最终提交包中的真实文件名填写支撑材料清单。
+支撑材料压缩包为 \texttt{支撑材料.zip}，解压后的文件均不含参赛者身份信息。主要内容如下：
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.25\textwidth}
+                  >{\raggedright\arraybackslash}p{0.67\textwidth}}
+\toprule
+文件或目录 & 内容说明\\
+\midrule
+\endfirsthead
+\toprule
+文件或目录 & 内容说明\\
+\midrule
+\endhead
+\texttt{README.txt} & 运行环境、目录结构、复现顺序和结果核对说明\\
+\texttt{requirements.txt} & Python 依赖及建议版本\\
+\texttt{药材烘干求解.py} & 问题一径向有限体积求解、结果表生成与冒烟测试\\
+\texttt{全程干燥求解.py} & 问题二、问题三的变物性全程模型及对照检验\\
+\texttt{问题4\_求解.py}、\texttt{问题4\_复现.py} & 问题四移动边界求解、敏感性分析与一键复现\\
+\texttt{问题1\_绘图.py}--\texttt{问题4\_绘图.py} & 四个问题的论文图件生成程序\\
+\texttt{论文图件优化.py}、\texttt{问题4\_素材整理.py} & 重点图件重绘与问题四结果材料整理\\
+\texttt{utils/}、\texttt{figure\_tools/} & 本项目内置的绘图样式、导出与版面检查辅助模块\\
+\texttt{repro\_manifest.py} & 复现清单与文件哈希生成程序\\
+\texttt{problem A/附件/} & 为保证离线复现而随包保留的赛题原始附件\\
+\texttt{results/} & 四问结果工作簿、关键结果、敏感性与收敛性数据、复现清单\\
+\texttt{figures/} & 正文实际引用的 16 幅 PDF 图件\\
+\texttt{AI工具使用详情.pdf}、\texttt{AI使用报告.docx} & 按 2026 年试行规定整理的 AI 工具使用详情及其可编辑审核稿，提交前由参赛队逐项复核\\
+\texttt{SHA256SUMS.txt} & 支撑材料各文件的 SHA-256 校验值\\
+\bottomrule
+\end{longtable}
 
 \section{计算程序}
 
-% 待补：放入能够从题目附件复现 result1.xlsx 至 result4.xlsx 的完整源程序。
-% 程序必须与论文公式、参数、时间步、空间步及最终结果保持一致。
+以下程序与支撑材料中的同名文件一致。完整运行顺序、参数和输出位置见支撑材料中的 \texttt{README.txt}。
+
+\subsection{问题一求解程序}
+\lstinputlisting[language=Python]{code/药材烘干求解.py}
+
+\subsection{问题二与问题三求解程序}
+\lstinputlisting[language=Python]{code/全程干燥求解.py}
+
+\subsection{问题四求解与复现程序}
+\lstinputlisting[language=Python]{code/问题4_求解.py}
+\lstinputlisting[language=Python]{code/问题4_复现.py}
+
+\subsection{结果整理与绘图程序}
+\lstinputlisting[language=Python]{code/问题4_素材整理.py}
+\lstinputlisting[language=Python]{code/问题1_绘图.py}
+\lstinputlisting[language=Python]{code/问题2_绘图.py}
+\lstinputlisting[language=Python]{code/问题3_绘图.py}
+\lstinputlisting[language=Python]{code/问题4_绘图.py}
+\lstinputlisting[language=Python]{code/论文图件优化.py}
+
+\subsection{公共辅助程序}
+\lstinputlisting[language=Python]{code/utils/plot_style.py}
+\lstinputlisting[language=Python]{code/figure_tools/setup_style.py}
+\lstinputlisting[language=Python]{code/figure_tools/export_figure.py}
+\lstinputlisting[language=Python]{code/figure_tools/visual_qa.py}
+\lstinputlisting[language=Python]{code/repro_manifest.py}
 
 \section{人工核验记录}
 
-% 待补：AI 工具使用详情单独生成 AI工具使用详情.pdf 并放入支撑材料。
-% 论文附录只保留组委会要求的文件清单和完整源程序，不写内部质检流程。
+参赛队提交前应按 \texttt{README.txt} 所列顺序重新运行冒烟测试与必要的全量计算，核对四个 \texttt{result*.xlsx}、关键结果摘要、正文数值和图件数据源的一致性；同时逐项审核 \texttt{AI工具使用详情.pdf} 中的工具、时间、用途、提示方式与使用过程。支撑材料和论文一经生成最终校验值，不再修改。
 
 \end{appendices}
+\fi
 
 \end{document}

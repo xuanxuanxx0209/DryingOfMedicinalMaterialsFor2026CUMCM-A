@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-13T06:43:06.716822+00:00",
+  "passed": true,
+  "main_tex": "example.tex",
+  "project_root": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\完整论文-LaTeX",
+  "source_sha256": "34658df8d42dfc54fc3d0f58e942ebb0535d7aec53daf89fbfc60925b31c51be",
+  "compiled_source_sha256": "34658df8d42dfc54fc3d0f58e942ebb0535d7aec53daf89fbfc60925b31c51be",
+  "post_build_source_sha256": "34658df8d42dfc54fc3d0f58e942ebb0535d7aec53daf89fbfc60925b31c51be",
+  "pdf_sha256": "534169da545689053630da9534c963da7259ca5f0cdd210a3ba8cc357fa62b1d",
+  "project_manifest_sha256": "e29ddc11d8f92db6e15cfa77cb3ce9fb405f5fcd95cba4b814c25552f9d2556c",
+  "engine": "xelatex",
+  "tools": {
+    "latexmk": {
+      "path": "C:\\Users\\27632\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\latexmk.EXE",
+      "version": "Initial Win CP for (console input, console output, system): (CP936, CP65001, CP936)"
+    },
+    "xelatex": {
+      "path": "C:\\Users\\27632\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\xelatex.EXE",
+      "version": "MiKTeX-XeTeX 4.18 (MiKTeX 26.5)"
+    }
+  },
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\27632\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\latexmk.EXE",
+        "-norc",
+        "-gg",
+        "-xelatex",
+        "-e",
+        "$xelatex = 'xelatex -no-shell-escape %O %S'",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-outdir=build",
+        "example.tex"
+      ],
+      "cwd": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\完整论文-LaTeX",
+      "returncode": 0,
+      "duration_seconds": 10.484
+    }
+  ],
+  "warnings": [],
+  "allowed_warnings": [],
+  "warning_override": {
+    "patterns": [],
+    "reason": null
+  },
+  "issues": [],
+  "reproduce": "C:\\Users\\27632\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe C:\\Users\\27632\\.codex\\skills\\cumcm-step-review\\tools\\latex\\scripts\\latex_paper.py build C:\\Users\\27632\\Desktop\\26CUMCM_A\\完整论文-LaTeX\\example.tex --engine xelatex --timeout 300 --publish C:\\Users\\27632\\Desktop\\26CUMCM_A\\完整论文-新编译.pdf"
+}
