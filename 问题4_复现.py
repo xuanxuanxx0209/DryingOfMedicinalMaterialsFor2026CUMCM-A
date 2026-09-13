@@ -1,6 +1,6 @@
 """Unique Q4 pipeline. --output-root isolates independent reproduction."""
 from __future__ import annotations
-import argparse,json,sys,time,shutil,subprocess,importlib.metadata
+import argparse,json,sys,time,shutil,subprocess,importlib.metadata,os
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import numpy as np
@@ -9,7 +9,7 @@ import openpyxl
 import 问题4_求解 as q
 
 ROOT=q.ROOT
-SKILL=Path(r'C:\Users\23572\.codex\skills\math-modeling')
+SKILL=Path(os.environ.get('CODEX_HOME',Path.home()/'.codex'))/'skills'/'math-modeling'
 
 def difference(s,t):
     times=np.intersect1d(s['time_s'],t['time_s'])
@@ -61,18 +61,67 @@ def write_outputs(base,runs,out,verification):
     process.to_csv(res/'问题4_关键过程.csv',index=False)
     rows=[]
     for name,s in runs.items():
-        m=s['meta'];rows.append({'scenario':name,'N':m['N'],'dt_s':m['dt_s'],'a':m['a'],'fixed':m['fixed'],'dry_time_s':m['dry_time_s'],'dry_time_h':m['dry_time_h'],'relative_to_main_percent':100*(m['dry_time_s']/t[-1]-1),'radius_end_cm':m['radius_end_cm'],'runtime_s':m['runtime_s']})
+        m=s['meta'];rows.append({'scenario':name,'N':m['N'],'dt_s':m['dt_s'],'a':m['a'],'fixed':m['fixed'],
+                                 'h_W_m2_K':m['h_W_m2_K'],'hm_m_s':m['hm_m_s'],
+                                 'dry_time_s':m['dry_time_s'],'dry_time_h':m['dry_time_h'],
+                                 'relative_to_main_percent':100*(m['dry_time_s']/t[-1]-1),
+                                 'radius_end_cm':m['radius_end_cm'],'runtime_s':m['runtime_s']})
     pd.DataFrame(rows).to_csv(res/'问题4_情景汇总.csv',index=False,encoding='utf-8-sig')
     pd.DataFrame([{'scenario':k,**v} for k,v in verification.items()]).to_csv(res/'问题4_数值加密.csv',index=False)
     unique,counts=np.unique(base['iterations'],return_counts=True)
     pd.DataFrame({'iterations':unique,'step_count':counts}).to_csv(res/'问题4_迭代统计.csv',index=False)
     fixed=runs['fixed']['meta']['dry_time_s']
     etaR=100*(t[-1]-fixed)/fixed
-    etaA={str(a):100*(runs[f'shape_{a}']['meta']['dry_time_s']/t[-1]-1) for a in [.1,.2]}
-    summary={**base['meta'],'fixed_radius_dry_time_s':fixed,'fixed_radius_dry_time_h':fixed/3600,'delta_geometry_s':float(t[-1]-fixed),'eta_geometry_percent':etaR,'eta_shape_percent':etaA,'E_shape_percent':max(map(abs,etaA.values())),'verification':verification,'excel_rows':len(t)-1,'excel_columns':22,'structural_empty_cells':int(np.isnan(arr[1:]).sum()),'table6':df.to_dict(orient='records'),'model_scope':'Q4 prescribed effective material-scalar diffusion, not identified solid-mass conservation'}
+    shape_values=[-.2,-.1,.1,.2]
+    etaA={str(a):100*(runs[f'shape_{a}']['meta']['dry_time_s']/t[-1]-1) for a in shape_values}
+    etaH={str(f):100*(runs[f'h_{f}']['meta']['dry_time_s']/t[-1]-1) for f in [.8,1.2]}
+    etaHm={str(f):100*(runs[f'hm_{f}']['meta']['dry_time_s']/t[-1]-1) for f in [.8,1.2]}
+    sensitivity=[]
+    for name,parameter,multiplier,value in [
+        ('main','基准',1.,0.),
+        ('shape_-0.2','a^*',-1.,-.2),('shape_-0.1','a^*',-.5,-.1),
+        ('shape_0.1','a^*',.5,.1),('shape_0.2','a^*',1.,.2),
+        ('h_0.8','h',.8,20.),('h_1.2','h',1.2,30.),
+        ('hm_0.8','h_m',.8,6.4e-7),('hm_1.2','h_m',1.2,9.6e-7)]:
+        s=base if name=='main' else runs[name]
+        sensitivity.append({'scenario':name,'parameter':parameter,'multiplier':multiplier,
+                            'parameter_value':value,'dry_time_s':s['meta']['dry_time_s'],
+                            'dry_time_h':s['meta']['dry_time_h'],
+                            'relative_to_main_percent':100*(s['meta']['dry_time_s']/t[-1]-1)})
+    pd.DataFrame(sensitivity).to_csv(res/'问题4_边界参数敏感性.csv',index=False,encoding='utf-8-sig')
+    summary={**base['meta'],'fixed_radius_dry_time_s':fixed,'fixed_radius_dry_time_h':fixed/3600,
+             'delta_geometry_s':float(t[-1]-fixed),'eta_geometry_percent':etaR,
+             'eta_shape_percent':etaA,'E_shape_percent':max(map(abs,etaA.values())),
+             'eta_h_percent':etaH,'E_h_percent':max(map(abs,etaH.values())),
+             'eta_hm_percent':etaHm,'E_hm_percent':max(map(abs,etaHm.values())),
+             'boundary_sensitivity':sensitivity,'verification':verification,
+             'excel_rows':len(t)-1,'excel_columns':22,
+             'structural_empty_cells':int(np.isnan(arr[1:]).sum()),
+             'table6':df.to_dict(orient='records'),
+             'model_scope':'Q4 prescribed effective material-scalar diffusion, not identified solid-mass conservation'}
     # Serialize structural nulls as JSON null, never as invalid JSON NaN.
     clean=json.loads(json.dumps(summary,ensure_ascii=False).replace('NaN','null'))
     (res/'问题4_结果摘要.json').write_text(json.dumps(clean,indent=2,ensure_ascii=False,allow_nan=False),encoding='utf-8')
+    robust=out/'robustness'/'Q4';robust.mkdir(parents=True,exist_ok=True)
+    robust_summary={
+        'question':'Q4','status':'PASS','baseline_dry_time_s':float(t[-1]),
+        'one_factor_at_a_time':True,
+        'shape_parameter_values':shape_values,'h_factors':[.8,1.2],'hm_factors':[.8,1.2],
+        'eta_shape_percent':etaA,'eta_h_percent':etaH,'eta_hm_percent':etaHm,
+        'E_shape_percent':max(map(abs,etaA.values())),
+        'E_h_percent':max(map(abs,etaH.values())),
+        'E_hm_percent':max(map(abs,etaHm.values())),
+        'interpretation':'Each parameter is perturbed alone and the full Q4 PDE is re-solved to the endpoint.'}
+    (robust/'q4_robustness_summary.json').write_text(
+        json.dumps(robust_summary,indent=2,ensure_ascii=False),encoding='utf-8')
+    report=(
+        '# 问题四稳健性与敏感性复算报告\n\n'
+        f'- 基准终点：{t[-1]/3600:.6f} h。\n'
+        f'- 结构参数：$a^*=-0.2,-0.1,0.1,0.2$，终点最大相对变化 {max(map(abs,etaA.values())):.6f}%。\n'
+        f'- 换热系数：$h$ 单因素上下浮动 20%，终点最大相对变化 {max(map(abs,etaH.values())):.6f}%。\n'
+        f'- 传质系数：$h_m$ 单因素上下浮动 20%，终点最大相对变化 {max(map(abs,etaHm.values())):.6f}%。\n'
+        '- 以上各情景均重新求解完整问题四偏微分方程至终点，并非只对基准结果作比例换算。\n')
+    (robust/'q4_robustness_report.md').write_text(report,encoding='utf-8')
     return summary
 
 def run_all(out,plots=True):
@@ -96,7 +145,14 @@ def run_all(out,plots=True):
         assert err<=5e-5 and ev<=.1,'Spatial accuracy requires model review'
     runs['main']=base;q.save_run(base,runpath/'main.npz')
     ss=base['meta']['stable_air']
-    cases=[('half_step',{'dt':.5}),('fixed',{'fixed':True}),('shape_0.1',{'a':.1}),('shape_0.2',{'a':.2}),('air_T_minus',{'Tshift':-ss['temperature_std_c']}),('air_T_plus',{'Tshift':ss['temperature_std_c']}),('air_C_minus',{'Cshift':-ss['moisture_std_kg_per_kg']}),('air_C_plus',{'Cshift':ss['moisture_std_kg_per_kg']}),('last_air',{'last_air':True})]
+    cases=[('half_step',{'dt':.5}),('fixed',{'fixed':True}),
+           ('shape_-0.2',{'a':-.2}),('shape_-0.1',{'a':-.1}),
+           ('shape_0.1',{'a':.1}),('shape_0.2',{'a':.2}),
+           ('h_0.8',{'h':20.}),('h_1.2',{'h':30.}),
+           ('hm_0.8',{'hm':6.4e-7}),('hm_1.2',{'hm':9.6e-7}),
+           ('air_T_minus',{'Tshift':-ss['temperature_std_c']}),('air_T_plus',{'Tshift':ss['temperature_std_c']}),
+           ('air_C_minus',{'Cshift':-ss['moisture_std_kg_per_kg']}),('air_C_plus',{'Cshift':ss['moisture_std_kg_per_kg']}),
+           ('last_air',{'last_air':True})]
     # Independent frozen scenarios; two workers bound peak memory and CPU use.
     with ThreadPoolExecutor(max_workers=2) as pool:
         futures=[(name,pool.submit(run,name,N=N,**kw)) for name,kw in cases]
@@ -114,14 +170,17 @@ def run_all(out,plots=True):
     materials.main(out)
     manifest(out,summary)
     (res/'问题4_执行状态.json').write_text(json.dumps({'status':'computational_checks_passed','elapsed_s':time.perf_counter()-total,'figures_generated':plots},indent=2),encoding='utf-8')
-    print(json.dumps({k:summary[k] for k in ['N','dry_time_s','dry_time_h','fixed_radius_dry_time_h','eta_geometry_percent','eta_shape_percent','E_shape_percent','verification']},ensure_ascii=False,indent=2),flush=True)
+    print(json.dumps({k:summary[k] for k in ['N','dry_time_s','dry_time_h','fixed_radius_dry_time_h',
+                                             'eta_geometry_percent','eta_shape_percent','E_shape_percent',
+                                             'eta_h_percent','E_h_percent','eta_hm_percent','E_hm_percent',
+                                             'verification']},ensure_ascii=False,indent=2),flush=True)
 
 def manifest(out,summary):
     if (out/'results/复现清单.json').exists() and not (out/'results/复现清单_Q3历史.json').exists():
         shutil.copy2(out/'results/复现清单.json',out/'results/复现清单_Q3历史.json')
     inputs=[ROOT/'problem A/A题.pdf',q.old.AIR_PATH,q.old.RADIUS_PATH,q.old.TEMPLATE_DIR/'result4.xlsx',ROOT/'Q4/第四问建模思路与公式整理_最终推荐版.tex',ROOT/'题目分析报告.md',ROOT/'术语表格.md',ROOT/'问题4_求解.py',ROOT/'问题4_复现.py',ROOT/'问题4_绘图.py',ROOT/'问题4_素材整理.py',ROOT/'全程干燥求解.py',ROOT/'药材烘干求解.py',ROOT/'utils/plot_style.py']
     inputs += list((SKILL/'tools/figure/scripts').glob('*.py'))
-    cmd=[sys.executable,'-X','utf8',str(SKILL/'references/roles/编程手/scripts/repro_manifest.py'),'--project-root',str(out),'--seed','0','--parameters',json.dumps({'question':4,'N':summary['N'],'dt_s':1.,'refinement_dt_s':.5,'shape_values':[0,.1,.2],'stable_start_s':9000,'stable_end_s':14400,'threshold':.15,'h':25.,'hm':8e-7}),'--command','python -X utf8 问题4_复现.py','--dependencies',json.dumps({'numba':'0.67.0','llvmlite':'0.49.0'}),'--overwrite']
+    cmd=[sys.executable,'-X','utf8',str(SKILL/'references/roles/编程手/scripts/repro_manifest.py'),'--project-root',str(out),'--seed','0','--parameters',json.dumps({'question':4,'N':summary['N'],'dt_s':1.,'refinement_dt_s':.5,'shape_values':[-.2,-.1,0,.1,.2],'stable_start_s':9000,'stable_end_s':14400,'threshold':.15,'h':25.,'h_factors':[.8,1.2],'hm':8e-7,'hm_factors':[.8,1.2]}),'--command','python -X utf8 问题4_复现.py','--dependencies',json.dumps({'numba':'0.67.0','llvmlite':'0.49.0'}),'--overwrite']
     for f in inputs:cmd+=['--input',str(f)]
     for package in ['numpy','scipy','pandas','openpyxl','matplotlib']:cmd+=['--package',package]
     subprocess.run(cmd,check=True)

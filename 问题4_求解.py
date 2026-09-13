@@ -6,13 +6,15 @@ Inputs are read-only. Numba is optional (plain Python uses the same functions).
 from __future__ import annotations
 import sys, json, argparse, time, hashlib
 from pathlib import Path
+
+ROOT=Path(__file__).resolve().parent
+sys.path.insert(0,str(ROOT/'build/q4_runtime'))
+
 import numpy as np
 import pandas as pd
 import openpyxl
 from scipy.linalg import eigvalsh_tridiagonal
 
-ROOT=Path(__file__).resolve().parent
-sys.path.insert(0,str(ROOT/'build/q4_runtime'))
 try:
     from numba import njit
     ACCELERATED=True
@@ -64,7 +66,7 @@ def linear_solve(history,b,gamma,w,geom,R,beta,ambient,dt):
     return u,relative
 
 @njit(cache=True,nogil=True)
-def kernel(N,dt,end,ta,ca,rt,rv,airtime,stableT,stableC,a,fixed,stop,initT=28.,initC=2.55):
+def kernel(N,dt,end,ta,ca,rt,rv,airtime,stableT,stableC,a,fixed,stop,h=25.,hm=8e-7,initT=28.,initC=2.55):
     x=np.linspace(0.,1.,N+1)
     xf=np.empty(N+2);xf[0]=0.;xf[-1]=1.;xf[1:-1]=(x[:-1]+x[1:])/2
     t=np.full(N+1,initT);c=np.full(N+1,initC);tp=t.copy();cp=c.copy()
@@ -93,9 +95,9 @@ def kernel(N,dt,end,ta,ca,rt,rv,airtime,stableT,stableC,a,fixed,stop,initT=28.,i
         tg=t.copy();cg=c.copy();converged=False
         for iteration in range(1,41):
             b,k,_=props(cg,tg)
-            tn,errT=linear_solve(th,b,k,w,geom,R,25.,ambT,effective)
+            tn,errT=linear_solve(th,b,k,w,geom,R,h,ambT,effective)
             _,_,d=props(cg,tn)
-            cn,errC=linear_solve(ch,np.ones(N+1),d,w,geom,R,8e-7,ambC,effective)
+            cn,errC=linear_solve(ch,np.ones(N+1),d,w,geom,R,hm,ambC,effective)
             stats[0]=max(stats[0],errT);stats[1]=max(stats[1],errC)
             et=np.max(np.abs(tn-tg));ec=np.max(np.abs(cn-cg))
             tg=tn;cg=cn
@@ -105,14 +107,14 @@ def kernel(N,dt,end,ta,ca,rt,rv,airtime,stableT,stableC,a,fixed,stop,initT=28.,i
         if not np.all(np.isfinite(cg)) or not np.all(np.isfinite(tg)) or np.min(cg)<0:
             raise RuntimeError('invalid field')
         deltaC=(cg-ch)/effective
-        lhs=np.sum(w*deltaC);flux=R*8e-7*(cg[-1]-ambC)
+        lhs=np.sum(w*deltaC);flux=R*hm*(cg[-1]-ambC)
         # Roundoff floor only for synthetic zero-flux constant-state test.
         if max(abs(lhs),abs(flux))>1e-20:
             stats[2]=max(stats[2],abs(lhs+flux)/max(abs(lhs),abs(flux)))
         deltaT=(tg-th)/effective
-        heatlhs=np.sum(b*w*deltaT);heatflux=R*25.*(tg[-1]-ambT)
+        heatlhs=np.sum(b*w*deltaT);heatflux=R*h*(tg[-1]-ambT)
         habs=abs(heatlhs+heatflux)
-        hscale=np.sum(b*w*(np.abs(tg)+np.abs(th))/effective)+R*25.*(abs(tg[-1])+abs(ambT))
+        hscale=np.sum(b*w*(np.abs(tg)+np.abs(th))/effective)+R*h*(abs(tg[-1])+abs(ambT))
         stats[3]=max(stats[3],habs);stats[4]=max(stats[4],habs/max(hscale,1e-30))
         stats[5]=min(stats[5],np.min(cg));stats[6]=min(stats[6],np.min(tg));stats[7]=max(stats[7],np.max(tg))
         stats[8]=max(stats[8],np.max(cg[1:]-cg[:-1]))
@@ -134,27 +136,29 @@ def input_data():
     assert np.all(np.isfinite(rad.radius_m))
     return air,rad,ss
 
-def solve(*,N=320,dt=1.,a=0.,fixed=False,end=604800.,stop=True,Tshift=0.,Cshift=0.,last_air=False):
+def solve(*,N=320,dt=1.,a=0.,fixed=False,end=604800.,stop=True,Tshift=0.,Cshift=0.,last_air=False,h=25.,hm=8e-7):
     air,rad,ss=input_data()
     st=ss['last_temperature_c'] if last_air else ss['temperature_mean_c']+Tshift
     sc=ss['last_moisture_kg_per_kg'] if last_air else ss['moisture_mean_kg_per_kg']+Cshift
     start=time.perf_counter()
-    values=kernel(N,dt,end,air.temperature_c,air.moisture,rad.time_s,rad.radius_m,air.time_s,st,sc,a,fixed,stop)
+    values=kernel(N,dt,end,air.temperature_c,air.moisture,rad.time_s,rad.radius_m,air.time_s,st,sc,a,fixed,stop,h,hm)
     t,r,T,C,it,stats=values
     keys=['heat_linear_residual','moisture_linear_residual','moisture_balance_relative','heat_balance_absolute','heat_balance_scaled','min_moisture','min_temperature_c','max_temperature_c','max_radial_moisture_increase','max_Cmax_minus_center','min_mapping_Jacobian_m','previous_Cmax','final_Cmax','dry_time_s','max_step_Cmax_increase']
     meta=dict(zip(keys,map(float,stats)))
-    meta.update(N=N,dt_s=dt,a=a,fixed=fixed,Tshift=Tshift,Cshift=Cshift,last_air=last_air,runtime_s=time.perf_counter()-start,max_picard_iterations=int(it.max()),stable_air=ss)
+    meta.update(N=N,dt_s=dt,a=a,fixed=fixed,Tshift=Tshift,Cshift=Cshift,last_air=last_air,
+                h_W_m2_K=h,hm_m_s=hm,runtime_s=time.perf_counter()-start,
+                max_picard_iterations=int(it.max()),stable_air=ss)
     meta['dry_time_h']=meta['dry_time_s']/3600
     meta['radius_end_cm']=float(r[-1]*100)
     meta['beyond_radius_observation']=bool(t[-1]>rad.time_s[-1])
-    meta['final_matrix_conditions']=conditions(N,dt,r[-1],a,T[-1],C[-1])
+    meta['final_matrix_conditions']=conditions(N,dt,r[-1],a,T[-1],C[-1],h,hm)
     return dict(time_s=t,radius_m=r,temperature_c=T,moisture=C,iterations=it,meta=meta)
 
-def conditions(N,dt,R,a,T,C):
+def conditions(N,dt,R,a,T,C,h=25.,hm=8e-7):
     x=np.linspace(0,1,N+1);xf=np.r_[0,(x[:-1]+x[1:])/2,1]
     _,w,geom=geometry(x,xf,R,a);b,k,d=props(C,T)
     out={}
-    for name,B,G,beta in [('heat',b,k,25.),('moisture',np.ones(N+1),d,8e-7)]:
+    for name,B,G,beta in [('heat',b,k,h),('moisture',np.ones(N+1),d,hm)]:
         f=geom*(G[:-1]+G[1:])/2;diag=1.5*B*w/dt
         diag[:-1]+=f;diag[1:]+=f;diag[-1]+=R*beta
         ev=eigvalsh_tridiagonal(diag,-f)
@@ -190,17 +194,30 @@ def smoke(output):
     errC=float(np.max(np.abs(ref.moisture-s['moisture'])))
     assert errT<1e-9 and errC<1e-10,(errT,errC)
     pert=solve(N=32,dt=1,end=1800,a=.2,stop=False)
+    pert_negative=solve(N=32,dt=1,end=1800,a=-.2,stop=False)
+    h_low=solve(N=32,dt=1,end=1800,h=20.,stop=False)
+    h_high=solve(N=32,dt=1,end=1800,h=30.,stop=False)
+    hm_low=solve(N=32,dt=1,end=1800,hm=6.4e-7,stop=False)
+    hm_high=solve(N=32,dt=1,end=1800,hm=9.6e-7,stop=False)
     air,rad,_=input_data()
     const=kernel(16,1.,600.,np.full_like(air.temperature_c,28.),np.full_like(air.moisture,2.55),rad.time_s,rad.radius_m,air.time_s,28.,2.55,.2,False,False)
     constant_error=max(float(np.max(np.abs(const[2]-28))),float(np.max(np.abs(const[3]-2.55))))
     assert constant_error<1e-9
     fixed=solve(N=32,dt=1,end=1800,fixed=True,stop=False)
     assert np.all(fixed['radius_m']==.02)
-    for z in [s,pert,fixed]:
+    for z in [s,pert,pert_negative,h_low,h_high,hm_low,hm_high,fixed]:
         m=z['meta'];assert m['moisture_balance_relative']<1e-8 and m['min_mapping_Jacobian_m']>0
         assert max(m['heat_linear_residual'],m['moisture_linear_residual'])<1e-12
+    # At this short horizon the centre value is almost unchanged; compare the
+    # volume-profile mean to verify that each boundary coefficient is active.
+    assert h_high['moisture'][-1].mean()<h_low['moisture'][-1].mean()
+    assert hm_high['moisture'][-1].mean()<hm_low['moisture'][-1].mean()
     output.parent.mkdir(parents=True,exist_ok=True)
-    report={'status':'PASS','uniform_regression_temperature_error':errT,'uniform_regression_moisture_error':errC,'moving_constant_state_error':constant_error,'base':s['meta'],'shape_02':pert['meta'],'fixed':fixed['meta']}
+    report={'status':'PASS','uniform_regression_temperature_error':errT,
+            'uniform_regression_moisture_error':errC,'moving_constant_state_error':constant_error,
+            'base':s['meta'],'shape_02':pert['meta'],'shape_minus_02':pert_negative['meta'],
+            'h_low':h_low['meta'],'h_high':h_high['meta'],
+            'hm_low':hm_low['meta'],'hm_high':hm_high['meta'],'fixed':fixed['meta']}
     output.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(report,ensure_ascii=False,indent=2))
 

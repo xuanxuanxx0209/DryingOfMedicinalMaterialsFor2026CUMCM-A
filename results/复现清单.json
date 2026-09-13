@@ -1,131 +1,131 @@
 {
   "schema_version": 1,
-  "created_at_utc": "2026-09-12T08:44:36.611019+00:00",
+  "created_at_utc": "2026-09-13T05:53:59.928410+00:00",
   "random_seed": 0,
   "input_files": [
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\problem A\\A题.pdf",
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\problem A\\A题.pdf",
       "sha256": "052d8014bff5727c019b72e44fdffaf5c145ce04050dd938baaf3527db331736",
       "bytes": 553320
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\problem A\\附件\\附件1.xlsx",
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\problem A\\附件\\附件1.xlsx",
       "sha256": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
       "bytes": 16586
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\problem A\\附件\\附件2.xlsx",
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\problem A\\附件\\附件2.xlsx",
       "sha256": "5563acbfa4b4afb10cc6c03e2207e5369bf39da27576672aff14cc5c32e704af",
       "bytes": 11485
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\problem A\\附件\\附件3\\result4.xlsx",
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\problem A\\附件\\附件3\\result4.xlsx",
       "sha256": "86e9300ffa3d30c43de895ea6723da943e85b8740b137bcae5af7107f076eeac",
       "bytes": 9351
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\Q4\\第四问建模思路与公式整理_最终推荐版.tex",
-      "sha256": "5c2eb509362ee35926bbc8e30ca198be3e024d8ffba2149a55153af9d8301774",
-      "bytes": 20805
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\Q4\\第四问建模思路与公式整理_最终推荐版.tex",
+      "sha256": "71a8a1d7cf4086046d1373d1695e2344d113ec3fd4507827ee966e050bf3cbdc",
+      "bytes": 21528
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\题目分析报告.md",
-      "sha256": "fb16e22413c40a278821bf619866d86db2898c958b9cc15078ca878403c1d3e6",
-      "bytes": 24344
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\题目分析报告.md",
+      "sha256": "0c0cdd6e8eb093a868bb8f670fb815c6d0e4733fb85d53be80367d321f66e9de",
+      "bytes": 24345
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\术语表格.md",
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\术语表格.md",
       "sha256": "bf0ba0b86cdeef094d3e456f5a015b3de4561d341b434fc6d0830d5f6b72b8f3",
       "bytes": 7293
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\问题4_求解.py",
-      "sha256": "f26ecd0437253ef547cb9b5d7321c9091cf049b4ab132fc0f6e2b7b792ee7480",
-      "bytes": 9923
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\问题4_求解.py",
+      "sha256": "98227ebb985c144d13ae5062ae42a3eb81090c1000bcfeaa219bd19e8b5fe3e6",
+      "bytes": 11008
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\问题4_复现.py",
-      "sha256": "8ceeb32a4246a1df2178ff324a2e169bbf0edea7e0326f9458bfb4b1c8f52f07",
-      "bytes": 9576
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\问题4_复现.py",
+      "sha256": "93d266bc555849103d063c3972178ea98d56615430902d4907425058e1b1c259",
+      "bytes": 13216
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\问题4_绘图.py",
-      "sha256": "2422a88c71e4e21ad0a9a7de3ee37d6265894bee5fd5ef4773487de337ff96d4",
-      "bytes": 12314
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\问题4_绘图.py",
+      "sha256": "78a90a4f0df8006fadc1a621d2429369106c72d0d6a0b21b685829616be81f5c",
+      "bytes": 12465
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\问题4_素材整理.py",
-      "sha256": "e1e3eff0f334c64387954a8afc4ade8f0161b2ad9c1c0e8a75cd4eba6453f2e0",
-      "bytes": 11475
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\问题4_素材整理.py",
+      "sha256": "55e30fc24804cca920c4b33a1cbd3e53a05eec3bb73ebfe465c0b05dd5e42c6b",
+      "bytes": 12319
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\全程干燥求解.py",
-      "sha256": "0eb6dbe808b3bb47f451bab941a01ec4f578b6bb28153c3b5dc6094d92440dc2",
-      "bytes": 61353
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\全程干燥求解.py",
+      "sha256": "ef4e115bd22cf5022742bbbbec28e1a6f21b8dc0f9d0d5b58828748ba079d94c",
+      "bytes": 62883
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\药材烘干求解.py",
-      "sha256": "0fcd3f02ae63da6ff848145d8dded7e756d81c3631417ae95257d677c10978b9",
-      "bytes": 21964
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\药材烘干求解.py",
+      "sha256": "18e1d75a38672867cfed7570d04ed1f5194ce6ffc65e23f5d64c98022d7c0ab4",
+      "bytes": 22541
     },
     {
-      "path": "C:\\Users\\23572\\Desktop\\CUMCM-2026\\utils\\plot_style.py",
-      "sha256": "f3de0a0c858d6018310d7e461574697a4cec7b28e5e20b8ccdaa7749772147e2",
-      "bytes": 17160
+      "path": "C:\\Users\\27632\\Desktop\\26CUMCM_A\\utils\\plot_style.py",
+      "sha256": "e9fa501fe72ff89b913e1f777e0b5925a118b95b9d324288c59e906f27592b9a",
+      "bytes": 17654
     },
     {
-      "path": "C:\\Users\\23572\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\check_figure.py",
+      "path": "C:\\Users\\27632\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\check_figure.py",
       "sha256": "861191858ff47c5af5247f08d0759b14956a2a7e7d8eafcc6b414d37b9d70f06",
       "bytes": 9709
     },
     {
-      "path": "C:\\Users\\23572\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\export_figure.py",
+      "path": "C:\\Users\\27632\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\export_figure.py",
       "sha256": "40ce3bcd31dfc4b33e38a1cb180c75dc730ee6fa046f04934c79f285c6f890c1",
       "bytes": 6450
     },
     {
-      "path": "C:\\Users\\23572\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\layout_tools.py",
+      "path": "C:\\Users\\27632\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\layout_tools.py",
       "sha256": "68e1d25774148fe78f5d87035d651f5e3707382502505cb11f62f9ec7ae88e49",
       "bytes": 9351
     },
     {
-      "path": "C:\\Users\\23572\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\profile_data.py",
+      "path": "C:\\Users\\27632\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\profile_data.py",
       "sha256": "d8a2a72c2607c390f2d3ed1508209d515ad4fbf833fa1602ab9da519b3596ec4",
       "bytes": 17764
     },
     {
-      "path": "C:\\Users\\23572\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\setup_style.py",
+      "path": "C:\\Users\\27632\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\setup_style.py",
       "sha256": "d58ef81684577bb605a92733dd2ca48ade03b4f819b3d255fd62f319be7fea82",
       "bytes": 11794
     },
     {
-      "path": "C:\\Users\\23572\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\style_constants.py",
+      "path": "C:\\Users\\27632\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\style_constants.py",
       "sha256": "d574969063fc1fb0fbd2449c4a77201ae8e46bb837cf4db8467c36bb0073dc8b",
       "bytes": 7098
     },
     {
-      "path": "C:\\Users\\23572\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\validate_figure.py",
+      "path": "C:\\Users\\27632\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\validate_figure.py",
       "sha256": "1886d3cb050c9e0eea6a17d798e3ec8df823b3abbfd50b4490c6c910c95c92d8",
       "bytes": 19402
     },
     {
-      "path": "C:\\Users\\23572\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\visual_qa.py",
+      "path": "C:\\Users\\27632\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\visual_qa.py",
       "sha256": "67675709e523c76e2748d50749de7bc6332f07df865379b26d024321fb40120f",
       "bytes": 12677
     }
   ],
   "runtime": {
     "name": "python",
-    "version": "3.13.7",
+    "version": "3.12.14",
     "platform": "Windows-11-10.0.26200-SP0",
     "dependencies": {
       "numba": "0.67.0",
       "llvmlite": "0.49.0",
-      "numpy": "2.3.3",
-      "scipy": "1.16.2",
-      "pandas": "2.3.2",
+      "numpy": "2.3.5",
+      "scipy": null,
+      "pandas": "3.0.1",
       "openpyxl": "3.1.5",
-      "matplotlib": "3.10.6"
+      "matplotlib": null
     }
   },
   "key_parameters": {
@@ -134,6 +134,8 @@
     "dt_s": 1.0,
     "refinement_dt_s": 0.5,
     "shape_values": [
+      -0.2,
+      -0.1,
       0,
       0.1,
       0.2
@@ -142,7 +144,15 @@
     "stable_end_s": 14400,
     "threshold": 0.15,
     "h": 25.0,
-    "hm": 8e-07
+    "h_factors": [
+      0.8,
+      1.2
+    ],
+    "hm": 8e-07,
+    "hm_factors": [
+      0.8,
+      1.2
+    ]
   },
   "reproduce_command": "python -X utf8 问题4_复现.py"
 }

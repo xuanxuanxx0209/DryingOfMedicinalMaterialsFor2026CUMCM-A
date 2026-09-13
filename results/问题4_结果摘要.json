@@ -21,7 +21,9 @@
   "Tshift": 0.0,
   "Cshift": 0.0,
   "last_air": false,
-  "runtime_s": 14.864418099998147,
+  "h_W_m2_K": 25.0,
+  "hm_m_s": 8e-07,
+  "runtime_s": 21.732995599973947,
   "max_picard_iterations": 4,
   "stable_air": {
     "sample_count": 91,
@@ -48,10 +50,105 @@
   "delta_geometry_s": -283388.0,
   "eta_geometry_percent": -60.64798070482187,
   "eta_shape_percent": {
+    "-0.2": -0.3040042636733964,
+    "-0.1": -0.15336172156690253,
     "0.1": 0.1560809010273001,
     "0.2": 0.3143371456229449
   },
   "E_shape_percent": 0.3143371456229449,
+  "eta_h_percent": {
+    "0.8": 0.035349332985279425,
+    "1.2": -0.023384943359494592
+  },
+  "E_h_percent": 0.035349332985279425,
+  "eta_hm_percent": {
+    "0.8": 1.3454499970088962,
+    "1.2": -0.7706154590790715
+  },
+  "E_hm_percent": 1.3454499970088962,
+  "boundary_sensitivity": [
+    {
+      "scenario": "main",
+      "parameter": "基准",
+      "multiplier": 1.0,
+      "parameter_value": 0.0,
+      "dry_time_s": 183879.0,
+      "dry_time_h": 51.0775,
+      "relative_to_main_percent": 0.0
+    },
+    {
+      "scenario": "shape_-0.2",
+      "parameter": "a^*",
+      "multiplier": -1.0,
+      "parameter_value": -0.2,
+      "dry_time_s": 183320.0,
+      "dry_time_h": 50.922222222222224,
+      "relative_to_main_percent": -0.3040042636733964
+    },
+    {
+      "scenario": "shape_-0.1",
+      "parameter": "a^*",
+      "multiplier": -0.5,
+      "parameter_value": -0.1,
+      "dry_time_s": 183597.0,
+      "dry_time_h": 50.99916666666667,
+      "relative_to_main_percent": -0.15336172156690253
+    },
+    {
+      "scenario": "shape_0.1",
+      "parameter": "a^*",
+      "multiplier": 0.5,
+      "parameter_value": 0.1,
+      "dry_time_s": 184166.0,
+      "dry_time_h": 51.157222222222224,
+      "relative_to_main_percent": 0.1560809010273001
+    },
+    {
+      "scenario": "shape_0.2",
+      "parameter": "a^*",
+      "multiplier": 1.0,
+      "parameter_value": 0.2,
+      "dry_time_s": 184457.0,
+      "dry_time_h": 51.238055555555555,
+      "relative_to_main_percent": 0.3143371456229449
+    },
+    {
+      "scenario": "h_0.8",
+      "parameter": "h",
+      "multiplier": 0.8,
+      "parameter_value": 20.0,
+      "dry_time_s": 183944.0,
+      "dry_time_h": 51.095555555555556,
+      "relative_to_main_percent": 0.035349332985279425
+    },
+    {
+      "scenario": "h_1.2",
+      "parameter": "h",
+      "multiplier": 1.2,
+      "parameter_value": 30.0,
+      "dry_time_s": 183836.0,
+      "dry_time_h": 51.065555555555555,
+      "relative_to_main_percent": -0.023384943359494592
+    },
+    {
+      "scenario": "hm_0.8",
+      "parameter": "h_m",
+      "multiplier": 0.8,
+      "parameter_value": 6.4e-07,
+      "dry_time_s": 186353.0,
+      "dry_time_h": 51.764722222222225,
+      "relative_to_main_percent": 1.3454499970088962
+    },
+    {
+      "scenario": "hm_1.2",
+      "parameter": "h_m",
+      "multiplier": 1.2,
+      "parameter_value": 9.6e-07,
+      "dry_time_s": 182462.0,
+      "dry_time_h": 50.68388888888889,
+      "relative_to_main_percent": -0.7706154590790715
+    }
+  ],
   "verification": {
     "space_320_640": {
       "table_max_abs_kg_kg": 1.7158440520831375e-05,

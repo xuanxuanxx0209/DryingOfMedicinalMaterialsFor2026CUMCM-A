@@ -1,0 +1,38 @@
+{
+  "question": "Q4",
+  "status": "PASS",
+  "baseline_dry_time_s": 183879.0,
+  "one_factor_at_a_time": true,
+  "shape_parameter_values": [
+    -0.2,
+    -0.1,
+    0.1,
+    0.2
+  ],
+  "h_factors": [
+    0.8,
+    1.2
+  ],
+  "hm_factors": [
+    0.8,
+    1.2
+  ],
+  "eta_shape_percent": {
+    "-0.2": -0.3040042636733964,
+    "-0.1": -0.15336172156690253,
+    "0.1": 0.1560809010273001,
+    "0.2": 0.3143371456229449
+  },
+  "eta_h_percent": {
+    "0.8": 0.035349332985279425,
+    "1.2": -0.023384943359494592
+  },
+  "eta_hm_percent": {
+    "0.8": 1.3454499970088962,
+    "1.2": -0.7706154590790715
+  },
+  "E_shape_percent": 0.3143371456229449,
+  "E_h_percent": 0.035349332985279425,
+  "E_hm_percent": 1.3454499970088962,
+  "interpretation": "Each parameter is perturbed alone and the full Q4 PDE is re-solved to the endpoint."
+}

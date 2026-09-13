@@ -21,7 +21,9 @@
   "Tshift": 0.0,
   "Cshift": 0.0001534629450327611,
   "last_air": false,
-  "runtime_s": 15.125780799993663,
+  "h_W_m2_K": 25.0,
+  "hm_m_s": 8e-07,
+  "runtime_s": 15.650349400006235,
   "max_picard_iterations": 4,
   "stable_air": {
     "sample_count": 91,
