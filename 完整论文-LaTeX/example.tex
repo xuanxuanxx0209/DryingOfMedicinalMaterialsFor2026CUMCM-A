@@ -12,6 +12,14 @@
 \usepackage{placeins}
 \usepackage{url}
 
+% 单栏符号表保留原字号；通过标题与浮动体间距控制正文篇幅。
+\titlespacing{\section}{0pt}{0.8em}{0.5em}
+\titlespacing{\subsection}{0pt}{0.7em}{0.35em}
+\titlespacing{\subsubsection}{0pt}{0.5em}{0.3em}
+\setlength{\textfloatsep}{12pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+
 \sisetup{per-mode=symbol}
 \IfFontExistsTF{SimSun}{
   \setCJKmainfont{SimSun}[BoldFont=SimHei]
@@ -137,29 +145,45 @@
 
 正文以 \(T\) 表示绝对温度。仅含温度导数和温差的导热方程使用摄氏温度计算会得到相同结果；附录三和附录四的 Arrhenius 型扩散系数则必须代入绝对温度。表格统一输出摄氏温度，含水率采用题目给出的干基定义。表 \ref{tab:symbols} 列出正文使用的核心符号，离散上下标只在有限体积小节内解释。
 
-\begin{table}[H]
-\centering\small
-\setlength{\tabcolsep}{3pt}
-\caption{主要符号及含义}\label{tab:symbols}
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lll lll@{}}
+\begin{longtable}{>{\centering\arraybackslash}p{0.16\textwidth}
+                  p{0.56\textwidth}
+                  >{\centering\arraybackslash}p{0.16\textwidth}}
+\caption{主要符号及含义}\label{tab:symbols}\\
 \toprule
-符号 & 含义 & 单位 & 符号 & 含义 & 单位\\
+符号 & 含义 & 单位\\
 \midrule
-\(t\) & 烘干时间 & \si{s} & \(C(r,t)\) & 药材干基含水率 & \si{kg/kg}\\
-\(r\) & 距轴线径向距离 & \si{m} & \(C_a(t)\) & 空气水分浓度 & \si{kg/kg}\\
-\(x\) & 归一化径向坐标 & 1 & \(\rho\) & 药材密度 & \si{kg/m^3}\\
-\(\xi\) & 非均匀收缩材料坐标 & 1 & \(c_p\) & 药材比热容 & \si{J/(kg.K)}\\
-\(L\) & 药材长度 & \si{m} & \(k\) & 药材导热系数 & \si{W/(m.K)}\\
-\(R\) & 固定模型半径 & \si{m} & \(D\) & 有效水分扩散系数 & \si{m^2/s}\\
-\(R(t)\) & 收缩模型半径 & \si{m} & \(h\) & 对流换热系数 & \si{W/(m^2.K)}\\
-\(r_\xi\) & 材料映射雅可比 & \si{m} & \(h_m\) & 对流传质系数 & \si{m/s}\\
-\(a_*\) & 非均匀收缩结构参数 & 1 & \(V_i\) & 径向控制体体积 & \si{m^3}\\
-\(T(r,t)\) & 药材绝对温度 & \si{K} & \(A_{i+\frac12}\) & 控制面面积 & \si{m^2}\\
-\(T_{\mathrm c}(r,t)\) & 药材摄氏温度 & \si{\degreeCelsius} & \(\Delta r\) & 径向网格步长 & \si{m}\\
-\(T_a(t)\) & 空气绝对温度 & \si{K} & \(\Delta t\) & 时间步长 & \si{s}\\
+\endfirsthead
+\toprule
+符号 & 含义 & 单位\\
+\midrule
+\endhead
 \bottomrule
-\end{tabular*}
-\end{table}
+\endfoot
+\(t\) & 烘干开始后的时间 & \si{s}\\
+\(r\) & 到药材轴线的径向距离 & \si{m}\\
+\(x\) & 收缩模型中的归一化径向坐标 & 1\\
+\(\xi\) & 非均匀收缩模型中的材料坐标 & 1\\
+\(L\) & 药材长度 & \si{m}\\
+\(R\) & 固定尺寸模型中的药材半径 & \si{m}\\
+\(R(t)\) & 收缩模型中的药材半径 & \si{m}\\
+\(r_\xi\) & 材料映射关于 \(\xi\) 的雅可比 & \si{m}\\
+\(a_*\) & 内部非均匀收缩的结构参数 & 1\\
+\(T(r,t)\) & 药材绝对温度 & \si{K}\\
+\(T_{\mathrm{c}}(r,t)\) & 药材摄氏温度 & \si{\degreeCelsius}\\
+\(T_a(t)\) & 烘房空气绝对温度 & \si{K}\\
+\(C(r,t)\) & 药材干基含水率 & \si{kg/kg}\\
+\(C_a(t)\) & 烘房空气水分浓度 & \si{kg/kg}\\
+\(\rho\) & 药材密度 & \si{kg/m^3}\\
+\(c_p\) & 药材比热容 & \si{J/(kg.K)}\\
+\(k\) & 药材导热系数 & \si{W/(m.K)}\\
+\(D\) & 有效水分扩散系数 & \si{m^2/s}\\
+\(h\) & 表面对流换热系数 & \si{W/(m^2.K)}\\
+\(h_m\) & 表面对流传质系数 & \si{m/s}\\
+\(V_i\) & 第 \(i\) 个径向控制体体积 & \si{m^3}\\
+\(A_{i+\frac12}\) & 相邻控制体之间的控制面面积 & \si{m^2}\\
+\(\Delta r\) & 径向网格步长 & \si{m}\\
+\(\Delta t\) & 时间步长 & \si{s}\\
+\end{longtable}
 
 式中 \(T_{\mathrm{c}}=T-273.15\)。当正文给出附件一的原始温度时使用摄氏温度，代入附录三和附录四的 Arrhenius 型扩散系数时使用绝对温度，避免因温标混用造成数量级错误。
 
@@ -1086,6 +1110,7 @@ E_C^{\max}=\max\left\{E_C^N,E_C^{\Delta t}\right\}
 \begingroup
 \raggedright
 \begin{thebibliography}{99}
+\setlength{\itemsep}{4pt}
 
 \bibitem{sokhansanj1999}
 SOKHANSANJ S, BAILEY W G, VAN DALFSEN K B.

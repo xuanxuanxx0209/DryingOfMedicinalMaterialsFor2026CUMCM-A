@@ -1,6 +1,6 @@
 {
   "body_pages": 30,
-  "full_pages": 149,
+  "full_pages": 148,
   "body_identical_in_full": true,
   "figure_numbering": [
     [
@@ -16,7 +16,7 @@
     [
       "fig:q1-air-boundary",
       "3",
-      "7"
+      "8"
     ],
     [
       "fig:q1-fields",
@@ -26,22 +26,22 @@
     [
       "fig:q1-convergence",
       "5",
-      "10"
+      "11"
     ],
     [
       "fig:q2-boundary",
       "6",
-      "11"
+      "12"
     ],
     [
       "fig:q2-temperature",
       "7",
-      "13"
+      "14"
     ],
     [
       "fig:q2-moisture",
       "8",
-      "14"
+      "15"
     ],
     [
       "fig:q2-gap",
@@ -92,8 +92,8 @@
   "all_references_resolved": true,
   "new_assets_match_originals": true,
   "blank_pages": [],
-  "source_sha256": "cb1209b597ba2789a5959cbc6f585ab41b4c955e8f439297779ab4c12d2d042d",
-  "body_sha256": "a9852e08bd3b074bc495e04760e632f35db599d877332cbaa0524e8ae7c3899b",
-  "full_sha256": "7470fb1c96f46f6205c6eb10d315c35ef1f48961ffc974ff463d703e9cdf0960",
-  "layout_change": "符号表改为双栏三线表，保留24个符号；正文文字字号、页边距和推导结果未改动。"
+  "source_sha256": "00c138767290d4b7f2fbbb645b1a823ba65d912876b55e0ecd304559d8da92fd",
+  "body_sha256": "d86834684dbcb3385964c8cfa44ee008f796a7e6f64b8e5b1e969594134aeb39",
+  "full_sha256": "ad5089902135f4093abb16e907c4852c86a72c8cef42877a48b023114c2be839",
+  "layout_change": "符号表恢复原单栏三线表，保留24个符号及原字号；仅收紧标题、浮动体和参考文献条目间距，正文文字字号、页边距、图片尺寸和推导结果未改动。"
 }
