@@ -49,4 +49,7 @@ figures/q2_audit/
 *.synctex.gz(busy)
 *.pdfsync
 Temp/*
+tmp/
+完整论文-LaTeX/build-insert-*/
+figures/几何与传热传质/PDF核验预览.png
 simkai.ttf
